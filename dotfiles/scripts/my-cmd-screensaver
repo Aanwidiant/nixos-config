@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+FILE="$HOME/.config/theme/screensaver.txt"
+
+screensaver_in_focus() {
+  hyprctl activewindow -j | jq -e '.class == "org.screensaver"' >/dev/null 2>&1
+}
+
+exit_screensaver() {
+  hyprctl keyword cursor:invisible false &>/dev/null
+  pkill -x tte 2>/dev/null
+  pkill -f org.screensaver 2>/dev/null
+  exit 0
+}
+
+trap exit_screensaver SIGINT SIGTERM SIGHUP SIGQUIT
+
+# safety check
+[[ -f "$FILE" ]] || exit 1
+
+# Get all available effects from tte
+mapfile -t EFFECTS < <(tte --help | grep -A 100 "^effects:" | tail -n +2 | awk '{print $1}' | grep -v '^$')
+
+if [[ ${#EFFECTS[@]} -eq 0 ]]; then
+  EFFECTS=(beams burn fireworks matrix rain slide spray waves)
+fi
+
+# set black background
+printf '\033]11;rgb:00/00/00\007'
+
+# hide cursor
+hyprctl keyword cursor:invisible true &>/dev/null
+
+while true; do
+  effect="${EFFECTS[RANDOM % ${#EFFECTS[@]}]}"
+
+  tte \
+    --input-file "$FILE" \
+    --frame-rate 120 \
+    --canvas-width 0 \
+    --canvas-height 0 \
+    --anchor-canvas c \
+    --anchor-text c \
+    "$effect" 2>/dev/null &
+  tte_pid=$!
+
+  while kill -0 "$tte_pid" 2>/dev/null; do
+    if read -rsn1 -t 0.2 || ! screensaver_in_focus; then
+      exit_screensaver
+    fi
+  done
+
+  sleep 0.5
+done

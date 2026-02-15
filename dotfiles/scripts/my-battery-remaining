@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+BAT_DEVICE="$(upower -e | grep -m1 BAT || true)"
+
+[[ -z "$BAT_DEVICE" ]] && exit 1
+
+upower -i "$BAT_DEVICE" \
+  | awk -F: '
+      /percentage/ {
+        gsub(/[%[:space:]]/, "", $2)
+        val = $2
+        printf("%d\n", val + 0.5)
+        exit
+      }
+    '

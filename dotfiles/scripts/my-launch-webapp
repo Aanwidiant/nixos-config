@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+browser="$(xdg-settings get default-web-browser)"
+
+case "$browser" in
+  google-chrome*|brave-browser*|microsoft-edge*|opera*|vivaldi*|helium*)
+    ;;
+  *)
+    browser="chromium.desktop"
+    ;;
+esac
+
+browser_exec=""
+
+for dir in \
+  "$HOME/.local/share/applications" \
+  "$HOME/.nix-profile/share/applications" \
+  "/etc/profiles/per-user/$USER/share/applications" \
+  "/run/current-system/sw/share/applications" \
+  "/usr/share/applications"
+do
+  if [[ -f "$dir/$browser" ]]; then
+    browser_exec="$(grep '^Exec=' "$dir/$browser" | head -n1 | cut -d= -f2 | sed 's/ *%[fFuUdDnNickvm]//g')"
+    break
+  fi
+done
+
+[[ -z "$browser_exec" ]] && exit 1
+
+exec $browser_exec --app="$1" "${@:2}"

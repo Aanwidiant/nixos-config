@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+font_name="$1"
+if [[ -z "$font_name" || "$font_name" == "CNCLD" ]]; then
+  echo "Usage: my-font-set <font-name>"
+  exit 1
+fi
+
+if ! fc-list | grep -iq "$font_name"; then
+  echo "Font '$font_name' not found."
+  exit 1
+fi
+
+# Base path to dotfiles
+DOTFILES="$HOME/nixos-config/dotfiles"
+
+# Kitty
+if [[ -f "$DOTFILES/kitty/kitty.conf" ]]; then
+  sed -i "s/^font_family[[:space:]]\+.*/font_family $font_name/" "$DOTFILES/kitty/kitty.conf"
+  echo "✓ Updated kitty.conf"
+fi
+
+# Hyprlock
+if [[ -f "$DOTFILES/hypr/hyprlock.conf" ]]; then
+  sed -i "s/^[[:space:]]*font_family[[:space:]]*=.*/    font_family = $font_name/" "$DOTFILES/hypr/hyprlock.conf"
+  echo "✓ Updated hyprlock.conf"
+fi
+
+# Mako - keep the size, only replace font name
+if [[ -f "$DOTFILES/mako/config" ]]; then
+  sed -i "s/^font=\(.*\)[[:space:]]\+\([0-9]\+\)$/font=$font_name \2/" "$DOTFILES/mako/config"
+  echo "✓ Updated mako config"
+fi
+
+# Waybar CSS
+if [[ -f "$DOTFILES/waybar/style.css" ]]; then
+  sed -i "s/font-family:[^;'\"]*['\"]\\?[^;'\"]*['\"]\\?;/font-family: '$font_name';/g" "$DOTFILES/waybar/style.css"
+  echo "✓ Updated waybar style.css"
+fi
+
+# SwayOSD CSS
+if [[ -f "$DOTFILES/swayosd/style.css" ]]; then
+  sed -i "s/font-family:[^;'\"]*['\"]\\?[^;'\"]*['\"]\\?;/font-family: '$font_name';/g" "$DOTFILES/swayosd/style.css"
+  echo "✓ Updated swayosd style.css"
+fi
+
+# Wofi CSS
+if [[ -f "$DOTFILES/wofi/style.css" ]]; then
+  sed -i "s/font-family:[^;'\"]*['\"]\\?[^;'\"]*['\"]\\?;/font-family: '$font_name';/g" "$DOTFILES/wofi/style.css"
+  echo "✓ Updated wofi style.css"
+fi
+
+# Fontconfig
+if [[ -f "$HOME/.config/fontconfig/fonts.conf" ]]; then
+  xmlstarlet ed -L \
+    -u '//match[@target="pattern"][test/string="monospace"]/edit[@name="family"]/string' \
+    -v "$font_name" \
+    "$HOME/.config/fontconfig/fonts.conf" 2>/dev/null
+  echo "✓ Updated fontconfig"
+fi
+
+echo ""
+echo "Font changed to: $font_name"
+echo "Restarting services..."
+
+my-restart-waybar
+my-restart-swayosd
+pkill -USR1 kitty 2>/dev/null
+makoctl reload 2>/dev/null
+
+my-hook font-set "$font_name" 2>/dev/null
+
+echo "Done!"

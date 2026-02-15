@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# Exit early if tte not installed
+command -v tte >/dev/null || exit 1
+
+# Exit if screensaver already running
+pgrep -f org.screensaver >/dev/null && exit 0
+
+# Optional toggle
+if [[ -f ~/.local/state/my/toggles/screensaver-off ]] && [[ "$1" != "force" ]]; then
+  exit 1
+fi
+
+# Save currently focused monitor
+focused="$(hyprctl monitors -j | jq -r '.[] | select(.focused==true).name')"
+
+# Launch screensaver on all monitors
+hyprctl monitors -j | jq -r '.[].name' | while read -r m; do
+  hyprctl dispatch focusmonitor "$m"
+
+  hyprctl dispatch exec -- \
+    kitty --class=org.screensaver \
+      --override font_size=18 \
+      --override window_padding_width=0 \
+      -e my-cmd-screensaver
+done
+
+# Restore focus
+hyprctl dispatch focusmonitor "$focused"

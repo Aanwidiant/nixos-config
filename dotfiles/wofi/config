@@ -1,0 +1,8 @@
+width=600
+height=400
+show=drun
+prompt=Run
+allow_images=true
+term=kitty
+normal_window = true
+insensitive=true

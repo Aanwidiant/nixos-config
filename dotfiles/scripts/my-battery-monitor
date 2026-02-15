@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+BATTERY_THRESHOLD=20
+NOTIFICATION_FLAG="/run/user/$UID/my_battery_notified"
+
+BATTERY_LEVEL="$(my-battery-remaining 2>/dev/null || true)"
+BAT_DEVICE="$(upower -e | grep -m1 BAT || true)"
+
+[[ -z "$BAT_DEVICE" ]] && exit 0
+
+BATTERY_STATE="$(
+  upower -i "$BAT_DEVICE" | awk '/state:/ {print $2}'
+)"
+
+send_notification() {
+  notify-send \
+    -u critical \
+    "󱐋 Time to recharge!" \
+    "Battery is down to ${1}%" \
+    -i battery-caution \
+    -t 30000
+}
+
+if [[ "$BATTERY_LEVEL" =~ ^[0-9]+$ ]]; then
+  if [[ "$BATTERY_STATE" == "discharging" && "$BATTERY_LEVEL" -le "$BATTERY_THRESHOLD" ]]; then
+    if [[ ! -f "$NOTIFICATION_FLAG" ]]; then
+      send_notification "$BATTERY_LEVEL"
+      touch "$NOTIFICATION_FLAG"
+    fi
+  else
+    rm -f "$NOTIFICATION_FLAG"
+  fi
+fi

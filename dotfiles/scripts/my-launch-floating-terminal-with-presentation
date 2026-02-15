@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cmd="$*"
+
+exec setsid xdg-terminal-exec \
+  --app-id=org.my.terminal \
+  --title=Terminal \
+  -e bash -c "my-show-logo; $cmd; my-show-done"

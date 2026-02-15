@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+THEME=$(my-theme-list | menu "Theme")
+
+[[ -z "$THEME" ]] && exit 0
+
+THEME_SLUG=$(echo "$THEME" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+my-theme-set "$THEME_SLUG"

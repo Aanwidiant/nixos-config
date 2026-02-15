@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+MODE="${1:-drun}"
+shift || true
+
+if pgrep -f "wofi --show" >/dev/null; then
+  pkill -f "wofi --show"
+  sleep 0.05
+fi
+
+case "$MODE" in
+  dmenu)
+    exec wofi \
+      --show dmenu \
+      --no-actions \
+      --no-history \
+      --matching contains \
+      "$@"
+    ;;
+  drun|run|window)
+    exec wofi \
+      --show "$MODE" \
+      --no-actions \
+      --sort-order default \
+      "$@"
+    ;;
+  *)
+    exec wofi \
+      --show drun \
+      --no-actions \
+      "$MODE" "$@"
+    ;;
+esac

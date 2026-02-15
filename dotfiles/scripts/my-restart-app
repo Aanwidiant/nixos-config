@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+pkill "$1" 2>/dev/null || true
+sleep 0.2
+"$1" &

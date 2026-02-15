@@ -1,0 +1,178 @@
+#!/usr/bin/env bash
+
+BACK_TO_EXIT=false
+
+back_to() {
+  local parent="$1"
+
+  if [[ "$BACK_TO_EXIT" == "true" ]]; then
+    exit 0
+  elif [[ -n "$parent" ]]; then
+    "$parent"
+  else
+    show_main_menu
+  fi
+}
+
+menu() {
+  local prompt="$1"
+  local options="$2"
+
+  echo -e "$options" | my-launch-wofi dmenu \
+    --prompt "$prompt…" \
+    --width 350 \
+    --height 270
+}
+
+terminal() {
+  xdg-terminal-exec --app-id=org.my.terminal "$@"
+}
+
+# Trigger
+
+show_trigger_menu() {
+  case "$(menu "Trigger" "  Capture\n  Share\n󰔎  Toggle")" in
+    *Capture*) show_capture_menu ;;
+    *Share*) show_share_menu ;;
+    *Toggle*) show_toggle_menu ;;
+    *) show_main_menu ;;
+  esac
+}
+
+show_capture_menu() {
+  case "$(menu "Capture" "  Screenshot\n  Screenrecord\n󰃉  Color")" in
+    *Screenshot*) show_screenshot_menu ;;
+    *Screenrecord*) show_screenrecord_menu ;;
+    *Color*) pkill hyprpicker || hyprpicker -a ;;
+    *) show_trigger_menu ;;
+  esac
+}
+
+show_screenshot_menu() {
+  case "$(menu "Screenshot" "  Snap with Editing\n  Straight to Clipboard")" in
+    *Editing*) my-cmd-screenshot smart ;;
+    *Clipboard*) my-cmd-screenshot smart clipboard ;;
+    *) show_capture_menu ;;
+  esac
+}
+
+show_screenrecord_menu() {
+  my-cmd-screenrecord --stop-recording && exit 0
+
+  case "$(menu "Screenrecord" "  Desktop audio\n  Desktop + mic\n  Desktop + mic + webcam")" in
+    *"Desktop audio"*) my-cmd-screenrecord --with-desktop-audio ;;
+    *"Desktop + mic"*) my-cmd-screenrecord --with-desktop-audio --with-microphone-audio ;;
+    *"webcam"*) my-cmd-screenrecord --with-desktop-audio --with-microphone-audio --with-webcam ;;
+    *) back_to show_capture_menu ;;
+  esac
+}
+
+show_share_menu() {
+  case "$(menu "Share" "  Clipboard\n  File\n  Folder")" in
+    *Clipboard*) my-cmd-share clipboard ;;
+    *File*) terminal bash -c "my-cmd-share file" ;;
+    *Folder*) terminal bash -c "my-cmd-share folder" ;;
+    *) back_to show_trigger_menu ;;
+  esac
+}
+
+show_toggle_menu() {
+  case "$(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar")" in
+    *Screensaver*) my-toggle-screensaver ;;
+    *Nightlight*) my-toggle-nightlight ;;
+    *Idle*) my-toggle-idle ;;
+    *Bar*) my-toggle-waybar ;;
+    *) show_trigger_menu ;;
+  esac
+}
+
+# Style
+
+show_style_menu() {
+  case "$(menu "Style" "󰸌  Theme\n  Font")" in
+      *Theme*) show_theme_menu ;;
+    *Font*) show_font_menu ;;
+    *) show_main_menu ;;
+  esac
+}
+
+show_font_menu() {
+  theme=$(menu "Font" "$(my-font-list)")
+  [[ -z "$theme" ]] && back_to show_style_menu
+  my-font-set "$theme"
+}
+
+show_theme_menu() {
+  theme=$(menu "Theme" "$(my-theme-list)")
+  [[ -z "$theme" ]] && back_to show_style_menu
+
+  slug=$(echo "$theme" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
+
+  my-theme-set "$slug"
+}
+
+
+# Setup
+
+show_setup_menu() {
+  case "$(menu "Setup" "  Audio\n  Wifi\n󰂯  Bluetooth\n󱐋  Power Profile")" in
+    *Audio*) my-launch-or-focus-tui wiremix ;;
+    *Wifi*) my-launch-wifi ;;
+    *Bluetooth*) my-launch-bluetooth ;;
+    *Power*) show_setup_power_menu ;;
+    *) show_main_menu ;;
+  esac
+}
+
+show_setup_power_menu() {
+  profile=$(menu "Power Profile" "$(my-powerprofiles-list)")
+  [[ -z "$profile" ]] && back_to show_setup_menu
+  powerprofilesctl set "$profile"
+}
+
+# System
+
+show_system_menu() {
+  case "$(menu "System" "  Lock\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown")" in
+    *Lock*) my-lock-screen ;;
+    *Screensaver*) my-launch-screensaver force ;;
+    *Suspend*) systemctl suspend ;;
+    *Restart*) my-cmd-reboot ;;
+    *Shutdown*) my-cmd-shutdown ;;
+    *) show_main_menu ;;
+  esac
+}
+
+# Main
+
+show_main_menu() {
+  case "$(menu "Go" "󰀻  Apps\n󱓞  Trigger\n  Style\n  Setup\n  About\n  System")" in
+    *Apps*) wofi --show drun --sort-order alphabetical --no-actions ;;
+    *Trigger*) show_trigger_menu ;;
+    *Style*) show_style_menu ;;
+    *Setup*) show_setup_menu ;;
+    *About*) my-launch-about ;;
+    *System*) show_system_menu ;;
+  esac
+}
+
+case "${1:-main}" in
+  trigger)
+    show_trigger_menu
+    ;;
+  style)
+    show_style_menu
+    ;;
+  setup)
+    show_setup_menu
+    ;;
+  system)
+    show_system_menu
+    ;;
+  power)
+    show_setup_power_menu
+    ;;
+  main|*)
+    show_main_menu
+    ;;
+esac

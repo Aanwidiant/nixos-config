@@ -1,0 +1,69 @@
+@import "../theme/current/theme/waybar.css";
+
+#waybar {
+    background-color: alpha(@background, 0.5);
+}
+
+* {
+    color: @foreground;
+    border: none;
+    border-radius: 6px;
+    min-height: 0;
+    font-family: 'JetBrainsMono Nerd Font';
+    font-size: 12px;
+}
+
+.modules-left {
+    margin-left: 8px;
+}
+
+.modules-right {
+    margin-right: 8px;
+}
+
+#workspaces button {
+    background-color: green;
+    all: initial;
+    padding: 0 6px;
+    margin: 0 1.5px;
+    min-width: 9px;
+}
+
+#workspaces button.empty {
+    opacity: 0.5;
+}
+
+#cpu,
+#battery,
+#pulseaudio,
+#custom-nixos,
+#custom-screenrecording-indicator {
+    min-width: 12px;
+    margin: 0 7.5px;
+}
+
+#bluetooth {
+    margin-right: 17px;
+}
+
+#network {
+    margin-right: 13px;
+}
+
+tooltip {
+    padding: 2px;
+}
+
+#clock {
+    margin-left: 8.75px;
+}
+
+#custom-screenrecording-indicator {
+    min-width: 12px;
+    margin-left: 8.75px;
+    font-size: 10px;
+}
+
+#custom-screenrecording-indicator.active {
+    color: #a55555;
+}

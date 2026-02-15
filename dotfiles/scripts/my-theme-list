@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+find "$HOME/.config/theme/themes/" \
+  -mindepth 1 -maxdepth 1 \
+  \( -type d -o -type l \) |
+  sort |
+  while read -r path; do
+    basename "$path" |
+      sed -E 's/(^|-)([a-z])/\1\u\2/g; s/-/ /g'
+  done

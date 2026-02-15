@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+STYLE="$HOME/.config/waybar/style.css"
+
+[[ -f "$STYLE" ]] || exit 1
+
+grep -oP 'font-family:\s*["'\'']?\K[^;"'\'']+' "$STYLE" | head -n1

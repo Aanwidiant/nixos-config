@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+rfkill unblock wifi
+my-launch-or-focus-tui impala

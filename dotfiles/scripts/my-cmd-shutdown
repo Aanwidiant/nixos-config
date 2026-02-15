@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+my-state clear "re*-required" || true
+my-hyprland-window-close-all || true
+
+sleep 5
+
+systemctl poweroff --no-wall

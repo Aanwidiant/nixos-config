@@ -1,0 +1,23 @@
+# Direnv
+.direnv
+.envrc
+
+# Nix build results
+result
+result-*
+
+# Flake backup / temp
+*.drv
+*.lock.old
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+
+# Logs
+*.log

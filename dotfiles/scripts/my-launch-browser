@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+default_browser="$(xdg-settings get default-web-browser)"
+
+browser_exec=""
+for dir in \
+  "$HOME/.local/share/applications" \
+  "$HOME/.nix-profile/share/applications" \
+  "/etc/profiles/per-user/$USER/share/applications" \
+  "/run/current-system/sw/share/applications" \
+  "/usr/share/applications"; do
+  if [[ -f "$dir/$default_browser" ]]; then
+    browser_exec="$(sed -n 's/^Exec=\([^ ]*\).*/\1/p' "$dir/$default_browser" | head -1)"
+    break
+  fi
+done
+
+[[ -z "$browser_exec" ]] && exit 1
+
+if [[ "$browser_exec" =~ (firefox|zen|librewolf) ]]; then
+  private_flag="--private-window"
+else
+  private_flag="--incognito"
+fi
+
+exec setsid "$browser_exec" "${@/--private/$private_flag}"

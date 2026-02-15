@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+CHROMIUM_THEME="$HOME/.config/theme/current/theme/chromium.theme"
+
+if my-cmd-present chromium || my-cmd-present brave; then
+  if [[ -f "$CHROMIUM_THEME" ]]; then
+    THEME_RGB_COLOR=$(<"$CHROMIUM_THEME")
+  else
+    THEME_RGB_COLOR="28,32,39"
+  fi
+
+  if my-cmd-present chromium; then
+    chromium --no-startup-window --set-theme-color="$THEME_RGB_COLOR"
+  fi
+
+  if my-cmd-present brave; then
+    brave --no-startup-window --set-theme-color="$THEME_RGB_COLOR"
+  fi
+fi
