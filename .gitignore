@@ -21,3 +21,5 @@ result-*
 
 # Logs
 *.log
+
+dotfiles/theme/current/

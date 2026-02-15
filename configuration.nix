@@ -72,6 +72,9 @@
   services.upower.enable = true;
   virtualisation.docker.enable = true;
 
+  # swap-ram
+  zramSwap.enable = true;
+
   # Audio (PipeWire)
   security.rtkit.enable = true;
   services.pipewire = {

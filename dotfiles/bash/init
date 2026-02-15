@@ -27,6 +27,8 @@ if [[ -t 1 \
    && -z "$SSH_CONNECTION" \
    && "$TERM_PROGRAM" != "vscode" \
    && "$TERM_PROGRAM" != "zed" \
+   && "$TERM_PROGRAM" != "webstrom" \
+   && "$TERM_PROGRAM" != "nvim" \
    && -z "$JETBRAINS_IDE" \
    && -z "$FASTFETCH_SHOWN" ]]; then
 
