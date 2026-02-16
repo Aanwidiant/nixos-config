@@ -1,13 +1,17 @@
 @import "../theme/current/theme/waybar.css";
 
 #waybar {
-    background-color: alpha(@background, 0.5);
+    background-color: alpha(@foreground, 0.25);
+}
+
+#layer {
+    border-radius: 6px;
 }
 
 * {
     color: @foreground;
     border: none;
-    border-radius: 6px;
+    border-radius: 7px;
     min-height: 0;
     font-family: 'JetBrainsMono Nerd Font';
     font-size: 12px;

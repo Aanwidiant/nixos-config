@@ -6,5 +6,4 @@ allow_images=true
 term=kitty
 normal_window=true
 insensitive=true
-matching=fuzzy
 sort_order=default
