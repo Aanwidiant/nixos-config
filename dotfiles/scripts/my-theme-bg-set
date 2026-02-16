@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+BG_PATH="$1"
+CURRENT_BACKGROUND_LINK="$HOME/.config/theme/current/background"
+
+[[ -z "$BG_PATH" ]] && exit 1
+
+ln -nsf "$BG_PATH" "$CURRENT_BACKGROUND_LINK"
+
+pkill swaybg
+sleep 0.2
+swaybg -i "$(readlink -f "$CURRENT_BACKGROUND_LINK")" -m fill &

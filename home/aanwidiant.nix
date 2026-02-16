@@ -15,7 +15,7 @@
   programs.fzf.enable = true;
   programs.starship.enable = true;
 
-  # Konfigurasi Git
+  # Configuration Git
   programs.git = {
     enable = true;
     settings = {
@@ -49,7 +49,8 @@
     gnome-disk-utility
     gnome-calendar
     baobab
-    powertop
+    cheese
+    chatbox
 
     # Development Editors & Tools
     neovim
@@ -105,6 +106,8 @@
     wiremix
     fastfetch
     btop
+    htop
+    powertop
 
     # CLI Utilities
     jq
@@ -125,6 +128,7 @@
     xdg-utils
     xdg-terminal-exec
     libxkbcommon
+    intel-gpu-tools
 
     # Visual
     terminaltexteffects

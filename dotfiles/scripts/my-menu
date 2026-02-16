@@ -89,9 +89,10 @@ show_toggle_menu() {
 # Style
 
 show_style_menu() {
-  case "$(menu "Style" "󰸌  Theme\n  Font")" in
-      *Theme*) show_theme_menu ;;
+  case "$(menu "Style" "󰸌  Theme\n  Font\n󰸉  Background")" in
+    *Theme*) show_theme_menu ;;
     *Font*) show_font_menu ;;
+    *Background*) show_bg_menu ;;
     *) show_main_menu ;;
   esac
 }
@@ -109,6 +110,33 @@ show_theme_menu() {
   slug=$(echo "$theme" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 
   my-theme-set "$slug"
+}
+
+show_bg_menu() {
+  BACKGROUNDS_DIR="$HOME/.config/theme/backgrounds"
+
+  mapfile -d '' -t BACKGROUNDS < <(
+    find -L "$BACKGROUNDS_DIR" -type f -print0 | sort -z
+  )
+
+  [[ ${#BACKGROUNDS[@]} -eq 0 ]] && back_to show_style_menu
+
+  MENU_LIST=""
+  for bg in "${BACKGROUNDS[@]}"; do
+    MENU_LIST+="$(basename "$bg")"$'\n'
+  done
+
+  selected=$(menu "Background" "$MENU_LIST")
+  [[ -z "$selected" ]] && back_to show_style_menu
+
+  for bg in "${BACKGROUNDS[@]}"; do
+    if [[ "$(basename "$bg")" == "$selected" ]]; then
+      my-theme-bg-set "$bg"
+      break
+    fi
+  done
+
+  back_to show_style_menu
 }
 
 

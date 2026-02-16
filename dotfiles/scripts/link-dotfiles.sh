@@ -27,6 +27,7 @@ link bash .config/bash
 link hooks .config/hooks
 link btop .config/btop
 link fastfetch .config/fastfetch
+link nvim .config/nvim
 link scripts .local/bin
 
 echo "Dotfiles linked ✔"

@@ -54,7 +54,6 @@
   environment.systemPackages = with pkgs; [
     git wget vim ntfs3g btrfs-progs
     efibootmgr dosfstools mtools usbutils
-    libinput
   ];
 
   # Nix-LD
@@ -72,6 +71,8 @@
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
   virtualisation.docker.enable = true;
+  services.libinput.enable = true;
+  services.touchegg.enable = true;
 
   # swap-ram
   zramSwap.enable = true;
