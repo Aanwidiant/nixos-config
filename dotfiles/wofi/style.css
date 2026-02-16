@@ -4,7 +4,6 @@ window {
     font-family: "JetBrainsMono Nerd Font";
     margin: 0;
     border-radius: 6px;
-    /*border: 1px solid @border;*/
     background-color: @background;
     color: @text;
 }

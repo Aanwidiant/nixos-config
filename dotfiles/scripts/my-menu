@@ -139,7 +139,6 @@ show_bg_menu() {
   back_to show_style_menu
 }
 
-
 # Setup
 
 show_setup_menu() {

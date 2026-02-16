@@ -42,7 +42,9 @@
     margin: 0 7.5px;
 }
 
-#bluetooth {
+#bluetooth,
+#custom-calendar
+{
     margin-right: 17px;
 }
 

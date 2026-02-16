@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 
 {
   imports = [
@@ -26,13 +30,21 @@
     enable = true;
     type = "fcitx5";
     fcitx5.waylandFrontend = true;
-    fcitx5.addons = with pkgs; [ fcitx5-gtk fcitx5-lua ];
+    fcitx5.addons = with pkgs; [
+      fcitx5-gtk
+      fcitx5-lua
+    ];
   };
 
   # Users
   users.users.aanwidiant = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "docker" "adbusers" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "docker"
+      "adbusers"
+    ];
     shell = pkgs.bash;
   };
 
@@ -52,15 +64,34 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    git wget vim ntfs3g btrfs-progs
-    efibootmgr dosfstools mtools usbutils
+    git
+    wget
+    vim
+    ntfs3g
+    btrfs-progs
+    efibootmgr
+    dosfstools
+    mtools
+    usbutils
   ];
 
   # Nix-LD
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
-    stdenv.cc.cc zlib fuse3 icu nss expat openssl
+    stdenv.cc.cc
+    zlib
+    fuse3
+    icu
+    nss
+    expat
+    openssl
   ];
+
+  # direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   # Services
   services.dbus.enable = true;
@@ -98,7 +129,7 @@
           --remember \
           --asterisks \
           --cmd 'start-hyprland'
-          '';
+        '';
         user = "greeter";
       };
     };
@@ -134,38 +165,56 @@
   networking.firewall = {
     enable = true;
     allowedTCPPortRanges = [
-      { from = 3000; to = 3005; }
-      { from = 5173; to = 5175; }
-      { from = 5000; to = 5005; }
-      { from = 6000; to = 6005; }
-      { from = 8000; to = 9000; }
+      {
+        from = 3000;
+        to = 3005;
+      }
+      {
+        from = 5173;
+        to = 5175;
+      }
+      {
+        from = 5000;
+        to = 5005;
+      }
+      {
+        from = 6000;
+        to = 6005;
+      }
+      {
+        from = 8000;
+        to = 9000;
+      }
     ];
     allowedTCPPorts = [ 53317 ];
     allowedUDPPorts = [ 53317 ];
   };
 
-boot = {
-  consoleLogLevel = 0;
+  boot = {
+    consoleLogLevel = 0;
 
-  kernelParams = [
-    "quiet"
-    "loglevel=0"
-    "rd.systemd.show_status=no"
-    "rd.udev.log_level=0"
-    "udev.log_level=0"
-    "nowatchdog"
-    "nmi_watchdog=0"
-  ];
+    kernelParams = [
+      "quiet"
+      "loglevel=0"
+      "rd.systemd.show_status=no"
+      "rd.udev.log_level=0"
+      "udev.log_level=0"
+      "nowatchdog"
+      "nmi_watchdog=0"
+    ];
 
-  kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
 
-  initrd.verbose = false;
-  plymouth.enable = false;
-};
+    initrd.verbose = false;
+    plymouth.enable = false;
+  };
 
   # Nix Settings
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
 

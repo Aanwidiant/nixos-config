@@ -1,4 +1,8 @@
-{ config, lib, pkgs, ... }:
+{ config
+, lib
+, pkgs
+, ...
+}:
 
 {
   home.username = "aanwidiant";
@@ -20,7 +24,7 @@
     enable = true;
     settings = {
       user = {
-        name  = "aanwidiant";
+        name = "aanwidiant";
         email = "aanwidianto01@gmail.com";
       };
     };
@@ -67,10 +71,23 @@
     bun
     phpPackages.composer
     cmake
-    clang
+    gcc
     docker-compose
-    mise
+    nodejs_24
+    pnpm
     android-tools
+    gnumake
+    python3
+    readline
+    ncurses
+    imagemagick
+    pkg-config
+    luajit
+    lua51Packages.luarocks-nix
+    prisma-engines
+    openssl
+    nodePackages.prisma
+    nixd
 
     # Database Tools
     dbgate
@@ -149,8 +166,7 @@
 
   home.sessionPath = [ "$HOME/.local/bin" ];
 
-home.activation.linkDotfiles =
-  lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.linkDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     ${config.home.homeDirectory}/nixos-config/dotfiles/scripts/link-dotfiles.sh
   '';
 
@@ -180,7 +196,7 @@ home.activation.linkDotfiles =
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
+      color-scheme = "prefer-dark";
     };
   };
 

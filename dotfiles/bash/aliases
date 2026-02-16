@@ -80,3 +80,6 @@ alias nix-optimize='sudo nix-store --optimize'
 
 # List generations
 alias nix-list='sudo nix-env --list-generations --profile /nix/var/nix/profiles/system'
+
+# GPU Stats
+alias gpu-stats='sudo intel_gpu_top'

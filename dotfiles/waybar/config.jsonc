@@ -10,7 +10,7 @@
   "margin-bottom": 0,
   "modules-left": ["custom/nixos", "hyprland/workspaces"],
   "modules-center": ["clock", "custom/screenrecording-indicator"],
-  "modules-right": ["bluetooth", "network", "pulseaudio", "cpu", "battery"],
+  "modules-right": ["custom/calendar", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -102,6 +102,12 @@
     "format-icons": {
       "default": ["", "", ""],
     },
+  },
+  "custom/calendar": {
+    "format": "",
+    "tooltip": true,
+    "on-click": "gnome-calendar",
+    "tooltip-format": "Calendar",
   },
   "custom/screenrecording-indicator": {
     "on-click": "my-cmd-screenrecord",
