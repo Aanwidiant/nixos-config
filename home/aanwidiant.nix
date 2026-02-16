@@ -96,7 +96,6 @@
     # Hyprland Ecosystem
     hypridle
     hyprlock
-    hyprpolkitagent
     waybar
     mako
     wofi

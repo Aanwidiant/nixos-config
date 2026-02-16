@@ -73,6 +73,7 @@
     dosfstools
     mtools
     usbutils
+    polkit_gnome
   ];
 
   # Nix-LD
@@ -190,6 +191,11 @@
     allowedUDPPorts = [ 53317 ];
   };
 
+  systemd.settings.Manager = {
+      DefaultTimeoutStopSec = "5s";
+      DefaultTimeoutStartSec = "5s";
+    };
+
   boot = {
     consoleLogLevel = 0;
 
@@ -201,6 +207,7 @@
       "udev.log_level=0"
       "nowatchdog"
       "nmi_watchdog=0"
+      "modprobe.blacklist=iTCO_wdt"
     ];
 
     kernelPackages = pkgs.linuxPackages_latest;
