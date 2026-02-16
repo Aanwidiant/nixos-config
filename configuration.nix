@@ -54,6 +54,7 @@
   environment.systemPackages = with pkgs; [
     git wget vim ntfs3g btrfs-progs
     efibootmgr dosfstools mtools usbutils
+    libinput
   ];
 
   # Nix-LD
@@ -151,7 +152,12 @@ boot = {
     "rd.systemd.show_status=no"
     "rd.udev.log_level=0"
     "udev.log_level=0"
+    "nowatchdog"
+    "nmi_watchdog=0"
   ];
+
+  kernelPackages = pkgs.linuxPackages_latest;
+
   initrd.verbose = false;
   plymouth.enable = false;
 };

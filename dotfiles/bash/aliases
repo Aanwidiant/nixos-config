@@ -68,3 +68,6 @@ alias nix-clean='sudo nix-collect-garbage --delete-old'
 
 # Sync boot entries
 alias nix-sync='sudo nixos-rebuild boot --flake ~/nixos-config#'
+
+# Update flake + switch
+alias nix-update='cd ~/nixos-config && nix flake update && sudo nixos-rebuild switch --flake .#'
