@@ -160,8 +160,9 @@ show_setup_power_menu() {
 # System
 
 show_system_menu() {
-  case "$(menu "System" "  Lock\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown")" in
+  case "$(menu "System" "  Lock\n󰈆  Logout\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown")" in
     *Lock*) my-lock-screen ;;
+    *Logout*) my-cmd-logout ;;
     *Screensaver*) my-launch-screensaver force ;;
     *Suspend*) systemctl suspend ;;
     *Restart*) my-cmd-reboot ;;
@@ -186,6 +187,9 @@ show_main_menu() {
 case "${1:-main}" in
   trigger)
     show_trigger_menu
+    ;;
+  share)
+    show_share_menu
     ;;
   style)
     show_style_menu

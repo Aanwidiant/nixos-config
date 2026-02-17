@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+my-state clear "re*-required" || true
+
+my-hyprland-window-close-all || true
+
+sleep 2
+
+sync
+
+hyprctl dispatch exit

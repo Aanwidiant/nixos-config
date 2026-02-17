@@ -105,6 +105,7 @@
   virtualisation.docker.enable = true;
   services.libinput.enable = true;
   services.touchegg.enable = true;
+  services.ollama.enable = true;
 
   # swap-ram
   zramSwap.enable = true;
@@ -198,7 +199,7 @@
 
   boot = {
     consoleLogLevel = 0;
-
+    blacklistedKernelModules = [ "raydium_i2c_ts" ];
     kernelParams = [
       "quiet"
       "loglevel=0"

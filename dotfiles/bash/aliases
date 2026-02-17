@@ -83,3 +83,6 @@ alias nix-list='sudo nix-env --list-generations --profile /nix/var/nix/profiles/
 
 # GPU Stats
 alias gpu-stats='sudo intel_gpu_top'
+
+# Cliphis wipe
+alias cwipe='cliphist wipe'

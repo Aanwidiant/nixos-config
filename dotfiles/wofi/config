@@ -1,7 +1,7 @@
 width=600
 height=400
 show=drun
-prompt=Run
+prompt=Search
 allow_images=true
 term=kitty
 normal_window=true

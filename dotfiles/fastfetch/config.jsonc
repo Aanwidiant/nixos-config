@@ -111,7 +111,7 @@
       "type": "command",
       "key": "󱦟 OS Age",
       "keyColor": "magenta",
-      "text": "echo $(( ($(date +%s) - $(stat -c %Y /nix/var/nix/profiles/system)) / 86400 )) days"
+      "text": "birth=$(stat -c %Y /boot --alternate-form 2>/dev/null || stat -c %W /); echo $(( ($(date +%s) - birth) / 86400 )) days"
     },
     {
       "type": "uptime",
