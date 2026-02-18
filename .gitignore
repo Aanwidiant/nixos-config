@@ -22,4 +22,6 @@ result-*
 # Logs
 *.log
 
+# folder and file secrets
 dotfiles/theme/current/
+secrets/

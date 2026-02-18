@@ -11,38 +11,53 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , ...
-    }@inputs:
+    { nixpkgs, home-manager, ... }@inputs:
+
+    let
+      system = "x86_64-linux";
+      username = "aanwidiant";
+      hostname = "nixos";
+    in
     {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
-          ./configuration.nix
+      nixosConfigurations.${hostname} =
+        nixpkgs.lib.nixosSystem {
+          inherit system;
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
+          specialArgs = {
+            inherit inputs username hostname;
+          };
 
-            home-manager.users.aanwidiant = import ./home/aanwidiant.nix;
-          }
+          modules = [
+            ./hosts/laptop/configuration.nix
 
-          (
-            { pkgs, ... }:
+            home-manager.nixosModules.home-manager
+
             {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+
+              home-manager.extraSpecialArgs = {
+                inherit inputs username hostname;
+              };
+
+              home-manager.users.${username} = {
+                imports = [
+                  ./home/default.nix
+                ];
+
+                home.username = username;
+                home.homeDirectory = "/home/${username}";
+              };
+            }
+
+            ({ ... }: {
               nix.gc = {
                 automatic = true;
                 dates = "weekly";
                 options = "--delete-older-than 7d";
               };
-            }
-          )
-        ];
-      };
+            })
+          ];
+        };
     };
 }
