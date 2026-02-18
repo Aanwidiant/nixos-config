@@ -1,21 +1,20 @@
-{ config, lib, ...}:
+{ config, lib, ... }:
 
 {
   imports = [
-    ../modules/home/shell.nix
-    ../modules/home/git.nix
-    ../modules/home/vscode.nix
-    ../modules/home/desktop.nix
-    ../modules/home/styling.nix
-    ../modules/home/productivity.nix
-    ../modules/home/development.nix
-    ../modules/home/database.nix
-    ../modules/home/hyprland.nix
+    ../modules/home/apps.nix
     ../modules/home/capture.nix
-    ../modules/home/terminal.nix
     ../modules/home/cli.nix
+    ../modules/home/database.nix
+    ../modules/home/development.nix
+    ../modules/home/env.nix
+    ../modules/home/git.nix
+    ../modules/home/hyprland.nix
+    ../modules/home/shell.nix
+    ../modules/home/styling.nix
+    ../modules/home/terminal.nix
     ../modules/home/visual.nix
-    ../secrets/variables.nix
+    ../modules/home/vscode.nix
   ];
 
   home.stateVersion = "25.11";

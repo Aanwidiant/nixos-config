@@ -17,6 +17,10 @@
       system = "x86_64-linux";
       username = "aanwidiant";
       hostname = "nixos";
+      gitUser = {
+        name = "aanwidiant";
+        email = "aanwidianto01@gmail.com";
+      };
     in
     {
       nixosConfigurations.${hostname} =
@@ -24,7 +28,7 @@
           inherit system;
 
           specialArgs = {
-            inherit inputs username hostname;
+            inherit inputs username hostname gitUser;
           };
 
           modules = [

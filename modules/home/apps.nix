@@ -16,6 +16,5 @@
     gnome-calendar
     baobab
     cheese
-    chatbox
   ];
 }

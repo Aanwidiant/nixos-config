@@ -8,7 +8,6 @@
     xmlstarlet
 
     # File & Search Tools
-    cliphist
     fd
     dust
     bat

@@ -3,17 +3,16 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../modules/system/boot.nix
-    ../modules/system/networking.nix
-    ../modules/system/users.nix
-    ../modules/system/hardware.nix
-    ../modules/system/audio.nix
-    ../modules/system/desktop.nix
-    ../modules/system/fonts.nix
-    ../modules/system/packages.nix
-    ../modules/system/services.nix
-    ../modules/system/security.nix
-    ../modules/system/nix-settings.nix
+    ../../modules/system/audio.nix
+    ../../modules/system/boot.nix
+    ../../modules/system/device.nix
+    ../../modules/system/display.nix
+    ../../modules/system/fonts.nix
+    ../../modules/system/networking.nix
+    ../../modules/system/programs.nix
+    ../../modules/system/services.nix
+    ../../modules/system/security.nix
+    ../../modules/system/users.nix
   ];
 
   system.stateVersion = "25.11";

@@ -17,7 +17,7 @@
     intel-gpu-tools
   ];
 
-  # Nix-LD (untuk menjalankan dynamic binaries non-NixOS)
+  # Nix-LD
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [

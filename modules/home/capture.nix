@@ -9,5 +9,6 @@
     wl-clipboard
     gpu-screen-recorder
     ffmpeg
+    cliphist
   ];
 }

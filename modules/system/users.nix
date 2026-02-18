@@ -8,6 +8,8 @@
       "networkmanager"
       "docker"
       "adbusers"
+      "video"
+      "audio"
     ];
     shell = pkgs.bash;
   };

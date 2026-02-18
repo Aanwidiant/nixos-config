@@ -13,9 +13,4 @@
   };
 
   virtualisation.docker.enable = true;
-
-  systemd.settings.Manager = {
-    DefaultTimeoutStopSec = "5s";
-    DefaultTimeoutStartSec = "5s";
-  };
 }

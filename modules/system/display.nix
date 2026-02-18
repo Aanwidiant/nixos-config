@@ -7,12 +7,12 @@
     settings = {
       default_session = {
         command = ''
-          ${pkgs.tuigreet}/bin/tuigreet \
-          --time \
-          --remember \
-          --asterisks \
-          --cmd 'start-hyprland 2>/dev/null'
-        '';
+          ${pkgs.bash}/bin/bash -c "sleep 1; exec ${pkgs.tuigreet}/bin/tuigreet \
+            --time \
+            --remember \
+            --asterisks \
+            --cmd start-hyprland"
+          '';
         user = "greeter";
       };
     };

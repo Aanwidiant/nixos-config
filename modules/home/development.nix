@@ -34,7 +34,6 @@
     luajit
     lua51Packages.luarocks-nix
     prisma-engines
-    openssl
     nodePackages.prisma
 
     ollama
