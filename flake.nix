@@ -28,7 +28,7 @@
           inherit system;
 
           specialArgs = {
-            inherit inputs username hostname gitUser;
+            inherit inputs username hostname;
           };
 
           modules = [
@@ -41,7 +41,7 @@
               home-manager.useUserPackages = true;
 
               home-manager.extraSpecialArgs = {
-                inherit inputs username hostname;
+                inherit inputs username hostname gitUser;
               };
 
               home-manager.users.${username} = {
