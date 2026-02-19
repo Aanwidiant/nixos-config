@@ -13,7 +13,6 @@
     mpv
     gnome-calculator
     gnome-disk-utility
-    gnome-calendar
     baobab
     cheese
   ];

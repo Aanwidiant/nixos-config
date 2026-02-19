@@ -106,7 +106,7 @@
   "custom/calendar": {
     "format": "",
     "tooltip": true,
-    "on-click": "gnome-calendar",
+    "on-click": "my-launch-or-focus-tui calcure",
     "tooltip-format": "Calendar",
   },
   "custom/screenrecording-indicator": {

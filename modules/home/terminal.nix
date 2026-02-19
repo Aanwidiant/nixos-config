@@ -10,5 +10,6 @@
     btop
     htop
     powertop
+    calcure
   ];
 }
