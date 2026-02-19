@@ -11,5 +11,7 @@
     htop
     powertop
     calcure
+    clock-rs
+    gum
   ];
 }

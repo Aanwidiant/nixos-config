@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+APP_ID=${MY_ID:-"org.my.$(basename "$1")"}
+
 exec setsid xdg-terminal-exec \
-  --app-id="org.my.$(basename "$1")" \
+  --app-id="$APP_ID" \
   -e "$1" "${@:2}"

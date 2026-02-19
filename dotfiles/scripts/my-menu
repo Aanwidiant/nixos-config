@@ -31,9 +31,9 @@ terminal() {
 # Trigger
 
 show_trigger_menu() {
-  case "$(menu "Trigger" "  Capture\n  Share\n󰔎  Toggle")" in
+    case "$(menu "Trigger" "  Capture\n󰥔  Clock\n󰔎  Toggle")" in
     *Capture*) show_capture_menu ;;
-    *Share*) show_share_menu ;;
+    *Clock*) my-clock-menu ;;
     *Toggle*) show_toggle_menu ;;
     *) show_main_menu ;;
   esac
@@ -64,15 +64,6 @@ show_screenrecord_menu() {
     *"Desktop + mic"*) my-cmd-screenrecord --with-desktop-audio --with-microphone-audio ;;
     *"webcam"*) my-cmd-screenrecord --with-desktop-audio --with-microphone-audio --with-webcam ;;
     *) back_to show_capture_menu ;;
-  esac
-}
-
-show_share_menu() {
-  case "$(menu "Share" "  Clipboard\n  File\n  Folder")" in
-    *Clipboard*) my-cmd-share clipboard ;;
-    *File*) terminal bash -c "my-cmd-share file" ;;
-    *Folder*) terminal bash -c "my-cmd-share folder" ;;
-    *) back_to show_trigger_menu ;;
   esac
 }
 
@@ -187,9 +178,6 @@ show_main_menu() {
 case "${1:-main}" in
   trigger)
     show_trigger_menu
-    ;;
-  share)
-    show_share_menu
     ;;
   style)
     show_style_menu

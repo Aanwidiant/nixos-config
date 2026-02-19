@@ -2,9 +2,11 @@
 
 {
   home.packages = with pkgs; [
+    wf-recorder
+    slurp
     satty
     wl-clipboard
-    gpu-screen-recorder
+    # gpu-screen-recorder
     ffmpeg
     cliphist
   ];

@@ -13,7 +13,6 @@
     dosfstools
     mtools
     usbutils
-    # polkit_gnome
     intel-gpu-tools
   ];
 
