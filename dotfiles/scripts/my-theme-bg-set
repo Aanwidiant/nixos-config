@@ -5,8 +5,13 @@ CURRENT_BACKGROUND_LINK="$HOME/.config/theme/current/background"
 
 [[ -z "$BG_PATH" ]] && exit 1
 
+# Update symlink
 ln -nsf "$BG_PATH" "$CURRENT_BACKGROUND_LINK"
+REAL_PATH="$(readlink -f "$CURRENT_BACKGROUND_LINK")"
 
-pkill swaybg
-sleep 0.2
-swaybg -i "$(readlink -f "$CURRENT_BACKGROUND_LINK")" -m fill &
+# Set wallpaper with hyprpaper
+hyprctl hyprpaper unload all
+hyprctl hyprpaper preload "$REAL_PATH"
+hyprctl hyprpaper wallpaper ", $REAL_PATH, cover"
+
+notify-send "Background changed" "$(basename "$REAL_PATH")" -t 2000

@@ -24,6 +24,11 @@
     };
   };
 
+  qt = {
+    enable = true;
+    style.name = "adwaita-dark";
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -32,5 +37,9 @@
 
   home.sessionVariables = {
     GTK_THEME = "Adwaita:dark";
+    QT_QPA_PLATFORMTHEME = "qt6ct";
+    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+    QT_ENABLE_HIGHDPI_SCALING = "1";
+    QT_QPA_PLATFORM = "wayland;xcb";
   };
 }
