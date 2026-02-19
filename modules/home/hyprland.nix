@@ -11,6 +11,8 @@
     nwg-displays
     hyprpicker
     hyprsunset
-    swaybg
+    hyprshot
+    hyprpaper
+    hyprpolkitagent
   ];
 }

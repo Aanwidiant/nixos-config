@@ -49,9 +49,9 @@ show_capture_menu() {
 }
 
 show_screenshot_menu() {
-  case "$(menu "Screenshot" "  Snap with Editing\n  Straight to Clipboard")" in
-    *Editing*) my-cmd-screenshot smart ;;
-    *Clipboard*) my-cmd-screenshot smart clipboard ;;
+  case "$(menu "Screenshot" "󰹑  Fullscreen\n󰒉  Region")" in
+    *Fullscreen*) my-cmd-screenshot fullscreen ;;
+    *Region*) my-cmd-screenshot region ;;
     *) show_capture_menu ;;
   esac
 }
