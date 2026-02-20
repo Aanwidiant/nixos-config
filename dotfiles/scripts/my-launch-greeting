@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+sleep 1
+
+HOUR=$(date +%H)
+
+if [ "$HOUR" -lt 12 ]; then
+    GREETING="Good morning"
+elif [ "$HOUR" -lt 18 ]; then
+    GREETING="Good afternoon"
+else
+    GREETING="Good evening"
+fi
+
+MESSAGES=(
+  "Stay focused and build something great."
+  "Small progress is still progress."
+  "Consistency beats intensity."
+  "Ship it. Then improve it."
+  "Deep work mode: ON. Silence the noise."
+  "One task at a time. Quality over speed."
+
+  "Your future self will thank you for this."
+  "Don't stop until you're proud."
+  "Mistakes are just unexpected lessons."
+  "The best way to predict the future is to create it."
+)
+
+RANDOM_MESSAGE=${MESSAGES[$RANDOM % ${#MESSAGES[@]}]}
+
+notify-send "$GREETING, $USER" "$RANDOM_MESSAGE"
