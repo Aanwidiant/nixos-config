@@ -13,6 +13,6 @@
     calcure
     clock-rs
     gum
-    dust
+    ncdu
   ];
 }

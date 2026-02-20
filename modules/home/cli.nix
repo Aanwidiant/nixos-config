@@ -9,7 +9,6 @@
 
     # File & Search Tools
     fd
-    dust
     bat
     eza
     tldr

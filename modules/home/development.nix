@@ -7,6 +7,7 @@
     zed-editor
     jetbrains.webstorm
     postman
+    bruno
     github-cli
     lazygit
     lazydocker
@@ -17,8 +18,6 @@
     nixpkgs-fmt
 
     # Runtimes & Build Tools
-    bun
-    phpPackages.composer
     cmake
     gcc
     docker-compose

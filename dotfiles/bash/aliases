@@ -60,26 +60,26 @@ alias ollama-status='systemctl status ollama'
 alias qwen='ollama run qwen2.5:3b'
 alias qwen-code='ollama run qwen2.5-coder:3b'
 
-# Switch New Generations
+# Switch New Generations (switch)
 alias nix-switch='sudo nixos-rebuild switch --flake ~/nixos-config#'
 
-# Update flake inputs (update packages)
-alias nix-update='nix flake update ~/nixos-config'
+# Boot Only (sync)
+alias nix-sync='sudo nixos-rebuild boot --flake ~/nixos-config#'
 
-# Update + Switch sekaligus
-alias nix-upgrade='nix flake update ~/nixos-config && sudo nixos-rebuild switch --flake ~/nixos-config#'
+# Update flake inputs
+alias nix-update='nix flake update --flake ~/nixos-config'
+
+# Upgrade = Update + Switch
+alias nix-upgrade="nix-update && nix-switch"
+
+# List system generations
+alias nix-list='sudo nixos-rebuild list-generations'
 
 # Clean Generations Old
 alias nix-clean='sudo nix-collect-garbage --delete-old'
 
-# Sync boot entries
-alias nix-sync='sudo nixos-rebuild boot --flake ~/nixos-config#'
-
-# Optimize nix store (bonus)
+# Optimize store (optional)
 alias nix-optimize='sudo nix-store --optimize'
-
-# List generations
-alias nix-list='sudo nix-env --list-generations --profile /nix/var/nix/profiles/system'
 
 # GPU Stats
 alias gpu-stats='sudo intel_gpu_top'
