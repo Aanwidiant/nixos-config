@@ -10,6 +10,7 @@
     power-profiles-daemon.enable = true;
     upower.enable = true;
     ollama.enable = true;
+    udisks2.enable = true;
   };
 
   virtualisation.docker.enable = true;

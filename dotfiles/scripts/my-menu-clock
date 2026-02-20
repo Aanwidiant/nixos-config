@@ -38,6 +38,6 @@ case "$CHOICE" in
     my-launch-tui clock-rs stopwatch
     ;;
   *)
-    exit 0
+    my-menu trigger
     ;;
 esac

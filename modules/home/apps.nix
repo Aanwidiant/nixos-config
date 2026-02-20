@@ -12,8 +12,6 @@
     imv
     mpv
     gnome-calculator
-    gnome-disk-utility
-    baobab
     cheese
   ];
 }
