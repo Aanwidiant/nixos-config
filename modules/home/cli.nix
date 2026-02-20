@@ -24,5 +24,6 @@
     xdg-utils
     xdg-terminal-exec
     libxkbcommon
+    libcanberra-gtk3
   ];
 }

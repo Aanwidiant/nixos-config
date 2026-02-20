@@ -3,10 +3,10 @@
 {
   home.packages = with pkgs; [
     wf-recorder
+    pulseaudio
     slurp
     satty
     wl-clipboard
-    # gpu-screen-recorder
     ffmpeg
     cliphist
   ];

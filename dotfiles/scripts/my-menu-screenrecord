@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+set -e
+
+SAVE_DIR="$HOME/Videos/Screenrecords"
+mkdir -p "$SAVE_DIR"
+TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
+FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mp4"
+
+DEFAULT_SOURCE="$(pactl get-default-source)"
+DEFAULT_SINK="$(pactl get-default-sink).monitor"
+
+FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
+
+# AREA SELECTION
+AREA_OPTIONS="󰹑  Fullscreen\n󰒅  Select Region"
+AREA_CHOICE=$(printf "$AREA_OPTIONS" | my-launch-wofi dmenu --prompt "Select Record Area" --width 350 --height 270)
+
+case "$AREA_CHOICE" in
+    *Fullscreen*)
+        GEOMETRY_ARGS=(-o "$FOCUSED_MONITOR")
+        ;;
+    *Region*)
+        GEOM=$(slurp 2>/dev/null)
+        [ -z "$GEOM" ] && exit 0
+        GEOMETRY_ARGS=(-g "$GEOM")
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+# AUDIO SELECTION
+AUDIO_OPTIONS="󰂛  No Audio\n󰍬  Microphone\n󰓃  Laptop Audio\n󰧚  Combined"
+AUDIO_CHOICE=$(printf "$AUDIO_OPTIONS" | my-launch-wofi dmenu --prompt "Select Audio" --width 350 --height 270)
+
+AUDIO_ARGS=()
+
+case "$AUDIO_CHOICE" in
+    *No*)
+        ;;
+    *Microphone*)
+        AUDIO_ARGS+=(--audio="$DEFAULT_SOURCE")
+        ;;
+    *Laptop*)
+        AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
+        ;;
+    *Combined*)
+        AUDIO_ARGS+=(--audio="$DEFAULT_SOURCE")
+        AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+# FPS SELECTION
+FPS_OPTIONS="󰑊  30 FPS\n󰑋  60 FPS"
+FPS_CHOICE=$(printf "$FPS_OPTIONS" | my-launch-wofi dmenu --prompt "Frame Rate" --width 350 --height 270)
+
+case "$FPS_CHOICE" in
+    *30*) FPS=30 ;;
+    *60*) FPS=60 ;;
+    *) exit 0 ;;
+esac
+
+# START RECORDING
+notify-send "Recording Started" "Recording at $FPS FPS" -i video-display
+
+wf-recorder \
+    -q \
+    -r "$FPS" \
+    -b 6M \
+    "${GEOMETRY_ARGS[@]}" \
+    "${AUDIO_ARGS[@]}" \
+    --audio-codec=aac \
+    --pixel-format yuv420p \
+    -f "$FILENAME"
+
+notify-send "Recording Finished" "Saved to $SAVE_DIR" -i video-display

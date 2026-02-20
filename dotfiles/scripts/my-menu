@@ -33,7 +33,7 @@ terminal() {
 show_trigger_menu() {
     case "$(menu "Trigger" "  Capture\n󰥔  Clock\n󰔎  Toggle")" in
     *Capture*) show_capture_menu ;;
-    *Clock*) my-clock-menu ;;
+    *Clock*) my-menu-clock ;;
     *Toggle*) show_toggle_menu ;;
     *) show_main_menu ;;
   esac
@@ -42,7 +42,7 @@ show_trigger_menu() {
 show_capture_menu() {
   case "$(menu "Capture" "  Screenshot\n  Screenrecord\n󰃉  Color")" in
     *Screenshot*) show_screenshot_menu ;;
-    *Screenrecord*) show_screenrecord_menu ;;
+    *Screenrecord*) my-menu-screenrecord ;;
     *Color*) pkill hyprpicker || hyprpicker -a ;;
     *) show_trigger_menu ;;
   esac
@@ -53,17 +53,6 @@ show_screenshot_menu() {
     *Fullscreen*) my-cmd-screenshot fullscreen ;;
     *Region*) my-cmd-screenshot region ;;
     *) show_capture_menu ;;
-  esac
-}
-
-show_screenrecord_menu() {
-  my-cmd-screenrecord --stop-recording && exit 0
-
-  case "$(menu "Screenrecord" "  Desktop audio\n  Desktop + mic\n  Desktop + mic + webcam")" in
-    *"Desktop audio"*) my-cmd-screenrecord --with-desktop-audio ;;
-    *"Desktop + mic"*) my-cmd-screenrecord --with-desktop-audio --with-microphone-audio ;;
-    *"webcam"*) my-cmd-screenrecord --with-desktop-audio --with-microphone-audio --with-webcam ;;
-    *) back_to show_capture_menu ;;
   esac
 }
 

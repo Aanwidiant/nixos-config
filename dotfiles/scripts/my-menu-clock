@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+OPTIONS="󰥔  Clock\n󰔛  Timer\n󰓅  Stopwatch"
+
+CHOICE=$(printf "$OPTIONS" | my-launch-wofi dmenu --prompt "Clock" --width 350 --height 270)
+
+case "$CHOICE" in
+  *Clock*)
+    my-launch-tui clock-rs clock
+    ;;
+  *Timer*)
+    MY_ID="org.my.clock-rs" my-launch-tui bash -c '
+        UNIT=$(gum choose --header "Select Time Unit" "Hours" "Minutes" "Seconds")
+
+        if [ -z "$UNIT" ]; then exit 0; fi
+
+        VAL=$(gum input --placeholder "Enter number of $UNIT..." --value "")
+
+        if [ -n "$VAL" ]; then
+            (
+                case "$UNIT" in
+                Hours)   sleep $((VAL * 3600)) ;;
+                Minutes) sleep $((VAL * 60)) ;;
+                Seconds) sleep $VAL ;;
+                esac
+                notify-send "Timer Finished!" "Time'\''s up!" -u critical
+                canberra-gtk-play -i alarm-clock-elapsed
+            ) &
+            case "$UNIT" in
+                Hours)   clock-rs timer --hours "$VAL" ;;
+                Minutes) clock-rs timer --minutes "$VAL" ;;
+                Seconds) clock-rs timer --seconds "$VAL" ;;
+            esac
+        fi
+        '
+        ;;
+  *Stopwatch*)
+    my-launch-tui clock-rs stopwatch
+    ;;
+  *)
+    exit 0
+    ;;
+esac

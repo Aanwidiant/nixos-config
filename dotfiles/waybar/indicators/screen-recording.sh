@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if pgrep -f gpu-screen-recorder >/dev/null; then
-  echo '{"text":"󰻂","tooltip":"Stop recording","class":"active"}'
+if pgrep -x "wf-recorder" >/dev/null; then
+  echo '{"text":"󰻂","tooltip":"Recording in progress... Click to stop.","class":"active"}'
 else
   echo '{}'
 fi
