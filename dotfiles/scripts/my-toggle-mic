@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+
+if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED; then
+    swayosd-client --custom-icon microphone-sensitivity-muted --custom-message "Mic Off"
+else
+    swayosd-client --custom-icon microphone-sensitivity-high --custom-message "Mic On"
+fi

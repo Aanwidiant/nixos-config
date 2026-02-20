@@ -30,11 +30,6 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 
-# Tools
-alias d='docker'
-alias r='rails'
-n() { if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi; }
-
 # Git
 alias g='git'
 alias gcm='git commit -m'
@@ -46,10 +41,6 @@ alias lg='lazygit'
 
 # Lazydocker
 alias ld='lazydocker'
-
-snap() {
-  sudo snapper create --description "$1"
-}
 
 # Ollama service shortcuts
 alias ollama-start='sudo systemctl start ollama'
