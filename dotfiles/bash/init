@@ -23,15 +23,15 @@ if command -v fzf &> /dev/null; then
   fi
 fi
 
-if [[ -t 1 \
-   && -z "$SSH_CONNECTION" \
-   && "$TERM_PROGRAM" != "vscode" \
-   && "$TERM_PROGRAM" != "zed" \
-   && "$TERM_PROGRAM" != "webstrom" \
-   && "$TERM_PROGRAM" != "nvim" \
-   && -z "$JETBRAINS_IDE" \
-   && -z "$FASTFETCH_SHOWN" ]]; then
-
-  export FASTFETCH_SHOWN=1
-  fastfetch
-fi
+# terminal fastfetch
+#if [[ -t 1 \
+#   && -z "$SSH_CONNECTION" \
+#   && "$TERM_PROGRAM" != "vscode" \
+#   && "$TERM_PROGRAM" != "zed" \
+#   && "$TERM_PROGRAM" != "webstrom" \
+#   && "$TERM_PROGRAM" != "nvim" \
+#   && -z "$JETBRAINS_IDE" \
+#   && -z "$FASTFETCH_SHOWN" ]]; then
+#  export FASTFETCH_SHOWN=1
+#  fastfetch
+#fi
