@@ -14,5 +14,6 @@
     clock-rs
     gum
     ncdu
+    yazi
   ];
 }
