@@ -14,6 +14,7 @@
     mtools
     usbutils
     intel-gpu-tools
+    polkit_gnome
   ];
 
   # Nix-LD
