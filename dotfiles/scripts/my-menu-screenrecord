@@ -12,6 +12,25 @@ DEFAULT_SINK="$(pactl get-default-sink).monitor"
 
 FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
 
+cleanup_audio() {
+    # Unload modules by ID if files exist
+    for id_file in /tmp/rec_loop1_id /tmp/rec_loop2_id /tmp/rec_sink_id; do
+        if [ -f "$id_file" ]; then
+            pactl unload-module $(cat "$id_file") 2>/dev/null || true
+        fi
+    done
+
+    # Clean up ID files
+    rm -f /tmp/rec_*.id
+
+    # Fallback: unload by name (safety net)
+    pactl list short modules | grep "recording_combined" | awk '{print $1}' | while read -r mod_id; do
+        pactl unload-module "$mod_id" 2>/dev/null || true
+    done
+}
+
+trap cleanup_audio EXIT INT TERM
+
 # AREA SELECTION
 AREA_OPTIONS="󰹑  Fullscreen\n󰒅  Select Region"
 AREA_CHOICE=$(printf "$AREA_OPTIONS" | my-launch-wofi dmenu --prompt "Select Record Area" --width 350 --height 270)
@@ -45,10 +64,28 @@ case "$AUDIO_CHOICE" in
     *Laptop*)
         AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
         ;;
-    *Combined*)
-        AUDIO_ARGS+=(--audio="$DEFAULT_SOURCE")
-        AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
-        ;;
+        *Combined*)
+            pactl load-module module-null-sink \
+                sink_name=recording_combined \
+                rate=48000 \
+                channels=2 > /tmp/rec_sink_id
+
+            pactl load-module module-loopback \
+                source="$DEFAULT_SOURCE" \
+                sink=recording_combined \
+                channels=2 \
+                remix=yes \
+                latency_msec=50 > /tmp/rec_loop1_id
+
+            pactl load-module module-loopback \
+                source="$DEFAULT_SINK.monitor" \
+                sink=recording_combined \
+                latency_msec=50 > /tmp/rec_loop2_id
+
+            sleep 2
+
+            AUDIO_ARGS+=(--audio="recording_combined.monitor")
+            ;;
     *)
         exit 0
         ;;

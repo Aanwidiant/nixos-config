@@ -115,6 +115,5 @@
       "exec": "~/.config/waybar/indicators/screen-recording.sh",
       "on-click": "pkill -INT wf-recorder && pkill -RTMIN+8 waybar",
       "signal": 8,
-      "interval": 2
   }
 }
