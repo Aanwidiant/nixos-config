@@ -20,8 +20,8 @@ menu() {
 
   echo -e "$options" | my-launch-wofi dmenu \
     --prompt "$prompt…" \
-    --width 350 \
-    --height 270
+    --width 320 \
+    --height 320
 }
 
 terminal() {
