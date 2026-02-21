@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
 
 rfkill unblock wifi
-my-launch-or-focus-tui impala
+
+if ! systemctl is-active --quiet NetworkManager; then
+  systemctl start NetworkManager
+fi
+
+for i in {1..30}; do
+  if nmcli -t -f DEVICE,TYPE,STATE device status 2>/dev/null | \
+     grep -q ":wifi:connected\|:wifi:disconnected"; then
+    break
+  fi
+  sleep 0.1
+done
+
+exec my-launch-or-focus-tui wifitui

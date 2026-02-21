@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+wifi_blocked=$(rfkill list wifi | grep -q "Soft blocked: yes" && echo yes || echo no)
+bt_blocked=$(rfkill list bluetooth | grep -q "Soft blocked: yes" && echo yes || echo no)
+
+if [[ "$wifi_blocked" == "yes" && "$bt_blocked" == "yes" ]]; then
+  rfkill unblock wifi
+  rfkill unblock bluetooth
+
+  for i in {1..30}; do
+    if nmcli device status 2>/dev/null | grep -q wifi &&
+       bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then
+      break
+    fi
+    sleep 0.1
+  done
+
+  notify-send "Airplane Mode Off"
+
+else
+  rfkill block wifi
+  rfkill block bluetooth
+
+  notify-send "Airplane Mode On"
+fi
+
+exit 0

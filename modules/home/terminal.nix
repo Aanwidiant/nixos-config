@@ -3,8 +3,8 @@
 {
   home.packages = with pkgs; [
     kitty
-    impala
-    bluetui
+    bluetuith
+    wifitui
     wiremix
     fastfetch
     btop

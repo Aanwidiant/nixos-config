@@ -57,11 +57,12 @@ show_screenshot_menu() {
 }
 
 show_toggle_menu() {
-  case "$(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar")" in
+  case "$(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode")" in
     *Screensaver*) my-toggle-screensaver ;;
     *Nightlight*) my-toggle-nightlight ;;
     *Idle*) my-toggle-idle ;;
     *Bar*) my-toggle-waybar ;;
+    *Airplane*) my-toggle-airplane ;;
     *) show_trigger_menu ;;
   esac
 }

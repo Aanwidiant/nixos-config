@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Toggle Bluetooth via rfkill
+
+if rfkill list bluetooth | grep -q "Soft blocked: yes"; then
+  rfkill unblock bluetooth
+
+  for i in {1..20}; do
+    rfkill list | grep -q "hci0" && break
+    sleep 0.1
+  done
+else
+  rfkill block bluetooth
+fi
+
+exit 0

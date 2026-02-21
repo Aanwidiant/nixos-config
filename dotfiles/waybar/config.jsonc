@@ -58,12 +58,14 @@
     "format-wifi": "{icon}",
     "format-ethernet": "󰀂",
     "format-disconnected": "󰤮",
+    "format-disabled": "󰤮",
     "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
     "on-click": "my-launch-wifi",
+    "on-click-right": "my-toggle-wifi"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -91,6 +93,7 @@
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
     "on-click": "my-launch-bluetooth",
+    "on-click-right": "my-toggle-bluetooth"
   },
   "pulseaudio": {
     "format": "{icon}",

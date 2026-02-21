@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Toggle Wi-Fi via rfkill
+
+if rfkill list wifi | grep -q "Soft blocked: yes"; then
+  rfkill unblock wifi
+
+  for i in {1..20}; do
+    nmcli device status | grep -q wifi && break
+    sleep 0.1
+  done
+else
+  rfkill block wifi
+fi
+
+exit 0
