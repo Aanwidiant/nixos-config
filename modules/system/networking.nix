@@ -2,9 +2,16 @@
 
 {
   networking = {
-    hostName = "nixos";
-    networkmanager.enable = true;
-    networkmanager.wifi.backend = "iwd";
+      hostName = "nixos";
+      networkmanager = {
+        enable = true;
+        wifi.backend = "iwd";
+        settings = {
+          connection = {
+            "wifi.powersave" = 2;
+          };
+        };
+      };
 
     firewall = {
       enable = true;
@@ -19,6 +26,15 @@
       allowedUDPPorts = [ 53317 ];
     };
   };
+
+  networking.wireless.iwd.settings = {
+      Network = {
+        EnableIPv6 = true;
+      };
+      General = {
+        AddressRandomization = "network";
+      };
+    };
 
   time.timeZone = "Asia/Jakarta";
 
