@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+DEVICE="/dev/video0"
+
+exec mpv "av://v4l2:$DEVICE" \
+  --profile=low-latency \
+  --untimed \
+  --no-cache \
+  --no-osc \
+  --no-input-default-bindings \
+  --no-border \
+  --force-window=yes \
+  --keep-open=yes \
+  --title="WebcamFloat" \
+  --wayland-app-id="my.org.webcam"
