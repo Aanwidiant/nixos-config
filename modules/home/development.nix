@@ -6,7 +6,6 @@
     neovim
     zed-editor
     jetbrains.webstorm
-    postman
     bruno
     github-cli
     lazygit
