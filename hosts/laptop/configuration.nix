@@ -8,6 +8,7 @@
     ../../modules/system/device.nix
     ../../modules/system/display.nix
     ../../modules/system/fonts.nix
+    ../../modules/system/gaming.nix
     ../../modules/system/networking.nix
     ../../modules/system/programs.nix
     ../../modules/system/services.nix
