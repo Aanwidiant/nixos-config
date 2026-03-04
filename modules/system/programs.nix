@@ -15,7 +15,7 @@
     usbutils
     intel-gpu-tools
     polkit_gnome
-    hyprlandPlugins.hyprscrolling
+    # hyprlandPlugins.hyprscrolling
   ];
 
   # Nix-LD

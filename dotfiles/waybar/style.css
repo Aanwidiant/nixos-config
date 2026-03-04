@@ -1,7 +1,7 @@
 @import "../theme/current/theme/waybar.css";
 
 #waybar {
-    background-color: alpha(@foreground, 0.25);
+    background-color: alpha(@background, 0.75);
 }
 
 #layer {
