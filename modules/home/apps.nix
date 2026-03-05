@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     brave
-    firefox
+    librewolf
     libreoffice
     mousepad
     evince
@@ -13,5 +13,6 @@
     mpv
     gnome-calculator
     cheese
+    geary
   ];
 }
