@@ -38,6 +38,5 @@ makoctl reload
 # Theme integrations
 my-theme-set-gnome
 my-theme-set-browser
-my-theme-set-vscode
 
 my-hook theme-set "$THEME_NAME"
