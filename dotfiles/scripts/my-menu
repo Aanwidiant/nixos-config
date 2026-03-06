@@ -43,7 +43,7 @@ show_capture_menu() {
   case "$(menu "Capture" "  Screenshot\n  Screenrecord\n󰃉  Color")" in
     *Screenshot*) show_screenshot_menu ;;
     *Screenrecord*) my-menu-screenrecord ;;
-    *Color*) pkill hyprpicker || hyprpicker -a ;;
+    *Color*) pkill hyprpicker || (sleep 0.2 && hyprpicker -a) ;;
     *) show_trigger_menu ;;
   esac
 }

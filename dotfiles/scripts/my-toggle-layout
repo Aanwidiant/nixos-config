@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-current=$(hyprctl getoption general:layout -j | jq -r '.str')
+CURRENT_LAYOUT=$(hyprctl getoption general:layout -j | jq -r '.str')
 
-if [ "$current" = "dwindle" ]; then
-    hyprctl keyword general:layout scrolling
+if [ "$CURRENT_LAYOUT" = "dwindle" ]; then
+    hyprctl keyword general:layout "scrolling"
+    notify-send "Layout Changed" "Scrolling"
 else
-    hyprctl keyword general:layout dwindle
+    hyprctl keyword general:layout "dwindle"
+    notify-send "Layout Changed" "Dwindle"
 fi
