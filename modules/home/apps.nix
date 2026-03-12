@@ -14,5 +14,6 @@
     gnome-calculator
     cheese
     geary
+    gnome-disk-utility
   ];
 }

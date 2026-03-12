@@ -15,6 +15,8 @@
     usbutils
     intel-gpu-tools
     polkit_gnome
+    gnutar
+    xz
   ];
 
   # Nix-LD

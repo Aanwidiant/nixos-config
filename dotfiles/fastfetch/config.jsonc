@@ -42,7 +42,7 @@
     },
     {
       "type": "swap",
-      "key": "└ └󰓡 ",
+      "key": "│ └󰓡 ",
       "keyColor": "cyan"
     },
     {
@@ -95,7 +95,7 @@
     },
     {
       "type": "terminalfont",
-      "key": "└ └ ",
+      "key": "│ └ ",
       "keyColor": "blue"
     },
     {
