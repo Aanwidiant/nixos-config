@@ -15,5 +15,6 @@
     gum
     ncdu
     yazi
+    cava
   ];
 }

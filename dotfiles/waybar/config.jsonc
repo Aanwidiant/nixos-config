@@ -10,7 +10,7 @@
   "margin-bottom": 1,
   "modules-left": ["custom/nixos", "hyprland/workspaces"],
   "modules-center": ["clock", "custom/screenrecording-indicator"],
-  "modules-right": ["custom/calendar", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
+  "modules-right": ["cava", "custom/calendar", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -118,5 +118,20 @@
       "exec": "~/.config/waybar/indicators/screen-recording.sh",
       "on-click": "pkill -INT wf-recorder && pkill -RTMIN+8 waybar",
       "signal": 8,
-  }
+  },
+  "cava": {
+      "framerate": 60,
+      "autosens": 1,
+      "bars": 20,
+      "method": "pipewire",
+      "source": "auto",
+      "bar_delimiter": 0,
+      "monstercat": false,
+      "waves": false,
+      "noise_reduction": 0.5,
+      "input_delay": 2,
+      "sleep_timer": 2,
+      "hide_on_silence": true,
+      "format-icons": [" ", "⣀", "⣄", "⣤", "⣦", "⣶", "⣷", "⣿"]
+  },
 }
