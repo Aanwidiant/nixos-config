@@ -6,4 +6,4 @@ until bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; do
   sleep 0.2
 done
 
-exec my-launch-or-focus-tui bluetuith
+exec my-launch-or-focus-tui bluetui

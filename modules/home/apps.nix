@@ -15,5 +15,6 @@
     cheese
     geary
     gnome-disk-utility
+    blanket
   ];
 }
