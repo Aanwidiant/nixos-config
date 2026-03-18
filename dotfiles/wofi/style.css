@@ -1,7 +1,7 @@
 @import "/home/aanwidiant/.config/theme/current/theme/wofi.css";
 
 window {
-    font-family: "JetBrainsMono Nerd Font";
+    font-family: 'JetBrainsMono Nerd Font';
     margin: 0;
     border-radius: 4px;
     background-color: alpha(@background, 0.95);
