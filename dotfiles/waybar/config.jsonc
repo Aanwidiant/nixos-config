@@ -10,7 +10,7 @@
   "margin-bottom": 1,
   "modules-left": ["custom/nixos", "hyprland/workspaces"],
   "modules-center": ["clock", "custom/screenrecording-indicator"],
-  "modules-right": ["cava", "custom/calendar", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
+  "modules-right": ["cava", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
   "hyprland/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
@@ -105,12 +105,6 @@
     "format-icons": {
       "default": ["", "", ""],
     },
-  },
-  "custom/calendar": {
-    "format": "",
-    "tooltip": true,
-    "on-click": "my-launch-or-focus-tui calcure",
-    "tooltip-format": "Calendar",
   },
   "custom/screenrecording-indicator": {
       "format": "{}",

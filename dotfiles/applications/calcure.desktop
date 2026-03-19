@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Calendar
+Comment=TUI Calendar
+Exec=my-launch-or-focus-tui calcure
+Icon=/home/aanwidiant/.local/share/applications/icons/calendar.png
+Terminal=false
+Type=Application
+Categories=Utility;

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Disk Usage
+Comment=TUI Disk Usage (ncdu)
+Exec=my-launch-or-focus-tui ncdu --color dark-bg
+Icon=/home/aanwidiant/.local/share/applications/icons/disk.png
+Terminal=false
+Type=Application
+Categories=Utility;

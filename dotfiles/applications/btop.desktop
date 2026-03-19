@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=System Dashboard
+Comment=Terminal UI for System Dashboard (btop)
+Exec=my-launch-or-focus-tui btop
+Icon=/home/aanwidiant/.local/share/applications/icons/system.png
+Terminal=false
+Type=Application
+Categories=Utility;

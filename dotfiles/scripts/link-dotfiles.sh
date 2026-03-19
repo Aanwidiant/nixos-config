@@ -31,5 +31,6 @@ link nvim .config/nvim
 link zed .config/zed
 link starship/starship.toml .config/starship.toml
 link scripts .local/bin
+link applications .local/share/applications
 
 echo "Dotfiles linked ✔"
