@@ -7,14 +7,13 @@
     libreoffice
     mousepad
     evince
-    nautilus
+    thunar
     localsend
     imv
     mpv
     gnome-calculator
     cheese
     geary
-    gnome-disk-utility
     blanket
   ];
 }

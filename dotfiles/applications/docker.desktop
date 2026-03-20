@@ -2,7 +2,7 @@
 Name=Docker
 Comment=Terminal UI for Docker (lazydocker)
 Exec=my-launch-or-focus-tui lazydocker
-Icon=/home/aanwidiant/.local/share/applications/icons/docker.png
+Icon=docker
 Terminal=false
 Type=Application
 Categories=Utility;

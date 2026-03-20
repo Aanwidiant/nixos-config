@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=System;Settings;Printing;HardwareSettings;X-Red-Hat-Base;
+Exec=xdg-open http://localhost:631/
+Icon=office-printer
+StartupNotify=false
+Terminal=false
+Type=Application
+Name=Manage Printing
+Comment=CUPS Web Interface

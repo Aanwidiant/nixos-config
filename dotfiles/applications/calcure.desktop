@@ -2,7 +2,7 @@
 Name=Calendar
 Comment=TUI Calendar
 Exec=my-launch-or-focus-tui calcure
-Icon=/home/aanwidiant/.local/share/applications/icons/calendar.png
+Icon=x-office-calendar
 Terminal=false
 Type=Application
 Categories=Utility;

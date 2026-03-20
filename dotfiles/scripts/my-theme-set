@@ -35,8 +35,4 @@ hyprctl reload
 pkill -SIGUSR2 btop 2>/dev/null || true
 makoctl reload
 
-# Theme integrations
-my-theme-set-gnome
-my-theme-set-browser
-
 my-hook theme-set "$THEME_NAME"

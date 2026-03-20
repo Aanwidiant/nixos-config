@@ -8,7 +8,6 @@
     wget
     vim
     ntfs3g
-    btrfs-progs
     efibootmgr
     dosfstools
     mtools
@@ -17,6 +16,17 @@
     polkit_gnome
     gnutar
     xz
+    thunar
+    xfconf
+    thunar-volman
+  ];
+
+  programs.thunar.enable = true;
+  programs.xfconf.enable = true;
+
+  programs.thunar.plugins = with pkgs; [
+    thunar-volman
+    thunar-archive-plugin
   ];
 
   # Nix-LD

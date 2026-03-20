@@ -2,7 +2,7 @@
 Name=System Processes
 Comment=Terminal UI for System Processes (htop)
 Exec=my-launch-or-focus-tui htop
-Icon=/home/aanwidiant/.local/share/applications/icons/process.png
+Icon=memory
 Terminal=false
 Type=Application
 Categories=Utility;
