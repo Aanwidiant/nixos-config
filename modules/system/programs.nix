@@ -19,6 +19,8 @@
     thunar
     xfconf
     thunar-volman
+    p7zip
+    file-roller
   ];
 
   programs.thunar.enable = true;

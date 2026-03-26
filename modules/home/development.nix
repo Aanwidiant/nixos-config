@@ -31,8 +31,6 @@
     pkg-config
     luajit
     lua51Packages.luarocks-nix
-    prisma-engines
-    nodePackages.prisma
     sshfs
 
     ollama

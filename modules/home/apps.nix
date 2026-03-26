@@ -15,5 +15,7 @@
     cheese
     geary
     blanket
+    ppsspp-sdl-wayland
+    organicmaps
   ];
 }

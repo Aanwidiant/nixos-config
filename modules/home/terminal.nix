@@ -16,5 +16,6 @@
     ncdu
     yazi
     cava
+    termusic
   ];
 }
