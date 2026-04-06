@@ -17,5 +17,6 @@
     blanket
     ppsspp-sdl-wayland
     organicmaps
+    figma-linux
   ];
 }

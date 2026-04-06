@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Music
+Comment=TUI termusic
+Exec=my-launch-or-focus-tui termusic
+Icon=playmymusic
+Terminal=false
+Type=Application
+Categories=Utility;

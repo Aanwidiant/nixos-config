@@ -12,6 +12,7 @@
     bat
     eza
     tldr
+    ripgrep
 
     # System & Hardware Control
     libnotify

@@ -4,8 +4,10 @@
   home.packages = with pkgs; [
     # Editors & Version Control
     neovim
+    helix
     zed-editor
     jetbrains.webstorm
+    android-studio
     bruno
     github-cli
     lazygit
@@ -32,6 +34,8 @@
     luajit
     lua51Packages.luarocks-nix
     sshfs
+    prisma-engines
+    tree-sitter
 
     ollama
   ];

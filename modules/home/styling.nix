@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   reversalBlue = pkgs.reversal-icon-theme.override {
@@ -26,6 +26,7 @@ in
         name = "Orchis-Dark";
         package = pkgs.orchis-theme;
       };
+      gtk4.theme = config.gtk.theme;
       iconTheme = {
         name = "Reversal-blue-dark";
         package = reversalBlue;
