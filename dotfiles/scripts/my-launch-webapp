@@ -1,30 +1,12 @@
 #!/usr/bin/env bash
 
-browser="$(xdg-settings get default-web-browser)"
-
-case "$browser" in
-  google-chrome*|brave-browser*|microsoft-edge*|opera*|vivaldi*|helium*|librewolf*)
-    ;;
-  *)
-    browser="chromium.desktop"
-    ;;
-esac
-
-browser_exec=""
-
-for dir in \
-  "$HOME/.local/share/applications" \
-  "$HOME/.nix-profile/share/applications" \
-  "/etc/profiles/per-user/$USER/share/applications" \
-  "/run/current-system/sw/share/applications" \
-  "/usr/share/applications"
-do
-  if [[ -f "$dir/$browser" ]]; then
-    browser_exec="$(grep '^Exec=' "$dir/$browser" | head -n1 | cut -d= -f2 | sed 's/ *%[fFuUdDnNickvm]//g')"
-    break
-  fi
-done
-
-[[ -z "$browser_exec" ]] && exit 1
+if command -v brave-browser &> /dev/null; then
+  browser_exec="brave-browser"
+elif command -v brave &> /dev/null; then
+  browser_exec="brave"
+else
+  echo "Brave not found"
+  exit 1
+fi
 
 exec $browser_exec --app="$1" "${@:2}"

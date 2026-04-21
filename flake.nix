@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,45 +26,52 @@
       };
     in
     {
-      nixosConfigurations.${hostname} =
-        nixpkgs.lib.nixosSystem {
-          inherit system;
+      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
+        inherit system;
 
-          specialArgs = {
-            inherit inputs username hostname;
-          };
+        specialArgs = {
+          inherit inputs username hostname;
+        };
 
-          modules = [
-            ./hosts/laptop/configuration.nix
+        modules = [
+          ./hosts/laptop/configuration.nix
 
-            home-manager.nixosModules.home-manager
+          home-manager.nixosModules.home-manager
 
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.extraSpecialArgs = {
+              inherit
+                inputs
+                username
+                hostname
+                gitUser
+                ;
+            };
+
+            home-manager.users.${username} = {
+              imports = [
+                ./home/default.nix
+              ];
+
+              home.username = username;
+              home.homeDirectory = "/home/${username}";
+            };
+          }
+
+          (
+            { ... }:
             {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-
-              home-manager.extraSpecialArgs = {
-                inherit inputs username hostname gitUser;
-              };
-
-              home-manager.users.${username} = {
-                imports = [
-                  ./home/default.nix
-                ];
-
-                home.username = username;
-                home.homeDirectory = "/home/${username}";
-              };
-            }
-
-            ({ ... }: {
               nix.gc = {
                 automatic = true;
                 dates = "weekly";
                 options = "--delete-older-than 7d";
               };
-            })
-          ];
-        };
+            }
+          )
+        ];
+      };
     };
 }

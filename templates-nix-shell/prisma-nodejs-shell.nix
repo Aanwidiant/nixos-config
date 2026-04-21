@@ -6,7 +6,7 @@ in
 pkgs.mkShell {
   buildInputs = [
     pkgs.prisma-engines_6
-    pkgs.nodePackages.prisma
+    pkgs.prisma
     pkgs.openssl
     pkgs.zlib
     pkgs.stdenv.cc.cc.lib
