@@ -10,6 +10,8 @@
       "adbusers"
       "video"
       "audio"
+      "disk"
+      "storage"
     ];
     shell = pkgs.bash;
   };

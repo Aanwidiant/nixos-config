@@ -4,10 +4,9 @@
   home.packages = with pkgs; [
     # Editors & Version Control
     neovim
-    helix
     zed-editor
     jetbrains.webstorm
-    android-studio
+    # android-studio
     bruno
     github-cli
     lazygit
