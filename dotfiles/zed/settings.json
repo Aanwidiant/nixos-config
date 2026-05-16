@@ -9,9 +9,17 @@
 {
   // "disable_ai": true,
   // "show_completions_on_input": false,
+  "cli_default_open_behavior": "existing_window",
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
   "vim_mode": false,
   "agent_ui_font_size": 12.0,
   "git_panel": {
+    "dock": "left",
     "tree_view": false
   },
   "session": {
@@ -36,13 +44,14 @@
     "words":"disabled"
   },
   "agent": {
+    "dock": "right",
     "favorite_models": [],
     "default_profile": "write",
     "default_model": {
       "effort": "high",
-      "enable_thinking": false,
+      "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5.3-codex"
+      "model": "gpt-5.2-codex"
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": []
@@ -79,7 +88,7 @@
     "show_sign_in": true,
     "show_user_picture": true,
     "show_onboarding_banner": false,
-    "show_branch_icon": true,
+    // "show_branch_icon": true,
     "show_branch_name": true,
     "show_project_items": true
   },
@@ -90,7 +99,8 @@
   "project_panel": {
     "default_width": 240.0,
     "button": true,
-    "dock": "left"
+    "dock": "left",
+    "auto_fold_dirs": false
   },
   "format_on_save": "off",
   "indent_guides": {
@@ -101,7 +111,7 @@
   "buffer_font_family": "JetBrainsMono Nerd Font",
   "icon_theme": {
     "mode": "dark",
-    "light": "Material Icon Theme",
+    "light": "Soft Charmed Icons",
     "dark": "Soft Charmed Icons"
   },
   "telemetry": {
@@ -112,8 +122,8 @@
   "buffer_font_size": 12.0,
   "theme": {
     "mode": "dark",
-    "light": "Tokyo Night Light",
-    "dark": "Catppuccin Frappé (Blue Blur+)"
+    "light": "Ayu Glass Light",
+    "dark": "Catppuccin Macchiato (Blur) [Light]"
   },
   "scroll_beyond_last_line": "off",
   "terminal": {
@@ -130,5 +140,16 @@
     "folds": true,
     "breakpoints": true,
     "runnables": true
-  }
+  },
+  "lsp": {
+      "vscode-css-language-server": {
+        "settings": {
+          "css": {
+            "lint": {
+              "unknownAtRules": "ignore"
+            }
+          }
+        }
+      }
+    }
 }
