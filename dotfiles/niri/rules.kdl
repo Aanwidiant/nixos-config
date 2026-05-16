@@ -1,0 +1,8 @@
+include "rules/browser.kdl"
+include "rules/clock-rs.kdl"
+include "rules/localsend.kdl"
+include "rules/pip.kdl"
+include "rules/system.kdl"
+include "rules/terminal.kdl"
+include "rules/webcam-overlay.kdl"
+include "rules/wofi.kdl"

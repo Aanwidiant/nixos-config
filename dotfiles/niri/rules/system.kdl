@@ -1,0 +1,52 @@
+// Floating windows
+window-rule {
+    match app-id="^(org\\.my\\.bluetui|org\\.my\\.impala|org\\.my\\.wiremix|org\\.my\\.btop|org\\.my\\.terminal|com\\.gabm\\.satty|TUI\\.float|imv|mpv|org\\.my\\.calcure|org\\.my\\.ncdu|org\\.my\\.htop|org\\.my\\.bash|org\\.my\\.termusic)$"
+
+    open-floating true
+
+    default-column-width {
+        fixed 875
+    }
+
+    default-window-height {
+        fixed 600
+    }
+}
+
+// File picker dialogs
+window-rule {
+    match app-id="^(xdg-desktop-portal-gtk|sublime_text|DesktopEditors)$"
+    match title="^(Open.*Files?|Open [Ff]older.*|Save.*Files?|Save.*As|Save|All Files|.*wants to (open|save).*|[Cc]hoose.*)"
+
+    open-floating true
+
+    default-column-width {
+        fixed 875
+    }
+
+    default-window-height {
+        fixed 600
+    }
+}
+
+// Calculator
+window-rule {
+    match app-id="^org\\.gnome\\.Calculator$"
+
+    open-floating true
+}
+
+// Screensaver fullscreen
+window-rule {
+    match app-id="^org\\.screensaver$"
+
+    open-floating true
+    open-fullscreen true
+}
+
+// No transparency on media windows
+window-rule {
+    match app-id="^(zoom|vlc|mpv|org\\.kde\\.kdenlive|com\\.obsproject\\.Studio|com\\.github\\.PintaProject\\.Pinta|imv)$"
+
+    opacity 1.0
+}

@@ -1,0 +1,17 @@
+prefer-no-csd
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+include "animations.kdl"
+include "autostart.kdl"
+include "binds.kdl"
+include "environment.kdl"
+include "gestures.kdl"
+include "input.kdl"
+include "layout.kdl"
+include "misc.kdl"
+include "output.kdl"
+include "rules.kdl"
+include "windows.kdl"

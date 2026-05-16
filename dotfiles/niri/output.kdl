@@ -1,0 +1,13 @@
+// output.kdl
+
+output "eDP-1" {
+    mode "1920x1080@60.005"
+    scale 1.25
+    position x=3088 y=1519
+}
+
+output "HDMI-A-1" {
+    mode "1600x900@60.0"
+    scale 1.0
+    position x=4624 y=1483
+}

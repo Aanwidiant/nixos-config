@@ -1,0 +1,15 @@
+// Cursor
+cursor {
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size 16
+    hide-when-typing
+}
+
+// GUM environment variables
+environment {
+    GUM_CONFIRM_PROMPT_FOREGROUND "6"
+    GUM_CONFIRM_SELECTED_FOREGROUND "0"
+    GUM_CONFIRM_SELECTED_BACKGROUND "2"
+    GUM_CONFIRM_UNSELECTED_FOREGROUND "0"
+    GUM_CONFIRM_UNSELECTED_BACKGROUND "8"
+}

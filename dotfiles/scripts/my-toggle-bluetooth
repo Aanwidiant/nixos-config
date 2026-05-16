@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Toggle Bluetooth via rfkill
-
 if rfkill list bluetooth | grep -q "Soft blocked: yes"; then
   rfkill unblock bluetooth
 

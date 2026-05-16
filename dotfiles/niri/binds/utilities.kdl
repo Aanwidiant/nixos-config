@@ -1,0 +1,40 @@
+binds {
+    // App launcher
+    Mod+Space { spawn "my-launch-wofi" "--sort-order=alphabetical" "--width" "600" "--height" "400"; }
+    Mod+Ctrl+E { spawn "wofi-emoji"; }
+    Mod+Alt+Space { spawn "my-menu"; }
+    Mod+Escape { spawn "my-menu" "system"; }
+    Mod+K { spawn "my-menu-keybindings"; }
+
+    // Aesthetics
+    Mod+Shift+Space { spawn "my-toggle-waybar"; }
+    Mod+Ctrl+Space { spawn "my-theme-bg-next"; }
+
+    // Notifications
+    Mod+Comma { spawn "makoctl" "dismiss"; }
+    Mod+Shift+Comma { spawn "makoctl" "dismiss" "--all"; }
+
+    Mod+Ctrl+Comma {
+        spawn "sh" "-c" "makoctl mode -t do-not-disturb && notify-send 'Toggled DND'"
+    }
+
+    Mod+Alt+Comma { spawn "makoctl" "invoke"; }
+
+    // Idle & nightlight
+    Mod+Ctrl+I { spawn "my-toggle-idle"; }
+    Mod+Ctrl+N { spawn "my-toggle-nightlight"; }
+
+    // Screenshots
+    Print { spawn "my-cmd-screenshot" "region"; }
+    Shift+Print { spawn "my-cmd-screenshot" "fullscreen"; }
+    Alt+Print { spawn "my-menu-screenrecord"; }
+
+    // Info notifications
+    Mod+Ctrl+T {
+        spawn "sh" "-c" "notify-send \"$(date +'%A %H:%M — %d %B %Y')\""
+    }
+
+    Mod+Ctrl+B {
+        spawn "sh" "-c" "notify-send \"Battery $(my-battery-remaining)%\""
+    }
+}

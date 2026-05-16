@@ -1,0 +1,16 @@
+window-rule {
+    match title="(?i)picture.?in.?picture"
+
+    open-floating true
+    open-focused false
+
+    default-column-width {
+        fixed 504
+    }
+
+    default-window-height {
+        fixed 284
+    }
+
+    opacity 1.0
+}

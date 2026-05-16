@@ -1,0 +1,13 @@
+# dotfiles/swayidle/config
+
+timeout 150 'pidof swaylock || my-launch-screensaver'
+
+timeout 300 'loginctl lock-session'
+
+timeout 330 \
+    'niri msg action power-off-monitors' \
+    resume 'niri msg action power-on-monitors && brightnessctl -r'
+
+before-sleep 'loginctl lock-session'
+
+after-resume 'niri msg action power-on-monitors'

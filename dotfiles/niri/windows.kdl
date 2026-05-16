@@ -1,0 +1,7 @@
+window-rule {
+    open-maximized false
+    opacity 0.97
+    draw-border-with-background false
+    geometry-corner-radius 6
+    clip-to-geometry true
+}

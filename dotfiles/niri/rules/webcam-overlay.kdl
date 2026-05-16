@@ -1,0 +1,16 @@
+window-rule {
+    match app-id="^my\\.org\\.webcam$"
+
+    open-floating true
+    open-focused false
+
+    default-column-width {
+        fixed 243
+    }
+
+    default-window-height {
+        fixed 136
+    }
+
+    opacity 1.0
+}

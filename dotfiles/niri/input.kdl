@@ -1,0 +1,28 @@
+input {
+    keyboard {
+        xkb {
+            layout "us"
+        }
+
+        repeat-rate 40
+        repeat-delay 600
+
+        numlock
+    }
+
+    touchpad {
+        natural-scroll
+        scroll-factor 0.9
+    }
+
+    mouse {
+        accel-speed 0.9
+    }
+
+    trackpoint {
+        accel-speed 0.5
+        natural-scroll
+    }
+
+    focus-follows-mouse max-scroll-amount="0%"
+}

@@ -123,7 +123,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Glass Light",
-    "dark": "Catppuccin Macchiato (Blur) [Light]"
+    "dark": "Catppuccin Macchiato (Blue Blur+)"
   },
   "scroll_beyond_last_line": "off",
   "terminal": {

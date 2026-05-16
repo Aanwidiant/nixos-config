@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   # Login Manager (Greetd + TUIGreet)
   services.greetd = {
@@ -11,28 +10,30 @@
             --time \
             --remember \
             --asterisks \
-            --cmd start-hyprland"
+            --cmd niri-session"
           '';
         user = "greeter";
       };
     };
   };
 
-  # Hyprland
-  programs.hyprland = {
+  # Niri
+  programs.niri = {
     enable = true;
-    xwayland.enable = true;
   };
+
   programs.dconf.enable = true;
 
   # Desktop Portals
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-gnome
+    ];
     config.common.default = "*";
   };
 
   # Input & gestures
   services.libinput.enable = true;
-  services.touchegg.enable = true;
 }

@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
-
 OUTPUT_DIR="$HOME/Pictures/Screenshots"
 mkdir -p "$OUTPUT_DIR"
-
 MODE="${1:-region}"
+TIMESTAMP="$(date +'%Y-%m-%d_%H-%M-%S')"
 
 case "$MODE" in
   fullscreen)
     sleep 0.2
-    hyprshot -m output -m active -z -s -o "$OUTPUT_DIR" --raw | \
+    grim - | \
       satty --filename - \
-        --output-filename "$OUTPUT_DIR/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png" \
+        --output-filename "$OUTPUT_DIR/screenshot-$TIMESTAMP.png" \
         --early-exit \
         --copy-command 'wl-copy'
     ;;
-
   region|*)
     sleep 0.2
-    hyprshot -m region -z -o "$OUTPUT_DIR" --raw | \
+    grim -g "$(slurp)" - | \
       satty --filename - \
-        --output-filename "$OUTPUT_DIR/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png" \
+        --output-filename "$OUTPUT_DIR/screenshot-$TIMESTAMP.png" \
         --early-exit \
         --copy-command 'wl-copy'
     ;;

@@ -1,0 +1,8 @@
+layer-rule {
+    match namespace="^wofi$"
+
+    background-effect {
+        blur true
+        // noise 0.05
+    }
+}

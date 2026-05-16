@@ -1,40 +1,29 @@
 #!/usr/bin/env bash
-
 set -e
-
 SAVE_DIR="$HOME/Videos/Screenrecords"
 mkdir -p "$SAVE_DIR"
 TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
 FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mp4"
-
 DEFAULT_SOURCE="$(pactl get-default-source)"
 DEFAULT_SINK="$(pactl get-default-sink).monitor"
-
-FOCUSED_MONITOR=$(hyprctl monitors -j | jq -r '.[] | select(.focused == true) | .name')
+FOCUSED_MONITOR=$(niri msg outputs 2>/dev/null | jq -r '.[] | select(.is_focused == true) | .name' | head -n1)
 
 cleanup_audio() {
-    # Unload modules by ID if files exist
     for id_file in /tmp/rec_loop1_id /tmp/rec_loop2_id /tmp/rec_sink_id; do
         if [ -f "$id_file" ]; then
             pactl unload-module $(cat "$id_file") 2>/dev/null || true
         fi
     done
-
-    # Clean up ID files
     rm -f /tmp/rec_*.id
-
-    # Fallback: unload by name (safety net)
     pactl list short modules | grep "recording_combined" | awk '{print $1}' | while read -r mod_id; do
         pactl unload-module "$mod_id" 2>/dev/null || true
     done
 }
-
 trap cleanup_audio EXIT INT TERM
 
 # AREA SELECTION
 AREA_OPTIONS="󰹑  Fullscreen\n󰒅  Select Region"
 AREA_CHOICE=$(printf "$AREA_OPTIONS" | my-launch-wofi dmenu --prompt "Select Record Area" --width 350 --height 270)
-
 case "$AREA_CHOICE" in
     *Fullscreen*)
         GEOMETRY_ARGS=(-o "$FOCUSED_MONITOR")
@@ -52,9 +41,7 @@ esac
 # AUDIO SELECTION
 AUDIO_OPTIONS="󰂛  No Audio\n󰍬  Microphone\n󰓃  Laptop Audio\n󰧚  Combined"
 AUDIO_CHOICE=$(printf "$AUDIO_OPTIONS" | my-launch-wofi dmenu --prompt "Select Audio" --width 350 --height 270)
-
 AUDIO_ARGS=()
-
 case "$AUDIO_CHOICE" in
     *No*)
         ;;
@@ -64,28 +51,24 @@ case "$AUDIO_CHOICE" in
     *Laptop*)
         AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
         ;;
-        *Combined*)
-            pactl load-module module-null-sink \
-                sink_name=recording_combined \
-                rate=48000 \
-                channels=2 > /tmp/rec_sink_id
-
-            pactl load-module module-loopback \
-                source="$DEFAULT_SOURCE" \
-                sink=recording_combined \
-                channels=2 \
-                remix=yes \
-                latency_msec=50 > /tmp/rec_loop1_id
-
-            pactl load-module module-loopback \
-                source="$DEFAULT_SINK.monitor" \
-                sink=recording_combined \
-                latency_msec=50 > /tmp/rec_loop2_id
-
-            sleep 2
-
-            AUDIO_ARGS+=(--audio="recording_combined.monitor")
-            ;;
+    *Combined*)
+        pactl load-module module-null-sink \
+            sink_name=recording_combined \
+            rate=48000 \
+            channels=2 > /tmp/rec_sink_id
+        pactl load-module module-loopback \
+            source="$DEFAULT_SOURCE" \
+            sink=recording_combined \
+            channels=2 \
+            remix=yes \
+            latency_msec=50 > /tmp/rec_loop1_id
+        pactl load-module module-loopback \
+            source="$DEFAULT_SINK.monitor" \
+            sink=recording_combined \
+            latency_msec=50 > /tmp/rec_loop2_id
+        sleep 2
+        AUDIO_ARGS+=(--audio="recording_combined.monitor")
+        ;;
     *)
         exit 0
         ;;
@@ -94,7 +77,6 @@ esac
 # FPS SELECTION
 FPS_OPTIONS="󰑊  30 FPS\n󰑋  60 FPS"
 FPS_CHOICE=$(printf "$FPS_OPTIONS" | my-launch-wofi dmenu --prompt "Frame Rate" --width 350 --height 270)
-
 case "$FPS_CHOICE" in
     *30*) FPS=30 ;;
     *60*) FPS=60 ;;
@@ -103,7 +85,6 @@ esac
 
 # START RECORDING
 notify-send "Recording Started" "Recording at $FPS FPS" -i video-display
-
 wf-recorder \
     -q \
     -r "$FPS" \
@@ -113,5 +94,4 @@ wf-recorder \
     --audio-codec=aac \
     --pixel-format yuv420p \
     -f "$FILENAME"
-
 notify-send "Recording Finished" "Saved to $SAVE_DIR" -i video-display

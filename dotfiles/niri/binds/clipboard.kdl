@@ -1,0 +1,19 @@
+binds {
+    // Copy / paste / cut
+    Mod+Shift+C {
+        spawn "wtype" "-M" "ctrl" "-k" "Insert" "-m" "ctrl";
+    }
+
+    Mod+Shift+V {
+        spawn "wtype" "-M" "shift" "-k" "Insert" "-m" "shift";
+    }
+
+    Mod+Shift+X {
+        spawn "wtype" "-M" "ctrl" "-k" "x" "-m" "ctrl";
+    }
+
+    // Clipboard manager
+    Mod+Ctrl+V {
+        spawn "sh" "-c" "cliphist list | my-launch-wofi dmenu --width 1005 --height 500 | cliphist decode | wl-copy";
+    }
+}

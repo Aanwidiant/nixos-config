@@ -2,21 +2,21 @@
   "reload_style_on_change": true,
   "layer": "top",
   "position": "top",
-  // "output": "eDP-1",
   "spacing": 0,
   "height": 26,
   "margin-top": 4,
   "margin-left": 4,
   "margin-right": 4,
   "margin-bottom": 1,
-  "modules-left": ["custom/nixos", "hyprland/workspaces"],
+  "modules-left": ["custom/nixos", "niri/workspaces"],
   "modules-center": ["clock", "custom/screenrecording-indicator"],
   "modules-right": ["cava", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
-  "hyprland/workspaces": {
+
+  "niri/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
-      "default": "",
+      "default": "",
       "1": "1",
       "2": "2",
       "3": "3",
@@ -27,7 +27,7 @@
       "8": "8",
       "9": "9",
       "10": "0",
-      "active": "󱓻",
+      "active": "󱓻"
     },
     "persistent-workspaces": {
       "1": [],

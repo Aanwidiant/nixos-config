@@ -1,0 +1,5 @@
+include "binds/app.kdl"
+include "binds/clipboard.kdl"
+include "binds/media.kdl"
+include "binds/utilities.kdl"
+include "binds/window.kdl"
