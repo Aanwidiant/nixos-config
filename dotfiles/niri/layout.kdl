@@ -1,7 +1,9 @@
-layout {
-    gaps 4
+include "/home/aanwidiant/nixos-config/dotfiles/theme/current/theme/niri.kdl"
 
-    default-column-width { proportion 0.75; }
+layout {
+    gaps 8
+
+    default-column-width { proportion 0.66667; }
 
     preset-column-widths {
         proportion 0.33333
@@ -9,14 +11,14 @@ layout {
         proportion 0.66667
     }
 
-    focus-ring {
-        width 1.5
-
-        active-color "#33ccffee"
-        inactive-color "#595959aa"
-    }
-
     border {
         off
     }
+}
+
+blur {
+    passes 3
+    offset 3.0
+    noise 0.02
+    saturation 1.5
 }

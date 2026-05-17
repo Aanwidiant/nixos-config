@@ -16,5 +16,6 @@
     ../../modules/system/users.nix
   ];
 
+  environment.localBinInPath = true;
   system.stateVersion = "25.11";
 }

@@ -6,7 +6,7 @@ TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
 FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mp4"
 DEFAULT_SOURCE="$(pactl get-default-source)"
 DEFAULT_SINK="$(pactl get-default-sink).monitor"
-FOCUSED_MONITOR=$(niri msg outputs 2>/dev/null | jq -r '.[] | select(.is_focused == true) | .name' | head -n1)
+FOCUSED_MONITOR=$(niri msg outputs | head -n 1 | grep -oP '\(\K[^)]+')
 
 cleanup_audio() {
     for id_file in /tmp/rec_loop1_id /tmp/rec_loop2_id /tmp/rec_sink_id; do
@@ -85,6 +85,7 @@ esac
 
 # START RECORDING
 notify-send "Recording Started" "Recording at $FPS FPS" -i video-display
+pkill -RTMIN+8 waybar
 wf-recorder \
     -q \
     -r "$FPS" \
@@ -95,3 +96,4 @@ wf-recorder \
     --pixel-format yuv420p \
     -f "$FILENAME"
 notify-send "Recording Finished" "Saved to $SAVE_DIR" -i video-display
+pkill -RTMIN+8 waybar

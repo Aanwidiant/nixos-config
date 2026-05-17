@@ -5,7 +5,7 @@ shift || true
 
 if pgrep -f "wofi --show" >/dev/null; then
   pkill -f "wofi --show"
-  sleep 0.05
+  sleep 0.15
 fi
 
 case "$MODE" in

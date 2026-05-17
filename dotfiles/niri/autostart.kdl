@@ -1,6 +1,5 @@
 // System
-spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "QT_QPA_PLATFORM=wayland"
-spawn-at-startup "systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "--all"
 
 // Daemons
 spawn-at-startup "swayidle"
@@ -22,3 +21,8 @@ spawn-at-startup "wl-paste" "--type" "image" "--watch" "cliphist" "store"
 
 // Authentication Agent
 spawn-at-startup "/run/current-system/sw/libexec/polkit-gnome-authentication-agent-1"
+
+// Use a custom build of xwayland-satellite.
+xwayland-satellite {
+    path "/run/current-system/sw/bin/xwayland-satellite"
+}

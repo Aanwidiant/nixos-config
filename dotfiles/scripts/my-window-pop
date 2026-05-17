@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# my-window-pop
+
 width=${1:-1300}
 height=${2:-900}
 x=${3:-}
@@ -13,10 +13,8 @@ id=$(echo "$active" | jq -r '.id')
 is_floating=$(echo "$active" | jq -r '.is_floating')
 
 if [[ "$is_floating" == "true" ]]; then
-    # Unfloat — move back to tiling
     niri msg action toggle-window-floating
 else
-    # Float, resize, center/move
     niri msg action toggle-window-floating
     niri msg action set-column-width "$width"
     niri msg action set-window-height "$height"

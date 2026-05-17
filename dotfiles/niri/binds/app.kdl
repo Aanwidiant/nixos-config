@@ -4,15 +4,15 @@ binds {
     }
 
     Mod+Shift+F {
-        spawn "my-launch-or-focus" "thunar";
+        spawn-sh "~/.local/bin/my-launch-or-focus thunar";
     }
 
     Mod+Shift+B {
-        spawn-sh "my-launch-browser";
+        spawn-sh "~/.local/bin/my-launch-browser"
     }
 
     Mod+Shift+Alt+B {
-        spawn "my-launch-browser" "--private";
+       spawn-sh "~/.local/bin/my-launch-browser --private";
     }
 
     // Editor
@@ -22,56 +22,56 @@ binds {
 
     // System tools
     Mod+Shift+T {
-        spawn "my-launch-or-focus-tui" "btop";
+        spawn-sh "~/.local/bin/my-launch-or-focus-tui btop";
     }
 
     Mod+Alt+T {
-        spawn "my-launch-or-focus-tui" "htop";
+        spawn-sh "~/.local/bin/my-launch-or-focus-tui htop";
     }
 
     Mod+Shift+D {
-        spawn "my-launch-or-focus-tui" "lazydocker";
+        spawn-sh "~/.local/bin/my-launch-or-focus-tui lazydocker";
     }
 
     Mod+Alt+D {
-        spawn "my-launch-or-focus-tui" "ncdu";
+        spawn-sh "~/.local/bin/my-launch-or-focus-tui ncdu";
     }
 
     Mod+Shift+A {
-        spawn "my-launch-about";
+        spawn-sh "~/.local/bin/my-launch-about";
     }
 
     Mod+Ctrl+W {
-        spawn "my-webcam";
+        spawn-sh "~/.local/bin/my-webcam";
     }
 
     Mod+Alt+W {
-        spawn "my-launch-webapp" "brave-browser" "--app=https://web.whatsapp.com/";
+        spawn-sh "~/.local/bin/my-launch-webapp brave-browser --app=https://web.whatsapp.com/";
     }
 
     Mod+Shift+M {
-        spawn "my-launch-or-focus" "geary";
+        spawn-sh "~/.local/bin/my-launch-or-focus geary";
     }
 
     // Special/media keys
     XF86Display {
-        spawn "my-launch-or-focus" "nwg-displays";
+        spawn-sh "~/.local/bin/my-launch-or-focus nwg-displays";
     }
 
     XF86WLAN {
-        spawn "my-launch-or-focus" "thunar";
+        spawn-sh "~/.local/bin/my-launch-or-focus thunar";
     }
 
     XF86NotificationCenter {
-        spawn "my-launch-or-focus" "dbgate";
+        spawn-sh "~/.local/bin/my-launch-or-focus dbgate";
     }
 
     XF86PickupPhone {
-        spawn "my-launch-or-focus" "bruno";
+        spawn-sh "~/.local/bin/my-launch-or-focus bruno";
     }
 
     XF86HangupPhone {
-        spawn "my-launch-browser";
+        spawn-sh "~/.local/bin/my-launch-browser";
     }
 
     XF86Favorites {

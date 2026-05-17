@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     swayidle
-    swaylock
+    hyprlock
     waybar
     mako
     wofi

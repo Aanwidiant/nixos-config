@@ -1,15 +1,15 @@
 // Chromium-based browsers
 window-rule {
     match app-id="^(google-)?[cC]hrom(e|ium)$|^[bB]rave-browser$|^[mM]icrosoft-edge$|^[Vv]ivaldi-stable$|^helium$"
+
     draw-border-with-background false
-        // Memaksa window mengikuti geometri tanpa dekorasi tambahan
-        geometry-corner-radius 0
-    opacity 1.0
 }
 
 // Firefox-based browsers
 window-rule {
     match app-id="^([fF]irefox|zen|librewolf)$"
+
+    block-out-from "screencast"
 
     opacity 1.0
 }

@@ -21,6 +21,7 @@
     thunar-volman
     p7zip
     file-roller
+    xwayland-satellite
   ];
 
   programs.thunar.enable = true;

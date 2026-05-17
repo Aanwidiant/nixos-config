@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
-
 rfkill unblock bluetooth
 
-until bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; do
+TIMEOUT=3
+COUNT=0
+until systemctl is-active bluetooth.service -q && \
+  bluetoothctl -- power on 2>/dev/null | grep -q "succeeded"; do
   sleep 0.2
+  COUNT=$((COUNT + 1))
+  if ((COUNT >= TIMEOUT * 5)); then
+    break
+  fi
 done
 
 exec my-launch-or-focus-tui bluetui

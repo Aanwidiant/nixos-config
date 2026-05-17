@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
+
 if (($# == 0)); then
   echo "Usage: my-launch-or-focus [window-pattern] [launch-command]"
   exit 1
 fi
+
 WINDOW_PATTERN="$1"
 LAUNCH_COMMAND="${2:-"$WINDOW_PATTERN"}"
 
-WINDOW_ID=$(niri msg windows \
+WINDOW_ID=$(niri msg --json windows \
   | jq -r --arg p "$WINDOW_PATTERN" \
   '.[]|select((.app_id|test("\\b" + $p + "\\b";"i")) or (.title|test("\\b" + $p + "\\b";"i")))|.id' \
   | head -n1)
@@ -14,5 +16,5 @@ WINDOW_ID=$(niri msg windows \
 if [[ -n "$WINDOW_ID" ]]; then
   niri msg action focus-window --id "$WINDOW_ID"
 else
-  eval setsid $LAUNCH_COMMAND >/dev/null 2>&1 &
+  setsid $LAUNCH_COMMAND >/dev/null 2>&1 &
 fi

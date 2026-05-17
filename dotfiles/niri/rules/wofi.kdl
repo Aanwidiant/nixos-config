@@ -3,6 +3,6 @@ layer-rule {
 
     background-effect {
         blur true
-        // noise 0.05
+        noise 0.05
     }
 }

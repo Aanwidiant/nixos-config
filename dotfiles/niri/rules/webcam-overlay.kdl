@@ -5,11 +5,11 @@ window-rule {
     open-focused false
 
     default-column-width {
-        fixed 243
+        fixed 380
     }
 
     default-window-height {
-        fixed 136
+        fixed 240
     }
 
     opacity 1.0

@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-# Lock the screen
-pidof swaylock >/dev/null || swaylock &
-# Avoid running screensaver when locked
+
+# prevent multiple lock instances
+pgrep hyprlock >/dev/null && exit 0
+
+# lock screen
+hyprlock
+
+# cleanup screensaver
 pkill -f org.screensaver 2>/dev/null || true

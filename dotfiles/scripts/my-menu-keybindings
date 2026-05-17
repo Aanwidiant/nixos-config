@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# A script to display Niri keybindings defined in your configuration
-
 parse_bindings() {
   niri msg action do-screen-transition 2>/dev/null || true
   niri msg bindings 2>/dev/null |
@@ -25,7 +23,6 @@ parse_bindings() {
     }'
 }
 
-# Fallback: parse langsung dari config files
 parse_bindings_from_config() {
   local config_dir="$HOME/.config/niri/binds"
   [[ -d "$config_dir" ]] || config_dir="$HOME/.config/niri"

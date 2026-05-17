@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-
-exec my-launch-or-focus-tui \
-'bash -c "printf \"\033[?25l\"; fastfetch; read -n 1 -s; printf \"\033[?25h\""'
+MY_ID="org.my.bash" exec my-launch-tui \
+  bash -c 'printf "\033[?25l"; fastfetch; read -n 1 -s; printf "\033[?25h"'

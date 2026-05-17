@@ -41,8 +41,6 @@ fi
 ln -nsf "$NEW_BACKGROUND" "$CURRENT_BACKGROUND_LINK"
 REAL_PATH="$(readlink -f "$CURRENT_BACKGROUND_LINK")"
 
-# Set wallpaper with hyprpaper
-# Set wallpaper dengan swaybg
 pkill swaybg 2>/dev/null || true
 swaybg -i "$REAL_PATH" -m fill &
 notify-send "Background changed" "$(basename "$REAL_PATH")" -t 2000

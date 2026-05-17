@@ -3,7 +3,7 @@
 window {
     font-family: 'JetBrainsMono Nerd Font';
     margin: 0;
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: alpha(@background, 0.95);
     color: @text;
     border: 1px solid alpha(@border, 0.3);

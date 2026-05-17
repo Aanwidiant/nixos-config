@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-# my-window-close-all
-
-# Close all open windows safely
 niri msg windows \
   | jq -r '.[].id' \
   | while read -r id; do
       [[ -n "$id" ]] && niri msg action close-window --id "$id"
     done
 
-# Move to first workspace
 niri msg action focus-workspace 1

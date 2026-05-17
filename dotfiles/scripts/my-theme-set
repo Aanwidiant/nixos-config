@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 if [[ -z "$1" || "$1" == "CNCLD" ]]; then
   echo "Usage: my-theme-set <theme-name>"
   exit 1
@@ -19,7 +20,7 @@ if [[ -f "$CURRENT_THEME_DIR/btop.theme" ]]; then
   ln -nsf "$CURRENT_THEME_DIR/btop.theme" \
     "$HOME/.config/btop/themes/current.theme"
 fi
-# Reload components
+
 pgrep -x waybar >/dev/null && my-restart-waybar
 my-restart-swayosd
 my-restart-terminal

@@ -1,7 +1,16 @@
 window-rule {
+    geometry-corner-radius 8
+    clip-to-geometry true
+}
+
+window-rule {
+    match is-focused=true
     open-maximized false
     opacity 0.97
     draw-border-with-background false
-    geometry-corner-radius 6
-    clip-to-geometry true
+}
+
+window-rule {
+    match is-focused=false
+    opacity 0.75
 }

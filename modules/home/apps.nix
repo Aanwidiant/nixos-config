@@ -18,6 +18,6 @@
     ppsspp-sdl-wayland
     organicmaps
     artix-games-launcher
-    # ocrfeeder
+    ocrfeeder
   ];
 }

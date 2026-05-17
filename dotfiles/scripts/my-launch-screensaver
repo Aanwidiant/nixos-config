@@ -2,18 +2,14 @@
 
 command -v tte >/dev/null || exit 1
 
-# already running
 pgrep -f org.screensaver >/dev/null && exit 0
 
-# toggle off
 if [[ -f ~/.local/state/my/toggles/screensaver-off ]] && [[ "$1" != "force" ]]; then
   exit 1
 fi
 
-# kill any leftover instance
 pkill -f org.screensaver 2>/dev/null
 
-# launch single fullscreen screensaver
 nohup kitty --class=org.screensaver \
   --override font_size=18 \
   --override window_padding_width=0 \

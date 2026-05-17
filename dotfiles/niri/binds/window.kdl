@@ -13,7 +13,7 @@ binds {
     Mod+F { maximize-column; }
     Mod+Ctrl+F { fullscreen-window; }
     Mod+T { toggle-window-floating; }
-    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+    Mod+Alt+F { switch-focus-between-floating-and-tiling; }
     Mod+C { center-column; }
     Mod+G { toggle-column-tabbed-display; }
 
@@ -58,6 +58,10 @@ binds {
     // Move column between workspaces
     Mod+Shift+Page_Down { move-workspace-down; }
     Mod+Shift+Page_Up   { move-workspace-up; }
+
+    // Move column between workspaces
+    Mod+Alt+Page_Down { move-column-to-workspace-down; }
+    Mod+Alt+Page_Up   { move-column-to-workspace-up; }
 
     // Scroll workspace with mouse wheel
     Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }

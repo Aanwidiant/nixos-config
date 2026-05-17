@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 ON_TEMP=4000
 
 restart_nightlighted_waybar() {

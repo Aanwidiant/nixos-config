@@ -27,7 +27,7 @@
       "8": "8",
       "9": "9",
       "10": "0",
-      "active": "󱓻"
+      "active": "󱓻",
     },
     "persistent-workspaces": {
       "1": [],
@@ -66,7 +66,7 @@
     "interval": 3,
     "spacing": 1,
     "on-click": "my-launch-wifi",
-    "on-click-right": "my-toggle-wifi"
+    "on-click-right": "my-toggle-wifi",
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -94,7 +94,7 @@
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
     "on-click": "my-launch-bluetooth",
-    "on-click-right": "my-toggle-bluetooth"
+    "on-click-right": "my-toggle-bluetooth",
   },
   "pulseaudio": {
     "format": "{icon}",
@@ -108,26 +108,27 @@
     },
   },
   "custom/screenrecording-indicator": {
-      "format": "{}",
-      "return-type": "json",
-      "exec": "~/.config/waybar/indicators/screen-recording.sh",
-      "on-click": "pkill -INT wf-recorder && pkill -RTMIN+8 waybar",
-      "signal": 8,
+    "format": "{}",
+    "return-type": "json",
+    "exec": "~/.config/waybar/indicators/screen-recording.sh",
+    "on-click": "pkill -INT wf-recorder && pkill -RTMIN+8 waybar",
+    "signal": 8,
+    "interval": 2,
   },
   "cava": {
-      "framerate": 30,
-      "autosens": 1,
-      "bars": 16,
-      "method": "pipewire",
-      "source": "auto",
-      "bar_delimiter": 0,
-      "monstercat": false,
-      "waves": false,
-      "noise_reduction": 0.3,
-      "input_delay": 2,
-      "sleep_timer": 2,
-      "hide_on_silence": true,
-      "format-icons": [" ","▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
-      // "format-icons": [" ", "⣀", "⣄", "⣤", "⣦", "⣶", "⣷", "⣿"]
+    "framerate": 30,
+    "autosens": 1,
+    "bars": 16,
+    "method": "pipewire",
+    "source": "auto",
+    "bar_delimiter": 0,
+    "monstercat": false,
+    "waves": false,
+    "noise_reduction": 0.3,
+    "input_delay": 2,
+    "sleep_timer": 2,
+    "hide_on_silence": true,
+    "format-icons": [" ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    // "format-icons": [" ", "⣀", "⣄", "⣤", "⣦", "⣶", "⣷", "⣿"]
   },
 }
