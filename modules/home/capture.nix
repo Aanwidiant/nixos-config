@@ -11,5 +11,6 @@
     ffmpeg
     cliphist
     wtype
+    wl-mirror
   ];
 }

@@ -2,7 +2,7 @@
 
 OPTIONS="󰥔  Clock\n󰔛  Timer\n󰓅  Stopwatch"
 
-CHOICE=$(printf "$OPTIONS" | my-launch-wofi dmenu --prompt "Clock" --width 350 --height 270)
+CHOICE=$(printf "$OPTIONS" | my-launch-fuzzel dmenu --placeholder "Clock" --lines 3 --width 32)
 
 case "$CHOICE" in
   *Clock*)

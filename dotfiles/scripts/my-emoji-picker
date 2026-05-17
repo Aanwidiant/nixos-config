@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-emoji=$(wofi-emoji)
-if [ -n "$emoji" ]; then
-  wl-copy "$emoji"
-  notify-send "📋 Emoji copied" "$emoji"
-fi

@@ -16,12 +16,12 @@ link() {
   ln -sfn "$src" "$dest"
 }
 
-link niri          .config/niri        # ganti hypr
-link swayidle      .config/swayidle    # baru
-link swaylock      .config/swaylock    # baru
+link niri          .config/niri
+link swayidle      .config/swayidle
+link swaylock      .config/swaylock
 link waybar .config/waybar
 link mako .config/mako
-link wofi .config/wofi
+link fuzzel .config/fuzzel
 link swayosd .config/swayosd
 link kitty .config/kitty
 link theme .config/theme

@@ -13,6 +13,11 @@ input {
     touchpad {
         natural-scroll
         scroll-factor 0.9
+        tap
+        tap-button-map "left-right-middle"
+        dwt
+        accel-speed 0.2
+        accel-profile "adaptive"
     }
 
     mouse {

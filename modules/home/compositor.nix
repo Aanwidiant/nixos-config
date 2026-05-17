@@ -6,11 +6,11 @@
     hyprlock
     waybar
     mako
-    wofi
     swayosd
     nwg-displays
     wl-color-picker
     wlsunset
     swaybg
+    fuzzel
   ];
 }

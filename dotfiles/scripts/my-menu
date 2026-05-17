@@ -17,11 +17,13 @@ back_to() {
 menu() {
   local prompt="$1"
   local options="$2"
+  local lines="${3:-6}"
+  local width="${4:-32}"
 
-  echo -e "$options" | my-launch-wofi dmenu \
-    --prompt "$prompt…" \
-    --width 320 \
-    --height 320
+  echo -e "$options" | my-launch-fuzzel dmenu \
+  --placeholder "$prompt… " \
+  --lines "$lines" \
+  --width "$width"
 }
 
 terminal() {
@@ -31,7 +33,7 @@ terminal() {
 # Trigger
 
 show_trigger_menu() {
-    case "$(menu "Trigger" "  Capture\n󰥔  Clock\n󰔎  Toggle")" in
+    case "$(menu "Trigger" "  Capture\n󰥔  Clock\n󰔎  Toggle" 3 32)" in
     *Capture*) show_capture_menu ;;
     *Clock*) my-menu-clock ;;
     *Toggle*) show_toggle_menu ;;
@@ -40,7 +42,7 @@ show_trigger_menu() {
 }
 
 show_capture_menu() {
-  case "$(menu "Capture" "  Screenshot\n  Screenrecord\n󰃉  Color")" in
+  case "$(menu "Capture" "  Screenshot\n  Screenrecord\n󰃉  Color" 3 32)" in
     *Screenshot*) show_screenshot_menu ;;
     *Screenrecord*) my-menu-screenrecord ;;
     *Color*) pkill wl-color-picker || (sleep 0.2 && wl-color-picker) ;;
@@ -49,7 +51,7 @@ show_capture_menu() {
 }
 
 show_screenshot_menu() {
-  case "$(menu "Screenshot" "󰹑  Fullscreen\n󰒉  Region")" in
+  case "$(menu "Screenshot" "󰹑  Fullscreen\n󰒉  Region" 2 32)" in
     *Fullscreen*) my-cmd-screenshot fullscreen ;;
     *Region*) my-cmd-screenshot region ;;
     *) show_capture_menu ;;
@@ -57,7 +59,7 @@ show_screenshot_menu() {
 }
 
 show_toggle_menu() {
-  case "$(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode")" in
+  case "$(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode" 5 32)" in
     *Screensaver*) my-toggle-screensaver ;;
     *Nightlight*) my-toggle-nightlight ;;
     *Idle*) my-toggle-idle ;;
@@ -70,7 +72,7 @@ show_toggle_menu() {
 # Style
 
 show_style_menu() {
-  case "$(menu "Style" "󰸌  Theme\n  Font\n󰸉  Background")" in
+  case "$(menu "Style" "󰸌  Theme\n  Font\n󰸉  Background" 3 32)" in
     *Theme*) show_theme_menu ;;
     *Font*) show_font_menu ;;
     *Background*) show_bg_menu ;;
@@ -79,13 +81,13 @@ show_style_menu() {
 }
 
 show_font_menu() {
-  theme=$(menu "Font" "$(my-font-list)")
+  theme=$(menu "Font" "$(my-font-list)" 6 32)
   [[ -z "$theme" ]] && back_to show_style_menu
   my-font-set "$theme"
 }
 
 show_theme_menu() {
-  theme=$(menu "Theme" "$(my-theme-list)")
+  theme=$(menu "Theme" "$(my-theme-list)" 6 32)
   [[ -z "$theme" ]] && back_to show_style_menu
 
   slug=$(echo "$theme" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
@@ -123,7 +125,7 @@ show_bg_menu() {
 # Setup
 
 show_setup_menu() {
-  case "$(menu "Setup" "  Audio\n  Wifi\n󰂯  Bluetooth\n󱐋  Power Profile")" in
+  case "$(menu "Setup" "  Audio\n  Wifi\n󰂯  Bluetooth\n󱐋  Power Profile" 4 32)" in
     *Audio*) my-launch-or-focus-tui wiremix ;;
     *Wifi*) my-launch-wifi ;;
     *Bluetooth*) my-launch-bluetooth ;;
@@ -133,7 +135,7 @@ show_setup_menu() {
 }
 
 show_setup_power_menu() {
-  profile=$(menu "Power Profile" "$(my-powerprofiles-list)")
+  profile=$(menu "Power Profile" "$(my-powerprofiles-list)" 3 32)
   [[ -z "$profile" ]] && back_to show_setup_menu
   powerprofilesctl set "$profile"
 }
@@ -141,7 +143,7 @@ show_setup_power_menu() {
 # System
 
 show_system_menu() {
-  case "$(menu "System" "  Lock\n󰈆  Logout\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown")" in
+  case "$(menu "System" "  Lock\n󰈆  Logout\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown" 6 32)" in
     *Lock*) my-lock-screen ;;
     *Logout*) my-cmd-logout ;;
     *Screensaver*) my-launch-screensaver force ;;
@@ -155,8 +157,8 @@ show_system_menu() {
 # Main
 
 show_main_menu() {
-  case "$(menu "Go" "󰀻  Apps\n󱓞  Trigger\n  Style\n  Setup\n  About\n  System")" in
-    *Apps*) wofi --show drun --sort-order alphabetical --no-actions ;;
+  case "$(menu "Go" "󰀻  Apps\n󱓞  Trigger\n  Style\n  Setup\n  About\n  System" 6 32)" in
+    *Apps*) my-launch-fuzzel drun --placeholder "Search" --lines 8 --width 32 ;;
     *Trigger*) show_trigger_menu ;;
     *Style*) show_style_menu ;;
     *Setup*) show_setup_menu ;;

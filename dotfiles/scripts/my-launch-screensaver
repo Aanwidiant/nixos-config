@@ -1,16 +1,33 @@
 #!/usr/bin/env bash
-
 command -v tte >/dev/null || exit 1
-
 pgrep -f org.screensaver >/dev/null && exit 0
-
 if [[ -f ~/.local/state/my/toggles/screensaver-off ]] && [[ "$1" != "force" ]]; then
   exit 1
 fi
-
 pkill -f org.screensaver 2>/dev/null
+pkill -x wl-mirror 2>/dev/null
 
+PRIMARY=$(niri msg --json outputs | jq -r '.[] | select(.current_mode != null) | .name' | head -1)
+
+# Spawn screensaver
 nohup kitty --class=org.screensaver \
   --override font_size=18 \
   --override window_padding_width=0 \
   -e my-cmd-screensaver >/dev/null 2>&1 &
+
+sleep 0.3
+
+# Mirror ke semua output selain primary
+niri msg --json outputs \
+  | jq -r '.[] | select(.current_mode != null) | .name' \
+  | grep -v "^$PRIMARY$" \
+  | while IFS= read -r output; do
+      nohup wl-mirror --fullscreen-output "$output" "$PRIMARY" >/dev/null 2>&1 &
+    done
+
+# Tunggu screensaver selesai
+while pgrep -f org.screensaver >/dev/null; do
+  sleep 0.5
+done
+
+pkill -x wl-mirror 2>/dev/null

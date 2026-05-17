@@ -14,6 +14,6 @@ binds {
 
     // Clipboard manager
     Mod+Ctrl+V {
-        spawn "sh" "-c" "cliphist list | my-launch-wofi dmenu --width 1005 --height 500 | cliphist decode | wl-copy";
+        spawn "sh" "-c" "cliphist list | my-launch-fuzzel dmenu --width 100 --lines 10 | cliphist decode | wl-copy";
     }
 }

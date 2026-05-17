@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+MODE="${1:-drun}"
+shift || true
+
+pkill -x fuzzel 2>/dev/null
+
+case "$MODE" in
+  dmenu)
+    exec fuzzel --dmenu "$@"
+    ;;
+
+  drun)
+    exec fuzzel "$@"
+    ;;
+
+  *)
+    exec fuzzel "$@"
+    ;;
+esac

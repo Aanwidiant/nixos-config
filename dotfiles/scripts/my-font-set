@@ -15,10 +15,10 @@ if [[ -f "$DOTFILES/kitty/kitty.conf" ]]; then
   sed -i "s/^font_family[[:space:]]\+.*/font_family $font_name/" "$DOTFILES/kitty/kitty.conf"
   echo "✓ Updated kitty.conf"
 fi
-# Swaylock (ganti hyprlock)
-if [[ -f "$DOTFILES/swaylock/config" ]]; then
-  sed -i "s/^font=.*/font=$font_name/" "$DOTFILES/swaylock/config"
-  echo "✓ Updated swaylock config"
+# Hyprlock
+if [[ -f "$DOTFILES/hyprlock/hyprlock.conf" ]]; then
+  sed -i "s/^font_family =.*/font_family = $font_name/" "$DOTFILES/hyprlock/hyprlock.conf"
+  echo "✓ Updated hyprlock config"
 fi
 # Mako
 if [[ -f "$DOTFILES/mako/config" ]]; then
@@ -35,10 +35,10 @@ if [[ -f "$DOTFILES/swayosd/style.css" ]]; then
   sed -i "s/font-family:[^;'\"]*['\"]\\?[^;'\"]*['\"]\\?;/font-family: '$font_name';/g" "$DOTFILES/swayosd/style.css"
   echo "✓ Updated swayosd style.css"
 fi
-# Wofi CSS
-if [[ -f "$DOTFILES/wofi/style.css" ]]; then
-  sed -i "s/font-family:[^;'\"]*['\"]\\?[^;'\"]*['\"]\\?;/font-family: '$font_name';/g" "$DOTFILES/wofi/style.css"
-  echo "✓ Updated wofi style.css"
+# Fuzzel
+if [[ -f "$DOTFILES/fuzzel/fuzzel.ini" ]]; then
+  sed -i "s/^font=.*/font=$font_name/" "$DOTFILES/fuzzel/fuzzel.ini"
+  echo "✓ Updated fuzzel.ini"
 fi
 # Fontconfig
 if [[ -f "$HOME/.config/fontconfig/fonts.conf" ]]; then

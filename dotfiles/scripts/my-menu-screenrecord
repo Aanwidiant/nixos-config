@@ -23,7 +23,7 @@ trap cleanup_audio EXIT INT TERM
 
 # AREA SELECTION
 AREA_OPTIONS="󰹑  Fullscreen\n󰒅  Select Region"
-AREA_CHOICE=$(printf "$AREA_OPTIONS" | my-launch-wofi dmenu --prompt "Select Record Area" --width 350 --height 270)
+AREA_CHOICE=$(printf "$AREA_OPTIONS" | my-launch-fuzzel dmenu --placeholder "Select Record Area" --lines 2 --width 32)
 case "$AREA_CHOICE" in
     *Fullscreen*)
         GEOMETRY_ARGS=(-o "$FOCUSED_MONITOR")
@@ -40,7 +40,7 @@ esac
 
 # AUDIO SELECTION
 AUDIO_OPTIONS="󰂛  No Audio\n󰍬  Microphone\n󰓃  Laptop Audio\n󰧚  Combined"
-AUDIO_CHOICE=$(printf "$AUDIO_OPTIONS" | my-launch-wofi dmenu --prompt "Select Audio" --width 350 --height 270)
+AUDIO_CHOICE=$(printf "$AUDIO_OPTIONS" | my-launch-fuzzel dmenu --placeholder "Select Audio" --lines 4 --width 32)
 AUDIO_ARGS=()
 case "$AUDIO_CHOICE" in
     *No*)
@@ -76,7 +76,7 @@ esac
 
 # FPS SELECTION
 FPS_OPTIONS="󰑊  30 FPS\n󰑋  60 FPS"
-FPS_CHOICE=$(printf "$FPS_OPTIONS" | my-launch-wofi dmenu --prompt "Frame Rate" --width 350 --height 270)
+FPS_CHOICE=$(printf "$FPS_OPTIONS" | my-launch-fuzzel dmenu --placeholder "Frame Rate" --lines 2 --width 32)
 case "$FPS_CHOICE" in
     *30*) FPS=30 ;;
     *60*) FPS=60 ;;

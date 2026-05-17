@@ -1,10 +1,9 @@
 binds {
     // App launcher
-    Mod+Space { spawn "my-launch-wofi" "--sort-order=alphabetical" "--width" "600" "--height" "400"; }
-    Mod+Ctrl+E { spawn "wofi-emoji"; }
+    Mod+Space { spawn "my-launch-fuzzel" "drun" "--placeholder" "Search" "--lines" "8" "--width" "32"; }
+    Mod+Ctrl+E { spawn "my-launch-emoji"; }
     Mod+Alt+Space { spawn "my-menu"; }
     Mod+Escape { spawn "my-menu" "system"; }
-    Mod+K { spawn "my-menu-keybindings"; }
 
     // Aesthetics
     Mod+Shift+Space { spawn "my-toggle-waybar"; }

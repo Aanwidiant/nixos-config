@@ -1,9 +1,0 @@
-width=600
-height=400
-show=drun
-prompt=Search
-allow_images=true
-term=kitty
-normal_window=true
-insensitive=true
-sort_order=default
