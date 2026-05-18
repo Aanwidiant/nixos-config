@@ -8,7 +8,7 @@
     mako
     swayosd
     nwg-displays
-    wl-color-picker
+    hyprpicker
     wlsunset
     swaybg
     fuzzel

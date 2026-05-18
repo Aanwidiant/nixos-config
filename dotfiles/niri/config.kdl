@@ -1,3 +1,5 @@
+include "monitor.kdl"
+
 prefer-no-csd
 hotkey-overlay {
     skip-at-startup
@@ -12,7 +14,6 @@ include "gestures.kdl"
 include "input.kdl"
 include "layout.kdl"
 include "misc.kdl"
-include "output.kdl"
 include "windows.kdl"
 include "rules.kdl"
 include "overview.kdl"

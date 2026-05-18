@@ -17,7 +17,7 @@ mapfile -t EFFECTS < <(
   tte --help | grep -A 100 "^effects:" | tail -n +2 | awk '{print $1}'
 )
 
-[[ ${#EFFECTS[@]} -eq 0 ]] && EFFECTS=(matrix rain burn waves)
+[[ ${#EFFECTS[@]} -eq 0 ]] && EFFECTS=(beams burn fireworks matrix rain slide spray waves binarypath blackhole bouncyballs bubbles colorshift crumble decrypt errorcorrect expand highlight laseretch middleout orbittingvolley overflow pour print rings randomsequence scattered slice slide smoke spotlights spray swarm sweep synthgrid thunderstorm unstable vhstape waves wipe)
 
 printf '\033]11;rgb:00/00/00\007'
 niri msg action set-cursor-visible false &>/dev/null || true
@@ -40,7 +40,7 @@ while true; do
   while kill -0 "$tte_pid" 2>/dev/null; do
     if read -rsn1 -t 0.2; then
       kill "$tte_pid" 2>/dev/null
-      exit 0   # 🔥 INI PENTING: keluar total
+      exit 0
     fi
   done
 done
