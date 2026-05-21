@@ -16,7 +16,21 @@ window-rule {
 // File picker dialogs
 window-rule {
     match app-id="^(xdg-desktop-portal-gtk|sublime_text|DesktopEditors)$"
-    match title="^(Open.*Files?|Open [Ff]older.*|Save.*Files?|Save.*As|Save|All Files|.*wants to (open|save).*|[Cc]hoose.*)"
+    match title="^(Open.*Files?|Open [Ff]older.*|Save.*Files?|Save.*As|Save|All Files|.*wants to (open|save).*|[Cc]hoose.*|.*Login - Akun Google.*)"
+
+    open-floating true
+
+    default-column-width {
+        fixed 875
+    }
+
+    default-window-height {
+        fixed 600
+    }
+}
+
+window-rule {
+    match app-id="^brave-browser$" title="^Login.*Google.*Brave$"
 
     open-floating true
 
@@ -36,17 +50,38 @@ window-rule {
     open-floating true
 }
 
-// Screensaver fullscreen
-window-rule {
-    match app-id="^org\\.screensaver$"
-
-    open-floating true
-    open-fullscreen true
-}
-
 // No transparency on media windows
 window-rule {
     match app-id="^(zoom|vlc|mpv|org\\.kde\\.kdenlive|com\\.obsproject\\.Studio|com\\.github\\.PintaProject\\.Pinta|imv)$"
 
     opacity 1.0
+}
+
+// Thunar rename
+window-rule {
+    match title="^Rename.*"
+
+    open-floating true
+
+    default-column-width {
+        fixed 480
+    }
+
+    default-window-height {
+        fixed 160
+    }
+}
+
+window-rule {
+    match app-id="org.my.cshift"
+
+    open-floating true
+
+    default-column-width {
+        fixed 620
+    }
+
+    default-window-height {
+        fixed 370
+    }
 }

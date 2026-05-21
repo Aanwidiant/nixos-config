@@ -9,7 +9,6 @@ hotkey-overlay {
 include "animations.kdl"
 include "autostart.kdl"
 include "binds.kdl"
-include "environment.kdl"
 include "gestures.kdl"
 include "input.kdl"
 include "layout.kdl"

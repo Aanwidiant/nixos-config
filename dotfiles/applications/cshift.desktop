@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=cShift
+Comment=Terminal case converter
+Exec=my-launch-or-focus-tui /home/aanwidiant/dev/app/experimental/cshift/target/release/cshift
+Terminal=false
+Type=Application
+Categories=Utility;Development;
+Icon=utilities-terminal

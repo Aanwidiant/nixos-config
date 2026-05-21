@@ -4,6 +4,6 @@ if pgrep -x swayidle >/dev/null; then
   pkill -x swayidle
   notify-send "Stop locking computer when idle"
 else
-  swayidle -w -c "$HOME/.config/swayidle/config" >/dev/null 2>&1 &
+  swayidle -w -C "$HOME/.config/swayidle/config" >/dev/null 2>&1 &
   notify-send "Now locking computer when idle"
 fi

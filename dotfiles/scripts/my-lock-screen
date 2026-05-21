@@ -5,6 +5,3 @@ pgrep hyprlock >/dev/null && exit 0
 
 # lock screen
 hyprlock
-
-# cleanup screensaver
-pkill -f org.screensaver 2>/dev/null || true

@@ -21,7 +21,7 @@
     cmake
     gcc
     docker-compose
-    nodejs_24
+    nodejs_25
     pnpm
     android-tools
     gnumake

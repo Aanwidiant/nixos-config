@@ -59,8 +59,7 @@ show_screenshot_menu() {
 }
 
 show_toggle_menu() {
-  case "$(menu "Toggle" "󱄄  Screensaver\n󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode" 5 32)" in
-    *Screensaver*) my-toggle-screensaver ;;
+  case "$(menu "Toggle" "󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode" 4 32)" in
     *Nightlight*) my-toggle-nightlight ;;
     *Idle*) my-toggle-idle ;;
     *Bar*) my-toggle-waybar ;;
@@ -143,10 +142,9 @@ show_setup_power_menu() {
 # System
 
 show_system_menu() {
-  case "$(menu "System" "  Lock\n󰈆  Logout\n󱄄  Screensaver\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown" 6 32)" in
+  case "$(menu "System" "  Lock\n󰈆  Logout\n󰤄  Suspend\n󰜉  Restart\n󰐥  Shutdown" 5 32)" in
     *Lock*) my-lock-screen ;;
     *Logout*) my-cmd-logout ;;
-    *Screensaver*) my-launch-screensaver force ;;
     *Suspend*) systemctl suspend ;;
     *Restart*) my-cmd-reboot ;;
     *Shutdown*) my-cmd-shutdown ;;

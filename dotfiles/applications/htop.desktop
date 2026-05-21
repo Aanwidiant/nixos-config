@@ -2,7 +2,7 @@
 Name=System Processes
 Comment=Terminal UI for System Processes (htop)
 Exec=my-launch-or-focus-tui htop
-Icon=memory
+Icon=hardinfo
 Terminal=false
 Type=Application
 Categories=Utility;

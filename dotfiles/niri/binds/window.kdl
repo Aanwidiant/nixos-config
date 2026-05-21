@@ -1,7 +1,16 @@
 binds {
     // Overview & window management
-    Mod+A repeat=false { toggle-overview; }
+    Mod+S repeat=false { toggle-overview; }
     Mod+W repeat=false { close-window; }
+
+    Mod+A { focus-column-left; }
+    Mod+D { focus-column-right; }
+
+    Mod+Q { focus-workspace-up; }
+    Mod+Z { focus-workspace-down; }
+
+    Mod+Ctrl+A { focus-monitor-left; }
+    Mod+Ctrl+D { focus-monitor-right; }
 
     // Column width presets
     Mod+R { switch-preset-column-width; }

@@ -1,5 +1,3 @@
-timeout 150 'my-launch-screensaver'
-timeout 300 'pkill -f org.screensaver; pkill -x wl-mirror; pidof hyprlock || hyprlock'
 timeout 600 'niri msg action power-off-monitors'
-before-sleep 'pkill -f org.screensaver; pkill -x wl-mirror; hyprlock'
+timeout 900 'systemctl suspend'
 after-resume 'niri msg action power-on-monitors && brightnessctl -r'

@@ -11,19 +11,19 @@
   // "show_completions_on_input": false,
   "cli_default_open_behavior": "existing_window",
   "outline_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "collaboration_panel": {
-    "dock": "left"
+    "dock": "left",
   },
   "vim_mode": false,
   "agent_ui_font_size": 12.0,
   "git_panel": {
     "dock": "left",
-    "tree_view": false
+    "tree_view": false,
   },
   "session": {
-    "trust_all_worktrees": true
+    "trust_all_worktrees": true,
   },
   "auto_update": true,
   "base_keymap": "VSCode",
@@ -32,16 +32,16 @@
     "code_actions": false,
     "agent_review": true,
     "selections_menu": true,
-    "breadcrumbs": true
+    "breadcrumbs": true,
   },
   "sticky_scroll": {
-    "enabled": true
+    "enabled": true,
   },
   "show_edit_predictions": false,
   "snippet_sort_order": "none",
   "completions": {
     "lsp": true,
-    "words":"disabled"
+    "words": "disabled",
   },
   "agent": {
     "dock": "right",
@@ -51,10 +51,10 @@
       "effort": "high",
       "enable_thinking": true,
       "provider": "copilot_chat",
-      "model": "gpt-5.2-codex"
+      "model": "gpt-5.2-codex",
     },
     "notify_when_agent_waiting": "primary_screen",
-    "model_parameters": []
+    "model_parameters": [],
   },
   "enable_language_server": true,
   "preferred_line_length": 120,
@@ -62,26 +62,26 @@
     {
       "host": "taskin-db",
       "args": [],
-      "projects": []
-    }
+      "projects": [],
+    },
   ],
   "window_decorations": "client",
   "preview_tabs": {
     "enable_preview_from_file_finder": false,
-    "enabled": false
+    "enabled": false,
   },
   "active_pane_modifiers": {
-    "border_size": 0.0
+    "border_size": 0.0,
   },
   "use_system_window_tabs": false,
   "tabs": {
     "file_icons": true,
-    "git_status": true
+    "git_status": true,
   },
   "tab_bar": {
     "show_tab_bar_buttons": true,
     "show_nav_history_buttons": false,
-    "show": true
+    "show": true,
   },
   "title_bar": {
     "show_menus": false,
@@ -90,21 +90,21 @@
     "show_onboarding_banner": false,
     // "show_branch_icon": true,
     "show_branch_name": true,
-    "show_project_items": true
+    "show_project_items": true,
   },
   "status_bar": {
     "cursor_position_button": true,
-    "active_language_button": true
+    "active_language_button": true,
   },
   "project_panel": {
     "default_width": 240.0,
     "button": true,
     "dock": "left",
-    "auto_fold_dirs": false
+    "auto_fold_dirs": false,
   },
   "format_on_save": "off",
   "indent_guides": {
-    "coloring": "indent_aware"
+    "coloring": "indent_aware",
   },
   "soft_wrap": "bounded",
   "ui_font_family": "JetBrainsMono Nerd Font",
@@ -112,44 +112,45 @@
   "icon_theme": {
     "mode": "dark",
     "light": "Soft Charmed Icons",
-    "dark": "Soft Charmed Icons"
+    "dark": "Soft Charmed Icons",
   },
   "telemetry": {
     "diagnostics": false,
-    "metrics": false
+    "metrics": false,
   },
   "ui_font_size": 14.0,
   "buffer_font_size": 12.0,
   "theme": {
     "mode": "dark",
     "light": "Ayu Glass Light",
-    "dark": "Catppuccin Macchiato (Blur) [Light]"
+    "dark": "Catppuccin Macchiato (Blur) [Light]",
   },
   "scroll_beyond_last_line": "off",
   "terminal": {
     "font_size": 12.0,
     "toolbar": {
-      "breadcrumbs": false
+      "breadcrumbs": false,
     },
     "font_family": "JetBrainsMono Nerd Font",
     "shell": "system",
-    "button": true
+    "button": true,
   },
   "show_wrap_guides": false,
   "gutter": {
     "folds": true,
     "breakpoints": true,
-    "runnables": true
+    "runnables": true,
   },
   "lsp": {
-      "vscode-css-language-server": {
-        "settings": {
-          "css": {
-            "lint": {
-              "unknownAtRules": "ignore"
-            }
-          }
-        }
-      }
-    }
+    "vscode-css-language-server": {
+      "settings": {
+        "css": {
+          "lint": {
+            "unknownAtRules": "ignore",
+          },
+        },
+      },
+    },
+  },
+  "load_direnv": "shell_hook",
 }
