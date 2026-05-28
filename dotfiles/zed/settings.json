@@ -123,7 +123,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Glass Light",
-    "dark": "Catppuccin Mocha (Blur)",
+    "dark": "Catppuccin Mocha (Blue Blur+)"
   },
   "scroll_beyond_last_line": "off",
   "terminal": {
