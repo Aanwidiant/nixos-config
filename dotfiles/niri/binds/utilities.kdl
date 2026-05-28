@@ -36,4 +36,6 @@ binds {
     Mod+Ctrl+B {
         spawn "sh" "-c" "notify-send \"Battery $(my-battery-remaining)%\""
     }
+
+    Mod+Shift+M { spawn "my-toggle-touchpad"; }
 }

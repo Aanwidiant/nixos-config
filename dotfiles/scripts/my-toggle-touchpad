@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+CONFIG="/home/aanwidiant/nixos-config/dotfiles/niri/input.kdl"
+
+if grep -A15 "touchpad {" "$CONFIG" | grep -q "^[[:space:]]*off"; then
+    sed -i '/touchpad {/,/}/ s/^[[:space:]]*off//' "$CONFIG"
+    notify-send "Touchpad Enabled"
+else
+    sed -i '/touchpad {/a\        off' "$CONFIG"
+    notify-send "Touchpad Disabled"
+fi
+
+niri msg action load-config-file

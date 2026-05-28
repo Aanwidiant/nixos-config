@@ -11,6 +11,14 @@ input {
     }
 
     touchpad {
+
+
+
+
+
+
+
+
         natural-scroll
         scroll-factor 0.9
         tap

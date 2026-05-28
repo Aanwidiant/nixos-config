@@ -1,13 +1,16 @@
 binds {
     // Overview & window management
-    Mod+S repeat=false { toggle-overview; }
-    Mod+W repeat=false { close-window; }
+    Mod+Q repeat=false { toggle-overview; }
+    Mod+Shift+Q repeat=false { close-window; }
 
     Mod+A { focus-column-left; }
     Mod+D { focus-column-right; }
 
-    Mod+Q { focus-workspace-up; }
-    Mod+Z { focus-workspace-down; }
+    Mod+W { focus-workspace-up; }
+    Mod+S { focus-workspace-down; }
+
+    Mod+Shift+W   cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+Shift+S   cooldown-ms=150 { move-column-to-workspace-down; }
 
     Mod+Ctrl+A { focus-monitor-left; }
     Mod+Ctrl+D { focus-monitor-right; }

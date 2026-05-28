@@ -1,5 +1,5 @@
 // System
-spawn-at-startup "dbus-update-activation-environment" "--systemd" "--all"
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP" "XDG_SESSION_TYPE" "DISPLAY" "NIXOS_OZONE_WL"
 
 // Daemons
 spawn-at-startup "swayidle"
