@@ -76,3 +76,18 @@ alias gpu-stats='sudo intel_gpu_top'
 
 # Cliphis wipe
 alias cwipe='cliphist wipe'
+
+# LAN - Static IP (Office)
+alias connect-office='sudo nmcli con modify "enp0s31f6" \
+ipv4.method manual \
+ipv4.addresses 10.200.100.159/24 \
+ipv4.gateway 10.200.100.1 \
+ipv4.dns "8.8.8.8 1.1.1.1" && \
+sudo nmcli con up "enp0s31f6"'
+
+# LAN - DHCP
+alias connect-home='sudo nmcli con modify "enp0s31f6" ipv4.method auto && sudo nmcli con up "enp0s31f6"'
+
+# Mount External SSD
+alias create-mount='sudo mkdir -p "/run/media/aanwidiant/New Volume"'
+alias mount-external='sudo mount -t ntfs-3g /dev/sda2 "/run/media/aanwidiant/New Volume"'

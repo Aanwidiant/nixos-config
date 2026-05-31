@@ -17,6 +17,5 @@
     yazi
     cava
     termusic
-    tmux
   ];
 }

@@ -13,6 +13,7 @@
     ../modules/home/shell.nix
     ../modules/home/styling.nix
     ../modules/home/terminal.nix
+    ../modules/home/tmux.nix
     ../modules/home/visual.nix
     ../modules/home/vscode.nix
   ];
