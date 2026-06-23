@@ -12,12 +12,16 @@ binds {
     }
 
     Mod+Shift+Alt+B {
-       spawn-sh "~/.local/bin/my-launch-browser --private";
+        spawn-sh "~/.local/bin/my-launch-browser --private";
     }
 
     // Editor
     Mod+Shift+E {
         spawn "zeditor";
+    }
+
+    Mod+Shift+N {
+        spawn "kitty" "-e" "nvim";
     }
 
     // System tools

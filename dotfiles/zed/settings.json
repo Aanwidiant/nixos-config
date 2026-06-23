@@ -9,6 +9,11 @@
 {
   // "disable_ai": true,
   // "show_completions_on_input": false,
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    }
+  },
   "cli_default_open_behavior": "existing_window",
   "outline_panel": {
     "dock": "left",
@@ -46,12 +51,12 @@
   "agent": {
     "dock": "right",
     "favorite_models": [],
-    "default_profile": "write",
+    "default_profile": "minimal",
     "default_model": {
       "effort": "high",
       "enable_thinking": true,
-      "provider": "copilot_chat",
-      "model": "gpt-5.2-codex",
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],

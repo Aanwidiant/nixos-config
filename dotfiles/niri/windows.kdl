@@ -6,7 +6,8 @@ window-rule {
 window-rule {
     match is-focused=true
     open-maximized false
-    opacity 0.97
+    // opacity 0.97
+    opacity 1.0
     draw-border-with-background false
 }
 

@@ -118,11 +118,6 @@
       "keyColor": "magenta"
     },
     {
-      "type": "localip",
-      "key": "󰩟 IP",
-      "keyColor": "magenta"
-    },
-    {
       "type": "battery",
       "key": "󰁹 Battery",
       "keyColor": "magenta"

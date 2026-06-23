@@ -68,7 +68,7 @@
       unbind -T copy-mode-vi MouseDragEnd1Pane
 
       # tmux-resurrect
-      set -g @resurrect-processes 'nvim lazygit'
+      set -g @resurrect-processes '"nvim->nvim *" lazygit'
 
       # Catppuccin Mocha theme colors
       thm_bg="#1e1e2e"
@@ -81,6 +81,7 @@
 
       # Status bar
       set -g status on
+      set -g status-position top
       set -g status-bg "$thm_bg"
       set -g status-justify left
       set -g status-left-length 100
@@ -100,7 +101,7 @@
       set -g window-status-style "fg=$thm_fg,bg=$thm_bg,none"
 
       # Current window
-      set -g window-status-current-format "#[fg=$thm_blue,bg=$thm_bg] #I: #[fg=$thm_magenta,bg=$thm_bg](✓) #[fg=$thm_cyan,bg=$thm_bg]#(echo '#{pane_current_path}' | rev | cut -d'/' -f-2 | rev)"
+      set -g window-status-current-format "#[fg=$thm_blue,bg=$thm_bg] #I: #[fg=$thm_magenta,bg=$thm_bg]󰄵 #[fg=$thm_cyan,bg=$thm_bg]#(echo '#{pane_current_path}' | rev | cut -d'/' -f-2 | rev)"
 
       # Other windows
       set -g window-status-format "#[fg=$thm_blue,bg=$thm_bg] #I: #[fg=$thm_fg,bg=$thm_bg]#W"

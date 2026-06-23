@@ -5,13 +5,8 @@
     enable = true;
     settings = {
       default_session = {
-        command = ''
-          ${pkgs.bash}/bin/bash -c "sleep 1; exec ${pkgs.tuigreet}/bin/tuigreet \
-            --time \
-            --remember \
-            --asterisks \
-            --cmd niri-session"
-          '';
+        command =
+          "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd niri-session";
         user = "greeter";
       };
     };

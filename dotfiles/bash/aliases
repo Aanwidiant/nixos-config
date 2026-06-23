@@ -31,10 +31,54 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 
 # Git
+# basic
 alias g='git'
-alias gcm='git commit -m'
-alias gcam='git commit -a -m'
-alias gcad='git commit -a --amend'
+
+# status & info
+alias gs='git status -sb'
+alias gl='git log --oneline --graph --decorate --all'
+
+# add
+alias ga='git add'
+alias gaa='git add .'
+
+# commit
+alias gc='git commit -m'
+alias gca='git commit -a -m'
+alias gcm='git commit --amend -m'
+
+# branch
+alias gb='git branch'
+alias gbd='git branch -d'
+alias gbr='git branch -r'
+
+# checkout / switch
+alias gco='git checkout'
+alias gsw='git switch'
+alias gswc='git switch -c'   # create branch baru
+
+# push & pull
+alias gp='git push'
+alias gpl='git pull'
+alias gpo='git push origin'
+alias gpom='git push origin main'
+alias gpob='git push origin $(git branch --show-current)'
+
+# stash
+alias gst='git stash'
+alias gsta='git stash apply'
+alias gstd='git stash drop'
+alias gstp='git stash pop'
+
+# rebase
+alias grb='git rebase'
+alias grbi='git rebase -i'
+alias grbc='git rebase --continue'
+alias grba='git rebase --abort'
+
+# reset (hati-hati ini)
+alias grh='git reset --hard'
+alias grs='git reset --soft HEAD~1'
 
 # Lazygit
 alias lg='lazygit'

@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    helium-flake = {
+      url = "github:oxcl/nix-flake-helium-browser";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -50,7 +54,19 @@
             home-manager.users.${username} = {
               imports = [
                 ./home/default.nix
+                inputs.helium-flake.homeModules.default
               ];
+
+              programs.helium = {
+                enable = true;
+                flags = [
+                  "--ozone-platform-hint=auto"
+                ];
+
+                policies = {
+                  "BrowserSignin" = 0;
+                };
+              };
 
               home.username = username;
               home.homeDirectory = "/home/${username}";

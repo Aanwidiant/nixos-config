@@ -38,4 +38,11 @@
     ];
     auto-optimise-store = true;
   };
+
+  systemd.services.NetworkManager-wait-online.enable = false;
+
+  services.logind.settings.Login = {
+    HandlePowerKey = "suspend";
+    HandlePowerKeyLongPress = "poweroff";
+  };
 }

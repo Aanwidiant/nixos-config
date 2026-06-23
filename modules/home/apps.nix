@@ -3,8 +3,8 @@
 {
   home.packages = with pkgs; [
     brave
-    librewolf
     libreoffice
+    # onlyoffice-desktopeditors
     mousepad
     evince
     thunar
@@ -18,5 +18,6 @@
     organicmaps
     artix-games-launcher
     ocrfeeder
+    zotero
   ];
 }

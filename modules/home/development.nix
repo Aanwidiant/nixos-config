@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -27,6 +27,7 @@
     sshfs
     tree-sitter
     ollama
+    jre
 
     #android-studio
   ];

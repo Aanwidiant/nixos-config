@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
 
-if command -v brave-browser &> /dev/null; then
-  browser_exec="brave-browser"
-elif command -v brave &> /dev/null; then
-  browser_exec="brave"
+if command -v helium &> /dev/null; then
+  browser_exec="helium"
 else
-  echo "Brave not found"
+  echo "Helium Browser not found"
   exit 1
 fi
 
-exec $browser_exec --app="$1" "${@:2}"
+exec "$browser_exec" --app="$1" "${@:2}"

@@ -1,7 +1,7 @@
 @import "../theme/current/theme/waybar.css";
 
 #waybar {
-    background-color: alpha(@background, 0.75);
+    background-color: alpha(@background, 0.6);
 }
 
 #layer {
@@ -11,10 +11,11 @@
 * {
     color: @foreground;
     border: none;
-    border-radius: 7px;
+    border-radius: 6px;
     min-height: 0;
     font-family: 'JetBrainsMono Nerd Font';
     font-size: 12px;
+    font-weight: bold;
 }
 
 .modules-left {
@@ -46,8 +47,7 @@
 }
 
 #bluetooth,
-#cava
-{
+#cava {
     margin-right: 17px;
 }
 

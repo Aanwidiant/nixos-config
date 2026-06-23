@@ -59,7 +59,7 @@ show_screenshot_menu() {
 }
 
 show_toggle_menu() {
-  case "$(menu "Toggle" "󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode\n󰌌 Touchpad" 5 32)" in
+  case "$(menu "Toggle" "󰔎  Nightlight\n󱫖  Idle Lock\n󰍜  Top Bar\n󰀝  Airplane Mode\n󰌌  Touchpad" 5 32)" in
     *Nightlight*) my-toggle-nightlight ;;
     *Idle*) my-toggle-idle ;;
     *Bar*) my-toggle-waybar ;;
