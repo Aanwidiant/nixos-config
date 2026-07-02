@@ -53,10 +53,9 @@
     "favorite_models": [],
     "default_profile": "minimal",
     "default_model": {
-      "effort": "high",
-      "enable_thinking": true,
-      "provider": "deepseek",
-      "model": "deepseek-v4-flash",
+      "enable_thinking": false,
+      "provider": "mistral",
+      "model": "open-mistral-nemo",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],

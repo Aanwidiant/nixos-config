@@ -16,7 +16,6 @@
     ../modules/home/tmux.nix
     ../modules/home/visual.nix
     ../modules/home/vscode.nix
-    ../modules/home/onlyoffice.nix
   ];
 
   home.stateVersion = "25.11";

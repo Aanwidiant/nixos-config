@@ -4,7 +4,8 @@
   home.packages = with pkgs; [
     brave
     libreoffice
-    # onlyoffice-desktopeditors
+    librewolf
+    onlyoffice-desktopeditors
     mousepad
     evince
     thunar
