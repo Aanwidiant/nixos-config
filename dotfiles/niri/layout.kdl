@@ -1,9 +1,10 @@
 include "/home/aanwidiant/nixos-config/dotfiles/theme/current/theme/niri.kdl"
 
 layout {
-    gaps 8
-
-    default-column-width { proportion 0.75; }
+    background-color "transparent"
+    gaps 6
+    
+    default-column-width { proportion 0.66667; }
 
     preset-column-widths {
         proportion 0.33333
@@ -22,4 +23,13 @@ blur {
     offset 3.0
     noise 0.02
     saturation 1.5
+}
+
+overview {
+    zoom 0.4
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
 }

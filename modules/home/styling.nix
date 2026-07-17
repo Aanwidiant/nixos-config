@@ -13,6 +13,7 @@ in
   ];
 
   home.pointerCursor = {
+    enable = true;
     gtk.enable = true;
     x11.enable = true;
     package = pkgs.bibata-cursors;
@@ -21,19 +22,19 @@ in
   };
 
   gtk = {
-      enable = true;
-      theme = {
-        name = "Orchis-Dark";
-        package = pkgs.orchis-theme;
-      };
-      gtk4.theme = config.gtk.theme;
-      iconTheme = {
-        name = "Reversal-blue-dark";
-        package = reversalBlue;
-      };
-      gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
-      gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+    enable = true;
+    theme = {
+      name = "Orchis-Dark";
+      package = pkgs.orchis-theme;
     };
+    gtk4.theme = config.gtk.theme;
+    iconTheme = {
+      name = "Reversal-blue-dark";
+      package = reversalBlue;
+    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+  };
 
   qt = {
     enable = true;

@@ -3,6 +3,7 @@ window-rule {
     match app-id="^(google-)?[cC]hrom(e|ium)$|^[bB]rave-browser$|^[mM]icrosoft-edge$|^[Vv]ivaldi-stable$|^helium$"
 
     draw-border-with-background false
+    open-maximized true
 }
 
 // Firefox-based browsers
@@ -10,8 +11,8 @@ window-rule {
     match app-id="^([fF]irefox|zen|librewolf)$"
 
     block-out-from "screencast"
-
     opacity 1.0
+    open-maximized true 
 }
 
 // Video apps

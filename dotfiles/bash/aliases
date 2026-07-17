@@ -92,7 +92,7 @@ alias ollama-stop='sudo systemctl stop ollama'
 alias ollama-status='systemctl status ollama'
 
 # Ollama model shortcuts
-alias qwen='ollama run qwen2.5-coder:7b'
+alias qwen='ollama run qwen3:8b'
 
 # Switch New Generations (switch)
 alias nix-switch='sudo nixos-rebuild switch --flake ~/nixos-config#'

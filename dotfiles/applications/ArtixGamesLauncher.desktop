@@ -1,6 +1,0 @@
-[Desktop Entry]
-Name=Artix Game Launcher
-Exec=artix-games-launcher %u
-Icon=gnome-arcade
-Type=Application
-Categories=Game;

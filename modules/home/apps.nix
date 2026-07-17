@@ -17,8 +17,5 @@
     geary
     blanket
     organicmaps
-    artix-games-launcher
-    ocrfeeder
-    zotero
   ];
 }

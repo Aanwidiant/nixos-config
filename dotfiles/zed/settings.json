@@ -9,6 +9,11 @@
 {
   // "disable_ai": true,
   // "show_completions_on_input": false,
+  "disable_ai": false,
+  "edit_predictions": {
+    "mode": "subtle",
+    "provider": "copilot"
+  },
   "agent_servers": {
     "opencode": {
       "type": "registry"
@@ -51,11 +56,12 @@
   "agent": {
     "dock": "right",
     "favorite_models": [],
-    "default_profile": "minimal",
+    "default_profile": "write",
     "default_model": {
-      "enable_thinking": false,
-      "provider": "mistral",
-      "model": "open-mistral-nemo",
+      "effort": "medium",
+      "enable_thinking": true,
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],

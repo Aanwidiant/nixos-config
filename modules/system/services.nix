@@ -9,8 +9,14 @@
     fwupd.enable = true;
     power-profiles-daemon.enable = true;
     upower.enable = true;
-    ollama.enable = true;
     udisks2.enable = true;
+  };
+
+  services.ollama = {
+    enable = true;
+    environmentVariables = {
+      OLLAMA_ORIGINS = "*";
+    };
   };
 
   virtualisation.docker.enable = true;

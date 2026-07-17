@@ -16,12 +16,12 @@ input {
         tap
         tap-button-map "left-right-middle"
         dwt
-        accel-speed 0.2
+        accel-speed 1.0
         accel-profile "adaptive"
     }
 
     mouse {
-        accel-speed 0.9
+        accel-speed 1.0
     }
 
     trackpoint {
