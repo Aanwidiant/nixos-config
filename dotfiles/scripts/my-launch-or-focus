@@ -8,13 +8,21 @@ fi
 WINDOW_PATTERN="$1"
 LAUNCH_COMMAND="${2:-"$WINDOW_PATTERN"}"
 
-WINDOW_ID=$(niri msg --json windows \
-  | jq -r --arg p "$WINDOW_PATTERN" \
-  '.[]|select((.app_id|test("\\b" + $p + "\\b";"i")) or (.title|test("\\b" + $p + "\\b";"i")))|.id' \
+# 1. Ambil daftar semua client dalam format JSON
+# mmsg get all-clients mengembalikan array JSON
+CLIENT_DATA=$(mmsg get all-clients)
+
+# 2. Cari ID client yang cocok dengan pola (app_id atau title)
+# Kita gunakan jq untuk parsing JSON
+WINDOW_ID=$(echo "$CLIENT_DATA" | jq -r --arg p "$WINDOW_PATTERN" \
+  '.[] | select((.app_id | test("\\b" + $p + "\\b"; "i")) or (.title | test("\\b" + $p + "\\b"; "i"))) | .id' \
   | head -n1)
 
 if [[ -n "$WINDOW_ID" ]]; then
-  niri msg action focus-window --id "$WINDOW_ID"
+  # 3. Jika ditemukan, fokuskan ke window tersebut
+  # Menggunakan dispatch focus_client dengan argumen client,<id>
+  mmsg dispatch focus_client client,$WINDOW_ID
 else
+  # 4. Jika tidak ditemukan, jalankan aplikasinya
   setsid $LAUNCH_COMMAND >/dev/null 2>&1 &
 fi

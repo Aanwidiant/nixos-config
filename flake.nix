@@ -11,10 +11,14 @@
       url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mangowm = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }@inputs:
+    { nixpkgs, home-manager, mangowm, ... }@inputs:
 
     let
       system = "x86_64-linux";
@@ -35,7 +39,7 @@
 
         modules = [
           ./hosts/laptop/configuration.nix
-
+          mangowm.nixosModules.mango
           home-manager.nixosModules.home-manager
 
           {
@@ -47,8 +51,7 @@
                 inputs
                 username
                 hostname
-                gitUser
-                ;
+                gitUser;
             };
 
             home-manager.users.${username} = {

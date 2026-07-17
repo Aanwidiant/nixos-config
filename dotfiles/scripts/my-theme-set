@@ -4,6 +4,7 @@ if [[ -z "$1" || "$1" == "CNCLD" ]]; then
   echo "Usage: my-theme-set <theme-name>"
   exit 1
 fi
+
 THEMES_DIR="$HOME/.config/theme/themes"
 CURRENT_THEME_DIR="$HOME/.config/theme/current/theme"
 THEME_NAME=$(echo "$1" |
@@ -11,20 +12,33 @@ THEME_NAME=$(echo "$1" |
   tr '[:upper:]' '[:lower:]' |
   tr ' ' '-')
 THEME_PATH="$THEMES_DIR/$THEME_NAME"
+
 if [[ ! -d "$THEME_PATH" ]]; then
   echo "Theme '$THEME_NAME' does not exist in $THEMES_DIR"
   exit 1
 fi
+
+# Update symlink tema saat ini
 ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
+
+# Update btop theme jika ada
 if [[ -f "$CURRENT_THEME_DIR/btop.theme" ]]; then
   ln -nsf "$CURRENT_THEME_DIR/btop.theme" \
     "$HOME/.config/btop/themes/current.theme"
 fi
 
+# Restart services yang terpengaruh perubahan tema
 pgrep -x waybar >/dev/null && my-restart-waybar
 my-restart-swayosd
 my-restart-terminal
-niri msg action reload-config
+
+# GANTI BAGIAN INI: Reload konfigurasi MangoWM
+# Menggunakan mmsg dispatch reload_config
+mmsg dispatch reload_config
+
+# Reload btop dan mako
 pkill -SIGUSR2 btop 2>/dev/null || true
 makoctl reload
+
+# Jalankan hook jika ada
 my-hook theme-set "$THEME_NAME"

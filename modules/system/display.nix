@@ -6,14 +6,14 @@
     settings = {
       default_session = {
         command =
-          "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd niri-session";
+          "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd mango";
         user = "greeter";
       };
     };
   };
 
-  # Niri
-  programs.niri = {
+  # MangoWM
+  programs.mango = {
     enable = true;
   };
 

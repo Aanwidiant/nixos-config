@@ -16,7 +16,7 @@ link() {
   ln -sfn "$src" "$dest"
 }
 
-link niri          .config/niri
+link mango          .config/mango
 link swayidle      .config/swayidle
 link swaylock      .config/swaylock
 link waybar .config/waybar
@@ -29,7 +29,6 @@ link bash .config/bash
 link hooks .config/hooks
 link btop .config/btop
 link fastfetch .config/fastfetch
-# link nvim .config/nvim
 link zed .config/zed
 link starship/starship.toml .config/starship.toml
 link scripts .local/bin

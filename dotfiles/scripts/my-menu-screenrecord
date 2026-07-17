@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 set -e
+
 SAVE_DIR="$HOME/Videos/Screenrecords"
 mkdir -p "$SAVE_DIR"
 TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
 FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mp4"
 DEFAULT_SOURCE="$(pactl get-default-source)"
 DEFAULT_SINK="$(pactl get-default-sink).monitor"
-FOCUSED_MONITOR=$(niri msg outputs | head -n 1 | grep -oP '\(\K[^)]+')
+
+# Deteksi monitor menggunakan mmsg (MangoWM IPC)
+FOCUSED_MONITOR=$(mmsg get cursorpos | jq -r '.monitor.name' 2>/dev/null)
+
+# Fallback hardcode jika deteksi gagal
+if [[ -z "$FOCUSED_MONITOR" ]]; then
+    FOCUSED_MONITOR="eDP-1"
+fi
 
 cleanup_audio() {
     for id_file in /tmp/rec_loop1_id /tmp/rec_loop2_id /tmp/rec_sink_id; do
@@ -86,6 +94,7 @@ esac
 # START RECORDING
 notify-send "Recording Started" "Recording at $FPS FPS" -i video-display
 pkill -RTMIN+8 waybar
+
 wf-recorder \
     -q \
     -r "$FPS" \
@@ -95,5 +104,6 @@ wf-recorder \
     --audio-codec=aac \
     --pixel-format yuv420p \
     -f "$FILENAME"
+
 notify-send "Recording Finished" "Saved to $SAVE_DIR" -i video-display
 pkill -RTMIN+8 waybar

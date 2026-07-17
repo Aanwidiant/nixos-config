@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
-niri msg windows \
-  | jq -r '.[].id' \
-  | while read -r id; do
-      [[ -n "$id" ]] && niri msg action close-window --id "$id"
-    done
+# Ambil semua client IDs
+CLIENT_IDS=$(mmsg get all-clients | jq -r '.[].id')
 
-niri msg action focus-workspace 1
+for id in $CLIENT_IDS; do
+    if [[ -n "$id" ]]; then
+        # Fokus ke window tersebut dulu
+        mmsg dispatch focusid client,$id
+        # Lalu kill
+        mmsg dispatch killclient
+    fi
+done

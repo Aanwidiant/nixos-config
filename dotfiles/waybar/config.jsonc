@@ -8,11 +8,11 @@
   "margin-left": 4,
   "margin-right": 4,
   "margin-bottom": 1,
-  "modules-left": ["custom/nixos", "niri/workspaces"],
+  "modules-left": ["custom/nixos", "wlr/workspaces"],
   "modules-center": ["clock", "custom/screenrecording-indicator"],
   "modules-right": ["cava", "bluetooth", "network", "pulseaudio", "cpu", "battery"],
 
-  "niri/workspaces": {
+"wlr/workspaces": {
     "on-click": "activate",
     "format": "{icon}",
     "format-icons": {
@@ -27,31 +27,24 @@
       "8": "8",
       "9": "9",
       "10": "0",
-      "active": "󱓻",
-    },
-    "persistent-workspaces": {
-      "1": [],
-      "2": [],
-      "3": [],
-      "4": [],
-      "5": [],
-    },
+      "active": "󱓻"
+    }
   },
   "custom/nixos": {
     "format": "<span font='CaskaydiaMono Nerd Font'>\uF313</span>",
     "on-click": "my-menu",
-    "on-click-right": "xdg-terminal-exec",
+    "on-click-right": "xdg-terminal-exec"
   },
 
   "cpu": {
     "interval": 5,
     "format": "󰍛",
-    "on-click": "my-launch-or-focus-tui btop",
+    "on-click": "my-launch-or-focus-tui btop"
   },
   "clock": {
     "format": "{:L%H:%M}",
     "format-alt": "{:L%A, %d %B %Y }",
-    "tooltip": false,
+    "tooltip": false
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
@@ -66,7 +59,7 @@
     "interval": 3,
     "spacing": 1,
     "on-click": "my-launch-wifi",
-    "on-click-right": "my-toggle-wifi",
+    "on-click-right": "my-toggle-wifi"
   },
   "battery": {
     "format": "{capacity}% {icon}",
@@ -75,7 +68,7 @@
     "format-plugged": "",
     "format-icons": {
       "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
-      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
     },
     "format-full": "󰂅",
     "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
@@ -84,8 +77,8 @@
     "on-click": "my-menu power",
     "states": {
       "warning": 20,
-      "critical": 10,
-    },
+      "critical": 10
+    }
   },
   "bluetooth": {
     "format": "",
@@ -94,7 +87,7 @@
     "format-no-controller": "",
     "tooltip-format": "Devices connected: {num_connections}",
     "on-click": "my-launch-bluetooth",
-    "on-click-right": "my-toggle-bluetooth",
+    "on-click-right": "my-toggle-bluetooth"
   },
   "pulseaudio": {
     "format": "{icon}",
@@ -104,8 +97,8 @@
     "scroll-step": 5,
     "format-muted": "",
     "format-icons": {
-      "default": ["", "", ""],
-    },
+      "default": ["", "", ""]
+    }
   },
   "custom/screenrecording-indicator": {
     "format": "{}",
@@ -113,7 +106,7 @@
     "exec": "~/.config/waybar/indicators/screen-recording.sh",
     "on-click": "pkill -INT wf-recorder && pkill -RTMIN+8 waybar",
     "signal": 8,
-    "interval": 2,
+    "interval": 2
   },
   "cava": {
     "framerate": 30,
@@ -128,7 +121,7 @@
     "input_delay": 2,
     "sleep_timer": 2,
     "hide_on_silence": true,
-    "format-icons": [" ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "format-icons": [" ", "▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"]
     // "format-icons": [" ", "⣀", "⣄", "⣤", "⣦", "⣶", "⣷", "⣿"]
-  },
+  }
 }
