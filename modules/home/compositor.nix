@@ -7,7 +7,6 @@
     waybar
     mako
     swayosd
-    nwg-displays
     hyprpicker
     wlsunset
     swaybg

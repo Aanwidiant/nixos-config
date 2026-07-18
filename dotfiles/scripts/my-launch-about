@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-MY_ID="org.my.bash" exec my-launch-tui \
+MY_ID="org.my.about" exec my-launch-tui \
   bash -c 'printf "\033[?25l"; fastfetch; read -n 1 -s; printf "\033[?25h"'

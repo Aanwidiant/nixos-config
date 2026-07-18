@@ -2,7 +2,7 @@
 
 window {
     border-radius: 8px;
-      opacity: 0.97;
+      opacity: 0.8;
       border: 2px solid @border-color;
       background-color: @background-color;
 }

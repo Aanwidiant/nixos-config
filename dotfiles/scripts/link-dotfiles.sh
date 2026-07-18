@@ -4,21 +4,21 @@ set -e
 DOTFILES="$HOME/nixos-config/dotfiles"
 
 link() {
-  local src="$DOTFILES/$1"
-  local dest="$HOME/$2"
+    local src="$DOTFILES/$1"
+    local dest="$HOME/$2"
 
-  mkdir -p "$(dirname "$dest")"
+    mkdir -p "$(dirname "$dest")"
 
-  if [[ -e "$dest" && ! -L "$dest" ]]; then
-    rm -rf "$dest"
-  fi
+    if [[ -e "$dest" && ! -L "$dest" ]]; then
+        rm -rf "$dest"
+    fi
 
-  ln -sfn "$src" "$dest"
+    ln -sfn "$src" "$dest"
 }
 
-link mango          .config/mango
-link swayidle      .config/swayidle
-link swaylock      .config/swaylock
+link mango .config/mango
+link swayidle .config/swayidle
+link swaylock .config/swaylock
 link waybar .config/waybar
 link mako .config/mako
 link fuzzel .config/fuzzel

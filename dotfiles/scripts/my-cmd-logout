@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 
-# Clear states and close windows (asumsi my-state dan my-window-close-all adalah skrip custom Anda yang tetap valid)
 my-state clear "re*-required" || true
 my-window-close-all || true
 
 sleep 2
 sync
 
-# Quit MangoWM Session
-# Opsi 1: Menggunakan loginctl (Standar systemd, paling direkomendasikan di NixOS)
 loginctl terminate-session "$XDG_SESSION_ID"
-
-# Opsi 2: Jika MangoWM memiliki CLI command khusus untuk quit (cek dokumentasi terbaru)
-# mangoctl quit 

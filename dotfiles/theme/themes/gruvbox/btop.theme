@@ -1,0 +1,81 @@
+# Bashtop theme with Gruvbox Dark palette
+# https://github.com/morhetz/gruvbox
+
+# Main background
+theme[main_bg]="#1D2021"
+
+# Main text color
+theme[main_fg]="#EBDBB2"
+
+# Title color for boxes
+theme[title]="#FABD2F"
+
+# Highlight color for keyboard shortcuts
+theme[hi_fg]="#83A598"
+
+# Background color of selected item in processes box
+theme[selected_bg]="#3C3836"
+
+# Foreground color of selected item in processes box
+theme[selected_fg]="#FBF1C7"
+
+# Color of inactive/disabled text
+theme[inactive_fg]="#665C54"
+
+# Misc colors for processes box including mini cpu graphs, details memory graph and details status text
+theme[proc_misc]="#83A598"
+
+# Cpu box outline color
+theme[cpu_box]="#D79921"
+
+# Memory/disks box outline color
+theme[mem_box]="#B16286"
+
+# Net up/down box outline color
+theme[net_box]="#458588"
+
+# Processes box outline color
+theme[proc_box]="#98971A"
+
+# Box divider line and small boxes line color
+theme[div_line]="#665C54"
+
+# Temperature graph colors
+theme[temp_start]="#98971A"
+theme[temp_mid]="#FABD2F"
+theme[temp_end]="#CC241D"
+
+# CPU graph colors
+theme[cpu_start]="#458588"
+theme[cpu_mid]="#83A598"
+theme[cpu_end]="#D3869B"
+
+# Mem/Disk free meter
+theme[free_start]="#98971A"
+theme[free_mid]="#B8BB26"
+theme[free_end]="#EBDBB2"
+
+# Mem/Disk cached meter
+theme[cached_start]="#458588"
+theme[cached_mid]="#83A598"
+theme[cached_end]="#D3869B"
+
+# Mem/Disk available meter
+theme[available_start]="#98971A"
+theme[available_mid]="#FABD2F"
+theme[available_end]="#EBDBB2"
+
+# Mem/Disk used meter
+theme[used_start]="#FABD2F"
+theme[used_mid]="#FE8019"
+theme[used_end]="#CC241D"
+
+# Download graph colors
+theme[download_start]="#458588"
+theme[download_mid]="#83A598"
+theme[download_end]="#98971A"
+
+# Upload graph colors
+theme[upload_start]="#B16286"
+theme[upload_mid]="#D3869B"
+theme[upload_end]="#FABD2F"

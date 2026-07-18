@@ -1,28 +1,27 @@
 #!/usr/bin/env bash
 
 if (($# == 0)); then
-  echo "Usage: my-launch-or-focus [window-pattern] [launch-command]"
+  echo "Usage: my-launch-or-focus [app-id-pattern] [launch-command]"
   exit 1
 fi
 
-WINDOW_PATTERN="$1"
-LAUNCH_COMMAND="${2:-"$WINDOW_PATTERN"}"
+APP_PATTERN="$1"
+LAUNCH_COMMAND="${2:-"$APP_PATTERN"}"
 
-# 1. Ambil daftar semua client dalam format JSON
-# mmsg get all-clients mengembalikan array JSON
-CLIENT_DATA=$(mmsg get all-clients)
+CLIENT_DATA=$(mmsg get all-clients 2>/dev/null)
 
-# 2. Cari ID client yang cocok dengan pola (app_id atau title)
-# Kita gunakan jq untuk parsing JSON
-WINDOW_ID=$(echo "$CLIENT_DATA" | jq -r --arg p "$WINDOW_PATTERN" \
-  '.[] | select((.app_id | test("\\b" + $p + "\\b"; "i")) or (.title | test("\\b" + $p + "\\b"; "i"))) | .id' \
-  | head -n1)
+WINDOW_ID=$(echo "$CLIENT_DATA" | jq -r --arg p "$APP_PATTERN" '
+  (if type == "object" then .clients else . end) as $list |
+  [$list[] | 
+  select(
+    (.appid // "" | ascii_downcase | contains($p | ascii_downcase))
+  )] |
+  sort_by(if .visible then 0 else 1 end) |
+  .[0].id
+')
 
-if [[ -n "$WINDOW_ID" ]]; then
-  # 3. Jika ditemukan, fokuskan ke window tersebut
-  # Menggunakan dispatch focus_client dengan argumen client,<id>
-  mmsg dispatch focus_client client,$WINDOW_ID
+if [[ -n "$WINDOW_ID" && "$WINDOW_ID" != "null" ]]; then
+  mmsg dispatch focusid client,$WINDOW_ID
 else
-  # 4. Jika tidak ditemukan, jalankan aplikasinya
   setsid $LAUNCH_COMMAND >/dev/null 2>&1 &
 fi

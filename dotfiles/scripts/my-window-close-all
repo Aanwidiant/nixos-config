@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 
-# Ambil semua client IDs
-CLIENT_IDS=$(mmsg get all-clients | jq -r '.[].id')
-
+CLIENT_IDS=$(mmsg get all-clients | jq -r '.clients[].id')
 for id in $CLIENT_IDS; do
-    if [[ -n "$id" ]]; then
-        # Fokus ke window tersebut dulu
-        mmsg dispatch focusid client,$id
-        # Lalu kill
-        mmsg dispatch killclient
+    if [[ -n "$id" && "$id" != "null" ]]; then
+        mmsg dispatch killclient client,$id
     fi
 done
+

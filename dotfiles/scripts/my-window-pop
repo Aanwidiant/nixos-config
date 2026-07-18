@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-CLIENT_ID=$(mmsg get focusing-client | jq -r '.id')
-if [[ -n "$CLIENT_ID" ]]; then
-    mmsg dispatch toggle_floating client,$CLIENT_ID
-fi

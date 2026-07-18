@@ -33,9 +33,13 @@
     min-width: 9px;
 }
 
-#workspaces button.empty {
-    opacity: 0.5;
+#workspaces button.active {
+    color: @foreground;
+    border: 1px solid @foreground;
+    border-radius: 6px;
+    margin: 2px
 }
+
 
 #cpu,
 #battery,
