@@ -42,7 +42,8 @@
     "clock": {
         "format": "{:L%H:%M}",
         "format-alt": "{:L%A, %d %B %Y }",
-        "tooltip": false
+        "tooltip": false,
+        "on-click-right": "my-launch-or-focus-tui calcure"
     },
     "network": {
         "format-icons": [

@@ -1,0 +1,16 @@
+{
+  "background": "#1b1e28",
+  "surface": "#2e3440",
+  "foreground": "#eceff4",
+  "muted": "#4c566a",
+  "border": "#3b4252",
+  "primary": "#88c0d0",
+  "secondary": "#81a1c1",
+  "accent": "#8fbcbb",
+  "success": "#a3be8c",
+  "warning": "#ebcb8b",
+  "danger": "#bf616a",
+  "iconFont": "JetBrainsMono Nerd Font"
+}
+
+

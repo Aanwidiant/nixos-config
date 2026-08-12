@@ -1,0 +1,107 @@
+#  System & Config
+SUPER+SHIFT+r                   Reload MangoWM Configuration
+SUPER+CTRL+i                    Toggle Idle Inhibitor (Prevent Sleep)
+SUPER+CTRL,n                    Toggle Night Light / Blue Light Filter
+SUPER+CTRL,t                    Show Current Date & Time
+SUPER+CTRL,b                    Show Battery Status
+NONE,XF86Display                Launch htop (System Monitor)
+
+# Apps & Launchers
+SUPER+Return                    Launch Terminal (Kitty)
+SUPER+space                     App Launcher (Fuzzel DRUN)
+SUPER+ALT+space                 Main Menu
+SUPER+Escape                    System Menu
+SUPER+CTRL,e                    Emoji Picker
+SUPER+k                         Keybinding List
+SUPER+SHIFT+f                   File Manager (Thunar)
+SUPER+SHIFT,b                   Launch Browser
+SUPER+SHIFT+ALT+b               Launch Browser (Private Mode)
+SUPER+SHIFT,e                   Launch Zeditor
+SUPER+SHIFT+n                   Launch Neovim in Terminal
+SUPER+SHIFT,w                   WhatsApp Web App
+NONE,XF86WLAN                   Quick Open File Manager
+NONE,XF86NotificationCenter     Launch DbGate
+NONE,XF86PickupPhone            Launch Bruno API Client
+NONE,XF86HangupPhone            Launch Browser
+NONE,XF86Favorites              Launch Zeditor
+
+# TUI & Special Tools
+SUPER+SHIFT,a                   Launch About / Fastfetch Info
+SUPER+CTRL,w                    Toggle Webcam Preview
+SUPER+CTRL+v                    Clipboard History (Cliphist + Fuzzel)
+
+# Clipboard & Wtype
+SUPER+SHIFT+c                   Paste as Plain Text (Ctrl+Insert)
+SUPER+SHIFT,v                   Paste with Shift Modifier
+SUPER+SHIFT,x                   Cut (Ctrl+X via wtype)
+
+# Volume & Brightness
+NONE,XF86AudioRaiseVolume       Volume Up (OSD)
+NONE,XF86AudioLowerVolume       Volume Down (OSD)
+NONE,XF86AudioMute              Toggle Mute (OSD)
+NONE,XF86AudioMicMute           Toggle Microphone Mute
+NONE,XF86MonBrightnessUp        Brightness Up (OSD)
+NONE,XF86MonBrightnessDown      Brightness Down (OSD)
+ALT+XF86AudioRaiseVolume        Volume Fine Up (+1%)
+ALT+XF86AudioLowerVolume        Volume Fine Down (-1%)
+ALT+XF86MonBrightnessUp         Brightness Fine Up (+1%)
+ALT+XF86MonBrightnessDown       Brightness Fine Down (-1%)
+
+# Notifications
+SUPER+,                         Dismiss Last Notification
+SUPER+SHIFT+,                   Dismiss All Notifications
+SUPER+CTRL+,                    Toggle Do Not Disturb Mode
+SUPER+ALT+,                     Invoke Notification Action
+
+# Aesthetics & Theme
+SUPER+SHIFT+space               Toggle Waybar Visibility
+SUPER+CTRL+space                Cycle Background / Theme
+
+# Screenshot & Recording
+Print                           Screenshot Region
+SHIFT+Print                     Screenshot Fullscreen (Active Monitor)
+ALT+Print                       Screen Recording Menu
+
+# Vim-Style Navigation (Focus)
+SUPER+h                         Focus Window Left
+SUPER+j                         Focus Window Down
+SUPER+k                         Focus Window Up
+SUPER+l                         Focus Window Right
+
+#  Window Manipulation
+SUPER+SHIFT+h                   Swap Window Left
+SUPER+SHIFT+j                   Swap Window Down
+SUPER+SHIFT+k                   Swap Window Up
+SUPER+SHIFT+l                   Swap Window Right
+SUPER+SHIFT+q                   Kill Focused Client (Safe)
+SUPER+t                         Toggle Floating Mode
+SUPER+f                         Toggle Fullscreen
+SUPER+c                         Toggle Maximize to Screen
+SUPER+SHIFT+c                   Center Window on Screen
+SUPER+g                         Toggle Global/All Tags
+SUPER+n                         Switch Layout (Dwindle ↔ Scroller)
+SUPER+Tab                       Toggle Jump Mode / Overview
+SUPER+i                         Minimize to Scratchpad
+SUPER+SHIFT,i                   Restore from Scratchpad
+SUPER+s                         Toggle Scratchpad Visibility
+SUPER+r                         Cycle Scroller Proportion Preset
+
+# ️ Monitor & Tag Navigation
+SUPER+CTRL+h                    Focus Monitor Left
+SUPER+CTRL+j                    Focus Monitor Down
+SUPER+CTRL+k                    Focus Monitor Up
+SUPER+CTRL+l                    Focus Monitor Right
+SUPER+1..9                      View Tag 1-9
+SUPER+SHIFT+1..9                Move Window to Tag 1-9
+SUPER+z                         View Previous Tag
+SUPER+x                         View Next Tag
+SUPER+SHIFT+z                   Move Window to Previous Tag
+SUPER+SHIFT+x                   Move Window to Next Tag
+
+# Mouse & Gestures
+SUPER+LeftClick                 Move Window
+SUPER+RightClick                Resize Window
+3-Finger Swipe Up               View Previous Tag
+3-Finger Swipe Down             View Next Tag
+SUPER+Scroll Up                 View Previous Tag
+SUPER+Scroll Down               View Next Tag

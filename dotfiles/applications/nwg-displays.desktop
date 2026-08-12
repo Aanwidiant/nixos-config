@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Displays Settings
-GenericName=Output configuration utility
-Comment=nwg-shell tool to configure outputs
-Exec=nwg-displays
-Icon=preferences-desktop-display
-Terminal=false
-Categories=Settings;DesktopSettings;

@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    brave
     libreoffice
     librewolf
     onlyoffice-desktopeditors

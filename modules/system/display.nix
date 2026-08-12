@@ -12,10 +12,10 @@
     };
   };
 
-  # MangoWM
-  programs.mango = {
-    enable = true;
-  };
+  # # MangoWM
+  # programs.mango = {
+  #   enable = true;
+  # };
 
   programs.dconf.enable = true;
 
@@ -23,11 +23,15 @@
   xdg.portal = {
     enable = true;
     extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk 
     ];
-    config.common.default = "*";
-  };
+    config = {
+      common = {
+        default = [ "gtk" ];
+      };
+    };
+    wlr.enable = true;
+  }; 
 
   # Input & gestures
   services.libinput.enable = true;

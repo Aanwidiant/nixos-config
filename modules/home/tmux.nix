@@ -70,14 +70,14 @@
       # tmux-resurrect
       set -g @resurrect-processes '"nvim->nvim *" lazygit'
 
-      # Catppuccin Mocha theme colors
-      thm_bg="#1e1e2e"
-      thm_fg="#cdd6f4"
-      thm_cyan="#89dceb"
-      thm_gray="#313244"
-      thm_magenta="#cba6f7"
-      thm_blue="#89b4fa"
-      thm_black4="#45475a"
+      # Nord theme colors
+      thm_bg="#2E3440"        # nord0
+      thm_fg="#D8DEE9"        # nord4
+      thm_cyan="#88C0D0"      # nord8
+      thm_gray="#3B4252"      # nord1
+      thm_magenta="#B48EAD"   # nord15
+      thm_blue="#81A1C1"      # nord9
+      thm_black4="#434C5E"    # nord2
 
       # Status bar
       set -g status on

@@ -17,6 +17,7 @@ link() {
 }
 
 link mango .config/mango
+link quickshell .config/quickshell
 link swayidle .config/swayidle
 link swaylock .config/swaylock
 link waybar .config/waybar

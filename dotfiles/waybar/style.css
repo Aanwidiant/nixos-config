@@ -1,7 +1,7 @@
 @import "../theme/current/theme/waybar.css";
 
 #waybar {
-    background-color: alpha(@background, 0.6);
+    background-color: alpha(@foreground, 0.15);
 }
 
 #layer {
@@ -37,7 +37,7 @@
     color: @foreground;
     border: 1px solid @foreground;
     border-radius: 6px;
-    margin: 2px
+    margin: 3px
 }
 
 

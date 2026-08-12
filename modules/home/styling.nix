@@ -8,7 +8,7 @@ in
 {
   home.packages = with pkgs; [
     reversalBlue
-    orchis-theme
+    colloid-gtk-theme 
     gsettings-desktop-schemas
   ];
 
@@ -24,8 +24,8 @@ in
   gtk = {
     enable = true;
     theme = {
-      name = "Orchis-Dark";
-      package = pkgs.orchis-theme;
+      name = "Colloid-Dark";
+      package = pkgs.colloid-gtk-theme;
     };
     gtk4.theme = config.gtk.theme;
     iconTheme = {
@@ -46,7 +46,7 @@ in
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       icon-theme = "Reversal-blue-dark";
-      gtk-theme = "Orchis-Dark";
+      gtk-theme = "Colloid-Dark";
       cursor-theme = "Bibata-Modern-Ice";
     };
   };

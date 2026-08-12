@@ -58,6 +58,7 @@
               imports = [
                 ./home/default.nix
                 inputs.helium-flake.homeModules.default
+                inputs.mangowm.hmModules.mango
               ];
 
               programs.helium = {

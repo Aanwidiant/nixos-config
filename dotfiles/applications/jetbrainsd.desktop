@@ -1,7 +1,0 @@
-[Desktop Entry]
-Version=1.5
-Name=JetBrains
-Type=Application
-NoDisplay=true
-MimeType=x-scheme-handler/jetbrains;
-Exec=/home/aanwidiant/.local/share/JetBrains/Daemon/bundles/current/jetbrainsd/bin/jetbrainsd handleUri %u

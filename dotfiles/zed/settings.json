@@ -9,10 +9,30 @@
 {
   // "disable_ai": true,
   // "show_completions_on_input": false,
+  "language_models": {
+    "anthropic_compatible": {
+      "agentrouter": {
+        "api_url": "https://agentrouter.org/",
+        "available_models": [
+          {
+            "name": "claude-opus-5,claude-opus-4-8",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "extra_beta_headers": [],
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "prompt_caching": false
+            }
+          }
+        ]
+      }
+    }
+  },
   "disable_ai": false,
   "edit_predictions": {
     "mode": "subtle",
-    "provider": "copilot"
+    "provider": "zed"
   },
   "agent_servers": {
     "opencode": {
@@ -54,14 +74,36 @@
     "words": "disabled",
   },
   "agent": {
+    "tool_permissions": {
+      "tools": {
+        "search_web": {
+          "default": "allow"
+        },
+        "delete_path": {
+          "always_allow": [
+            {
+              "pattern": "^wedding-invitation/"
+            }
+          ]
+        },
+        "create_directory": {
+          "default": "allow"
+        },
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    },
+    "sandbox_permissions": {
+      "allow_unsandboxed": true
+    },
     "dock": "right",
     "favorite_models": [],
     "default_profile": "write",
     "default_model": {
-      "effort": "medium",
       "enable_thinking": true,
-      "provider": "openai-subscribed",
-      "model": "gpt-5.5",
+      "provider": "ollama",
+      "model": "qwen3:8b",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],
@@ -133,7 +175,7 @@
   "theme": {
     "mode": "dark",
     "light": "Ayu Glass Light",
-    "dark": "Tokyo Night Storm"
+    "dark": "Nord Dark"
   },
   "scroll_beyond_last_line": "off",
   "terminal": {

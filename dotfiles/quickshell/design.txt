@@ -1,0 +1,58 @@
+Quickshell dynamic island
+Top Bar (clock) swipeable/scroll to switch left and right
+Notification & Notification manager
+Control Center (toggle and slider like smartphone control panel)
+Polkit
+OSD (audio, brightness)
+Launcher
+Keybind list
+Clipboard
+Logout menu
+Power Menu
+Simple calendar widget
+Music
+Bluetooth widget
+Wifi widget
+Audio widget
+Emoji picker
+Background picker
+Theme picker
+font picker
+stopwatch
+timer
+screenrecord
+screenshot
+color picker
+
+
+└── Quickshell
+    ├── Status Island
+    ├── Top Bar
+    ├── Control Center
+    ├── Notification
+    ├── Launcher
+    ├── Polkit
+    ├── OSD
+    ├── Calendar
+    ├── Bluetooth
+    ├── WiFi
+    ├── Audio
+    ├── Clipboard
+    ├── Emoji
+    ├── Power Menu
+    └── Wallpaper Picker
+
+
+| Enum              | Nilai |
+| ----------------- | ----: |
+| `Font.Thin`       |   100 |
+| `Font.ExtraLight` |   200 |
+| `Font.Light`      |   300 |
+| `Font.Normal`     |   400 |
+| `Font.Medium`     |   500 |
+| `Font.DemiBold`   |   600 |
+| `Font.Bold`       |   700 |
+| `Font.ExtraBold`  |   800 |
+| `Font.Black`      |   900 |
+
+󰚾  \udb81\udebe

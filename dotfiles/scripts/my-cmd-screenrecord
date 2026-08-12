@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+set -e
+
+MODE="${1:-fullscreen}"
+AUDIO="${2:-desktop}"
+FPS="${3:-60}"
+
+SAVE_DIR="$HOME/Videos/Screenrecords"
+mkdir -p "$SAVE_DIR"
+TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
+FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mp4"
+
+DEFAULT_SOURCE="$(pactl get-default-source)"
+DEFAULT_SINK="$(pactl get-default-sink).monitor"
+
+FOCUSED_MONITOR=$(mmsg get cursorpos 2>/dev/null | jq -r '.monitor.name // .monitor // empty' 2>/dev/null || true)
+if [[ -z "$FOCUSED_MONITOR" || "$FOCUSED_MONITOR" == "null" ]]; then
+    FOCUSED_MONITOR="eDP-1"
+fi
+
+cleanup_audio() {
+    for id_file in /tmp/rec_loop1_id /tmp/rec_loop2_id /tmp/rec_sink_id; do
+        if [ -f "$id_file" ]; then
+            pactl unload-module "$(cat "$id_file")" 2>/dev/null || true
+            rm -f "$id_file"
+        fi
+    done
+
+    pactl list short modules | grep "recording_combined" | awk '{print $1}' | while read -r mod_id; do
+    pactl unload-module "$mod_id" 2>/dev/null || true
+done
+}
+trap cleanup_audio EXIT INT TERM
+
+case "$MODE" in
+    fullscreen)
+        GEOMETRY_ARGS=(-o "$FOCUSED_MONITOR")
+        ;;
+    region|*)
+        GEOM=$(slurp 2>/dev/null)
+        [ -z "$GEOM" ] && exit 0
+        GEOMETRY_ARGS=(-g "$GEOM")
+        ;;
+esac
+
+AUDIO_ARGS=()
+case "$AUDIO" in
+    mic)
+        AUDIO_ARGS+=(--audio="$DEFAULT_SOURCE")
+        ;;
+    desktop)
+        AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
+        ;;
+    combined)
+        pactl load-module module-null-sink \
+            sink_name=recording_combined \
+            rate=48000 \
+            channels=2 > /tmp/rec_sink_id
+
+        pactl load-module module-loopback \
+            source="$DEFAULT_SOURCE" \
+            sink=recording_combined \
+            channels=2 \
+            remix=yes \
+            latency_msec=50 > /tmp/rec_loop1_id
+
+        pactl load-module module-loopback \
+            source="$DEFAULT_SINK" \
+            sink=recording_combined \
+            latency_msec=50 > /tmp/rec_loop2_id
+
+        sleep 1
+        AUDIO_ARGS+=(--audio="recording_combined.monitor")
+        ;;
+    none|*)
+        ;;
+esac
+
+notify-send "Recording Started" 
+
+wf-recorder \
+    -q \
+    -r "$FPS" \
+    -b 6M \
+    "${GEOMETRY_ARGS[@]}" \
+    "${AUDIO_ARGS[@]}" \
+    --audio-codec=aac \
+    --pixel-format yuv420p \
+    -f "$FILENAME"
+
+notify-send "Recording Finished" 

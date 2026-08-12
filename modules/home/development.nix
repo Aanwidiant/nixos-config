@@ -5,7 +5,6 @@
     # Editors & Version Control
     neovim
     zed-editor
-    jetbrains.webstorm
     bruno
     github-cli
     lazygit
@@ -28,7 +27,9 @@
     tree-sitter
     ollama
     jre
+    qt6.qtdeclarative
 
-    #android-studio
+    #android-studio    
+    #jetbrains.webstorm
   ];
 }

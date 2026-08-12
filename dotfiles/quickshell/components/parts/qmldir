@@ -1,0 +1,14 @@
+CavaVisualizer 1.0 CavaVisualizer.qml
+Clock 1.0 Clock.qml
+Date 1.0 Date.qml
+ActionButton 1.0 ActionButton.qml
+LongToggle 1.0 LongToggle.qml
+ShortToggle 1.0 ShortToggle.qml
+CustomSlider 1.0 CustomSlider.qml
+BackButton 1.0 BackButton.qml
+BatteryIcon 1.0 BatteryIcon.qml
+CustomListView 1.0 CustomListView.qml
+HeaderIcon 1.0 HeaderIcon.qml
+Stopwatch 1.0 Stopwatch.qml
+Timer 1.0 Timer.qml
+DigitSpinBox 1.0 DigitSpinBox.qml

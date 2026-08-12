@@ -22,6 +22,7 @@
     p7zip
     file-roller
     xwayland-satellite
+    unzip
   ];
 
   programs.thunar.enable = true;
