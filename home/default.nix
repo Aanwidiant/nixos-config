@@ -3,15 +3,17 @@
 {
   imports = [
     ../modules/home/apps.nix
+    ../modules/home/bash.nix
     ../modules/home/capture.nix
     ../modules/home/cli.nix
     ../modules/home/database.nix
     ../modules/home/development.nix
     ../modules/home/env.nix
+    ../modules/home/fastfetch.nix
     ../modules/home/git.nix
     ../modules/home/idle.nix
     ../modules/home/compositor.nix
-    ../modules/home/shell.nix
+    ../modules/home/starship.nix
     ../modules/home/styling.nix
     ../modules/home/terminal.nix
     ../modules/home/tmux.nix

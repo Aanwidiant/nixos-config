@@ -6,7 +6,6 @@
     impala
     bluetui
     wiremix
-    fastfetch
     btop
     htop
     powertop

@@ -7,7 +7,6 @@
   };
 
   home.packages = with pkgs; [
-    # swayidle
     wayidle
     hyprlock
     hyprpicker

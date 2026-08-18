@@ -9,8 +9,6 @@
 
     # File & Search Tools
     fd
-    bat
-    eza
     tldr
     ripgrep
 
@@ -23,7 +21,5 @@
     # XDG & Desktop Integration
     xdg-utils
     xdg-terminal-exec
-    libxkbcommon
-    libcanberra-gtk3
   ];
 }

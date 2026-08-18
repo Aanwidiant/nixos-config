@@ -16,17 +16,13 @@ link() {
     ln -sfn "$src" "$dest"
 }
 
+link hypr .config/hypr
 link mango .config/mango
 link quickshell .config/quickshell
-link swayidle .config/swayidle
 link kitty .config/kitty
 link theme .config/theme
-link bash .config/bash
-link hooks .config/hooks
 link btop .config/btop
-link fastfetch .config/fastfetch
 link zed .config/zed
-link starship/starship.toml .config/starship.toml
 link scripts .local/bin
 link applications .local/share/applications
 link nvim .config/nvim

@@ -1,6 +1,0 @@
-source ./shell
-source ./aliases
-source ./functions
-source ./init
-source ./envs
-[[ $- == *i* ]] && bind -f ./inputrc
