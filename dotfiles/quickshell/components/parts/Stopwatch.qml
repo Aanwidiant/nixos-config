@@ -47,6 +47,7 @@ ColumnLayout {
             }
 
             HoverHandler { cursorShape: Qt.PointingHandCursor }
+
             TapHandler { onTapped: TimerService.swToggle() }
         }
 

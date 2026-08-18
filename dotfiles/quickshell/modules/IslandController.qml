@@ -40,6 +40,7 @@ Item {
     || currentState === "screenrecord"
     || currentState === "timer"
     || currentState === "emoji"
+    || currentState === "notification"
     || isOsdState
 
     readonly property bool isExpandedOrClosing: isExpandedState || isClosingExpanded
@@ -405,6 +406,36 @@ Item {
             if (controller.isExpandedOrClosing && !controller.isOsdState) return
             controller.pendingType = "microphone"
             controller.triggerContentChange()
+        }
+    }
+
+    Connections {
+        target: NotificationService
+
+        function onNotificationReceived(notification) {
+            if (controller.currentState === "polkit") return
+
+            if (controller.currentState === "notification") {
+                timers.restartResetTimer()
+                return
+            }
+
+            if (controller.isExpandedState) {
+                controller.closeExpandedState(function() {
+                    controller.pendingType = "notification"
+                    controller.triggerContentChange()
+                })
+                return
+            }
+
+            controller.pendingType = "notification"
+            controller.triggerContentChange()
+        }
+
+        function onNotificationDismissed(notification) {
+            if (NotificationService.activeCount === 0) {
+                controller.closeExpandedState()
+            }
         }
     }
 

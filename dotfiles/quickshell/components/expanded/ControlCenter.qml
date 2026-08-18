@@ -10,15 +10,11 @@ Item {
     id: root
 
     implicitWidth: 400
-    implicitHeight: 472
+    implicitHeight: 456
 
     property string currentUser: Quickshell.env("USER") || "Guest"
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     ColumnLayout {
         anchors.top: parent.top
@@ -70,15 +66,16 @@ Item {
                     text: "\uf011"
                     font.family: Theme.iconFont
                     font.pixelSize: Metrics.textXL
-                    color: powerArea.containsMouse ? Theme.primary : Theme.muted
+                    color: hoverPowerSystem.hovered ? Theme.primary : Qt.alpha(Theme.primary, 0.9)
                 }
 
-                MouseArea {
-                    id: powerArea
-                    anchors.fill: parent
-                    hoverEnabled: true
+                HoverHandler {
+                    id: hoverPowerSystem
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: controller.openPowerSystem()
+                }
+
+                TapHandler {
+                    onTapped: controller.openPowerSystem()
                 }
             }
 
@@ -93,12 +90,10 @@ Item {
                     anchors.centerIn: parent
                 }
 
-                MouseArea {
-                    id: batteryArea
-                    anchors.fill: parent
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: controller.openPowerProfile()
+                HoverHandler { cursorShape: Qt.PointingHandCursor }
+
+                TapHandler {
+                    onTapped: controller.openPowerProfile() 
                 }
             }
         }

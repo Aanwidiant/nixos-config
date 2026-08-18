@@ -9,6 +9,7 @@
 {
   // "disable_ai": true,
   // "show_completions_on_input": false,
+  "proxy": "",
   "language_models": {
     "anthropic_compatible": {
       "agentrouter": {
@@ -101,9 +102,10 @@
     "favorite_models": [],
     "default_profile": "write",
     "default_model": {
+      "effort": "medium",
       "enable_thinking": true,
-      "provider": "ollama",
-      "model": "qwen3:8b",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],
@@ -174,8 +176,8 @@
   "buffer_font_size": 12.0,
   "theme": {
     "mode": "dark",
-    "light": "Ayu Glass Light",
-    "dark": "Nord Dark"
+    "light": "One Light",
+    "dark": "Catppuccin Mocha (Blur)"
   },
   "scroll_beyond_last_line": "off",
   "terminal": {

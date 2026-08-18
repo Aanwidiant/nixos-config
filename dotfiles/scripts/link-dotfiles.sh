@@ -19,11 +19,6 @@ link() {
 link mango .config/mango
 link quickshell .config/quickshell
 link swayidle .config/swayidle
-link swaylock .config/swaylock
-link waybar .config/waybar
-link mako .config/mako
-link fuzzel .config/fuzzel
-link swayosd .config/swayosd
 link kitty .config/kitty
 link theme .config/theme
 link bash .config/bash
@@ -34,5 +29,6 @@ link zed .config/zed
 link starship/starship.toml .config/starship.toml
 link scripts .local/bin
 link applications .local/share/applications
+link nvim .config/nvim
 
 echo "Dotfiles linked ✔"

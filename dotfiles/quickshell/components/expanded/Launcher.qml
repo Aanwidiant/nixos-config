@@ -12,13 +12,7 @@ Item {
     implicitWidth: 400
     implicitHeight: 400
 
-    property bool expanded: false
-
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState() 
-    }
+    CloseButton {}
 
     onVisibleChanged: {
         if (!visible) {
@@ -29,6 +23,7 @@ Item {
     }
 
     function launch(app) {
+        if (!app) return;
         if (app.runInTerminal) {
             Quickshell.execDetached({
                 command: ["kitty", "-e"].concat(app.command)
@@ -38,34 +33,36 @@ Item {
         }
     }
 
+    readonly property var masterApps: {
+        if (typeof DesktopEntries === "undefined" || !DesktopEntries.applications) {
+            return [];
+        }
+
+        const manuallyHidden = [
+            "base", "gvim", "calc", "draw", "impress", 
+            "math", "thunar-bulk-rename", "thunar-settings", 
+            "thunar-volman-settings", "writer"
+        ];
+
+        return Array.from(DesktopEntries.applications.values)
+        .filter(d => {
+            if (!d || !d.name) return false;
+            if (d.hidden || d.noDisplay) return false;
+            if (manuallyHidden.includes(d.name) || manuallyHidden.includes(d.id)) return false;
+            return true;
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
+    }
+
     ScriptModel {
         id: filtered
 
         values: {
-            if (typeof DesktopEntries === "undefined" || !DesktopEntries.applications) {
-                return [];
-            }
+            const q = searchableList.query ? searchableList.query.trim().toLowerCase() : "";
 
-            const manuallyHidden = [
-                "base", "gvim", "calc", "draw", "impress", 
-                "math", "thunar-bulk-rename", "thunar-settings", 
-                "thunar-volman-settings", "writer"
-            ];
+            if (q === "") return root.masterApps;
 
-            const allEntries = [...DesktopEntries.applications.values]
-            .filter(d => {
-                if (!d || !d.name) return false;
-                if (d.hidden || d.noDisplay) return false;
-                if (manuallyHidden.includes(d.name) || manuallyHidden.includes(d.id)) return false;
-                return true;
-            })
-            .sort((a, b) => a.name.localeCompare(b.name));
-
-            const q = searchableList.query.trim().toLowerCase();
-
-            if (q === "") return allEntries;
-
-            return allEntries.filter(d => {
+            return root.masterApps.filter(d => {
                 const name       = (d.name || "").toLowerCase();
                 const keywords   = (d.keywords || []).join(" ").toLowerCase();
                 const categories = (d.categories || []).join(" ").toLowerCase();
@@ -93,12 +90,12 @@ Item {
             searchableList.currentIndex = filtered.values.length > 0 ? 0 : -1;
         }
 
-       delegate: Rectangle {
+        delegate: Rectangle {
             id: entry
             required property var modelData
             required property int index
 
-            width: searchableList.listView.width
+            width: searchableList.listView ? searchableList.listView.width : parent.width
             height: 42
             radius: Metrics.radiusMD
 
@@ -106,8 +103,8 @@ Item {
             readonly property bool isHovered: hoverHandler.hovered
 
             color: isCurrent 
-                   ? Qt.alpha(Theme.primary, 0.75) 
-                   : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
+            ? Qt.alpha(Theme.primary, 0.75) 
+            : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
 
             Behavior on color { ColorAnimation { duration: 150 } }
 
@@ -136,12 +133,12 @@ Item {
                 IconImage {
                     Layout.preferredWidth: 32
                     Layout.preferredHeight: 32
-                    source: Quickshell.iconPath(entry.modelData.icon, true)
+                    source: Quickshell.iconPath(entry.modelData.icon || "", true)
                 }
 
                 Text {
                     Layout.fillWidth: true
-                    text: entry.modelData.name
+                    text: entry.modelData.name || ""
                     color: entry.ListView.isCurrentItem ? Theme.foreground : Theme.primary 
                     font.pixelSize: Metrics.textMD
                     font.weight: Font.Medium

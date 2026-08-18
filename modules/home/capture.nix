@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    wf-recorder
     pulseaudio
     grim
     slurp

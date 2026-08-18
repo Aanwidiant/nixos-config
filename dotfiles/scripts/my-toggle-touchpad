@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-mmsg dispatch toggle_trackpad_enable
-notify-send "Touchpad Toggled"

@@ -33,6 +33,7 @@ Item {
         if (contentType === "screenrecord") return screenrecordContent
         if (contentType === "timer") return timerContent
         if (contentType === "emoji") return emojiContent
+        if (contentType === "notification") return notifContent
         return null
     }
 
@@ -183,5 +184,11 @@ Item {
         id: emojiContent 
         anchors.centerIn: parent
         visible: popup.contentType === "emoji"
+    }
+
+    Notification {
+        id: notifContent
+        anchors.centerIn: parent
+        visible: popup.contentType === "notification"
     }
 }

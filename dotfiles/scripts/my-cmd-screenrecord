@@ -8,84 +8,81 @@ FPS="${3:-60}"
 SAVE_DIR="$HOME/Videos/Screenrecords"
 mkdir -p "$SAVE_DIR"
 TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
-FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mp4"
+FILENAME="$SAVE_DIR/recording_$TIMESTAMP.mkv"
 
-DEFAULT_SOURCE="$(pactl get-default-source)"
-DEFAULT_SINK="$(pactl get-default-sink).monitor"
-
-FOCUSED_MONITOR=$(mmsg get cursorpos 2>/dev/null | jq -r '.monitor.name // .monitor // empty' 2>/dev/null || true)
-if [[ -z "$FOCUSED_MONITOR" || "$FOCUSED_MONITOR" == "null" ]]; then
-    FOCUSED_MONITOR="eDP-1"
-fi
-
-cleanup_audio() {
-    for id_file in /tmp/rec_loop1_id /tmp/rec_loop2_id /tmp/rec_sink_id; do
-        if [ -f "$id_file" ]; then
-            pactl unload-module "$(cat "$id_file")" 2>/dev/null || true
-            rm -f "$id_file"
+case "$1" in
+    stop)
+        if pgrep -f "gpu-screen-recorder" > /dev/null; then
+            pkill -SIGINT -f "gpu-screen-recorder" 
+            notify-send "Recording Stopped & Saved"
+            exit 0
+        else
+            notify-send "Tidak ada rekaman berjalan."
+            exit 1
         fi
-    done
+        ;;
+    toggle-pause)
+        if pgrep -f "gpu-screen-recorder" > /dev/null; then
+            pkill -SIGUSR2 -f "gpu-screen-recorder" 
+            notify-send "Recording Paused / Resumed"
+            exit 0
+        else
+            notify-send "Tidak ada rekaman berjalan."
+            exit 1
+        fi
+        ;;
+esac
 
-    pactl list short modules | grep "recording_combined" | awk '{print $1}' | while read -r mod_id; do
-    pactl unload-module "$mod_id" 2>/dev/null || true
-done
-}
-trap cleanup_audio EXIT INT TERM
+CMD_TARGET=()
 
 case "$MODE" in
+    region)
+        RAW_GEOM=$(slurp 2>/dev/null)
+        if [ -z "$RAW_GEOM" ]; then
+            notify-send "Pemilihan region dibatalkan."
+            exit 1
+        fi
+
+        REGION_FORMATTED=$(echo "$RAW_GEOM" | awk -F'[, ]' '{print $3"+"$1"+"$2}')
+        CMD_TARGET=(-w region -region "$REGION_FORMATTED")
+        ;;
+
     fullscreen)
-        GEOMETRY_ARGS=(-o "$FOCUSED_MONITOR")
+        FOCUSED_MONITOR=$(mmsg get cursorpos 2>/dev/null | jq -r '.monitor // empty' 2>/dev/null || true)
+
+        if [ -n "$FOCUSED_MONITOR" ] && [ "$FOCUSED_MONITOR" != "null" ]; then
+            CMD_TARGET=(-w "$FOCUSED_MONITOR")
+        else
+            CMD_TARGET=(-w screen)
+        fi
         ;;
-    region|*)
-        GEOM=$(slurp 2>/dev/null)
-        [ -z "$GEOM" ] && exit 0
-        GEOMETRY_ARGS=(-g "$GEOM")
+
+    *)
+        CMD_TARGET=(-w screen)
         ;;
 esac
 
-AUDIO_ARGS=()
+AUDIO_ARG=""
 case "$AUDIO" in
-    mic)
-        AUDIO_ARGS+=(--audio="$DEFAULT_SOURCE")
-        ;;
-    desktop)
-        AUDIO_ARGS+=(--audio="$DEFAULT_SINK")
-        ;;
-    combined)
-        pactl load-module module-null-sink \
-            sink_name=recording_combined \
-            rate=48000 \
-            channels=2 > /tmp/rec_sink_id
-
-        pactl load-module module-loopback \
-            source="$DEFAULT_SOURCE" \
-            sink=recording_combined \
-            channels=2 \
-            remix=yes \
-            latency_msec=50 > /tmp/rec_loop1_id
-
-        pactl load-module module-loopback \
-            source="$DEFAULT_SINK" \
-            sink=recording_combined \
-            latency_msec=50 > /tmp/rec_loop2_id
-
-        sleep 1
-        AUDIO_ARGS+=(--audio="recording_combined.monitor")
-        ;;
-    none|*)
-        ;;
+    mic) AUDIO_ARG="default_input" ;;
+    desktop) AUDIO_ARG="default_output" ;;
+    combined|both) AUDIO_ARG="default_output|default_input" ;;
+    none|*) AUDIO_ARG="" ;;
 esac
 
-notify-send "Recording Started" 
+notify-send "Recording Started"
 
-wf-recorder \
-    -q \
-    -r "$FPS" \
-    -b 6M \
-    "${GEOMETRY_ARGS[@]}" \
-    "${AUDIO_ARGS[@]}" \
-    --audio-codec=aac \
-    --pixel-format yuv420p \
-    -f "$FILENAME"
+CMD=(
+    gpu-screen-recorder
+    "${CMD_TARGET[@]}"
+    -f "$FPS"
+    -k h264
+    -fm cfr
+    -o "$FILENAME"
+)
 
-notify-send "Recording Finished" 
+if [ -n "$AUDIO_ARG" ]; then
+    CMD+=(-a "$AUDIO_ARG")
+fi
+
+exec "${CMD[@]}"

@@ -31,7 +31,7 @@ Item {
             width: 100
             height: 5
             radius: Metrics.radiusFull
-            color: Theme.border
+            color: Theme.surface
             anchors.verticalCenter: parent.verticalCenter
 
             Rectangle {

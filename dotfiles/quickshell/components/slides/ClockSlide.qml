@@ -5,7 +5,7 @@ import "../parts"
 Item {
     id: root
 
-    implicitWidth: 144
+    implicitWidth: 156
     implicitHeight: 32
 
     Clock {
@@ -13,9 +13,11 @@ Item {
         anchors.centerIn: parent
     }
 
-    MouseArea {
-        anchors.fill: parent
+    HoverHandler {
         cursorShape: Qt.PointingHandCursor
-        onClicked: controller.openClockDetails()  
+    }
+
+    TapHandler {
+        onTapped: controller.openClockDetails()
     }
 }

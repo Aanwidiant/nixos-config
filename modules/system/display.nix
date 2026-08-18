@@ -12,11 +12,6 @@
     };
   };
 
-  # # MangoWM
-  # programs.mango = {
-  #   enable = true;
-  # };
-
   programs.dconf.enable = true;
 
   # Desktop Portals

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 if command -v helium &> /dev/null; then
-  browser_exec="helium"
+  browser_exec="brave-origin"
 else
-  echo "Helium Browser not found"
+  echo "Brave-Origin Browser not found"
   exit 1
 fi
 

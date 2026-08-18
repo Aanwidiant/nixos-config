@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import "../../theme"
 import "../../services"
+import "../parts"
 
 Item {
     id: root
@@ -12,6 +13,8 @@ Item {
     implicitHeight: 148
 
     property bool expanded: false
+
+    CloseButton {}
 
     Item {
         anchors.fill: parent
@@ -58,13 +61,6 @@ Item {
                             }
                         }
                     }
-                }
-
-                MouseArea {
-                    id: mouseClose
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: controller.closeExpandedState()
                 }
             }
 
@@ -160,6 +156,7 @@ Item {
                 }
 
                 Item {
+                    id: seekContainer
                     Layout.fillWidth: true
                     Layout.preferredHeight: 14
 
@@ -167,7 +164,7 @@ Item {
                         id: progressBg
                         anchors.centerIn: parent
                         width: parent.width
-                        height: mouseSeek.containsMouse ? 6 : 4
+                        height: hoverHandler.hovered ? 6 : 4
                         radius: height / 2
                         color: Theme.muted
                         Behavior on height { NumberAnimation { duration: 100 } }
@@ -186,23 +183,34 @@ Item {
                         }
                     }
 
-                    MouseArea {
-                        id: mouseSeek
-                        anchors.fill: parent
-                        hoverEnabled: MprisService.canSeek
+                    HoverHandler {
+                        id: hoverHandler
                         enabled: MprisService.canSeek
                         cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                    }
 
-                        function doSeek(mouse) {
-                            MprisService.seekToRatio(mouse.x / width);
+                    PointHandler {
+                        id: seekHandler
+                        enabled: MprisService.canSeek
+
+                        onActiveChanged: {
+                            if (active) {
+                                doSeek(point.position.x)
+                            }
                         }
 
-                        onClicked: (mouse) => doSeek(mouse)
-                        onPositionChanged: (mouse) => {
-                            if (pressed) doSeek(mouse);
+                        onPointChanged: {
+                            if (active) {
+                                doSeek(point.position.x)
+                            }
+                        }
+
+                        function doSeek(posX) {
+                            let ratio = Math.min(Math.max(posX / seekContainer.width, 0), 1);
+                            MprisService.seekToRatio(ratio);
                         }
                     }
-                }
+                } 
 
                 RowLayout {
                     Layout.fillWidth: true
@@ -231,7 +239,7 @@ Item {
                         Layout.preferredWidth: 32
                         Layout.preferredHeight: 32
                         radius: Metrics.radiusFull
-                        color: MprisService.canGoPrevious ? Theme.surface : Theme.danger
+                        color:  Theme.surface 
 
                         Text {
                             anchors.centerIn: parent
@@ -241,12 +249,13 @@ Item {
                             font.family: Theme.iconFont
                         }
 
-                        MouseArea {
-                            id: mousePrev
-                            anchors.fill: parent
-                            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        HoverHandler {
                             enabled: MprisService.canGoPrevious
-                            onClicked: MprisService.previous()
+                            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        }
+
+                        TapHandler {
+                            onTapped: MprisService.previous() 
                         }
                     }
 
@@ -255,7 +264,6 @@ Item {
                         Layout.preferredHeight: 40
                         radius: Metrics.radiusFull
                         color: Theme.primary 
-                        opacity: MprisService.canControl ? 1.0 : 0.5
 
                         Text {
                             anchors.centerIn: parent
@@ -265,11 +273,13 @@ Item {
                             font.family: Theme.iconFont
                         }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
+                        HoverHandler {
                             enabled: MprisService.canControl
-                            onClicked: MprisService.togglePlaying()
+                            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        }
+
+                        TapHandler {
+                            onTapped: MprisService.togglePlaying()
                         }
                     }
 
@@ -277,7 +287,7 @@ Item {
                         Layout.preferredWidth: 32
                         Layout.preferredHeight: 32
                         radius: Metrics.radiusFull
-                        color: MprisService.canGoNext ? Theme.surface : Theme.danger
+                        color: Theme.surface 
 
                         Text {
                             anchors.centerIn: parent
@@ -287,12 +297,13 @@ Item {
                             font.family: Theme.iconFont
                         }
 
-                        MouseArea {
-                            id: mouseNext
-                            anchors.fill: parent
-                            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        HoverHandler {
                             enabled: MprisService.canGoNext
-                            onClicked: MprisService.next()
+                            cursorShape: enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                        }
+
+                        TapHandler {
+                            onTapped: MprisService.next()
                         }
                     }
                 }

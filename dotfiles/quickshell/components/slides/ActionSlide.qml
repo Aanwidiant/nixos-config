@@ -5,7 +5,7 @@ import "../../theme"
 Item {
     id: root
 
-    implicitWidth: 144
+    implicitWidth: 156
     implicitHeight: 32
 
     RowLayout {
@@ -33,8 +33,8 @@ Item {
 
                     text: modelData.icon
                     font.family: Theme.iconFont
-                    font.pixelSize: btnMouse.containsMouse ? 20 : 16
-                    color: btnMouse.containsMouse ? Theme.primary : Qt.alpha(Theme.primary, 0.7)
+                    font.pixelSize: hoverHandler.hovered ? 20 : 16
+                    color: hoverHandler.hovered ? Theme.primary : Qt.alpha(Theme.primary, 0.7)
 
                     Behavior on font.pixelSize {
                         NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
@@ -45,12 +45,13 @@ Item {
                     }
                 }
 
-                MouseArea {
-                    id: btnMouse
-                    anchors.fill: parent
-                    hoverEnabled: true
+                HoverHandler {
+                    id: hoverHandler
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: modelData.onClicked()
+                }
+
+                TapHandler {
+                    onTapped: modelData.onClicked()
                 }
             }
         }

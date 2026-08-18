@@ -1,22 +1,18 @@
 { pkgs, ... }:
 
 {
-
   wayland.windowManager.mango = {
     enable = true;
     systemd.enable = true;
   };
 
   home.packages = with pkgs; [
-    swayidle
+    # swayidle
+    wayidle
     hyprlock
-    waybar
-    mako
-    swayosd
     hyprpicker
     wlsunset
     swaybg
-    fuzzel
     quickshell
   ];
 }

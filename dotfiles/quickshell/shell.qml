@@ -39,6 +39,8 @@ ShellRoot {
         implicitHeight: mainPanel.screen ? mainPanel.screen.height * 4/5 : 0
 
         readonly property bool requiresKeyboardFocus: [
+            "clock_details",
+            "music_details",
             "polkit",
             "launcher",
             "power_system",
@@ -60,8 +62,11 @@ ShellRoot {
             "emoji"
         ].includes(dynamicIsland.currentState)
 
-        WlrLayershell.keyboardFocus: requiresKeyboardFocus 
-        ? WlrKeyboardFocus.Exclusive 
+        WlrLayershell.keyboardFocus:
+        dynamicIsland.currentState === "notification"
+        ? WlrKeyboardFocus.OnDemand
+        : requiresKeyboardFocus
+        ? WlrKeyboardFocus.Exclusive
         : WlrKeyboardFocus.None
 
         WlrLayershell.layer: WlrLayer.Top

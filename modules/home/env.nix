@@ -1,4 +1,5 @@
 { ... }:
+
 {
   home.sessionVariables = {
     EDITOR = "zeditor";
@@ -9,11 +10,5 @@
     
     XDG_SESSION_TYPE = "wayland";
     XDG_CURRENT_DESKTOP = "wlroots";
-
-    GUM_CONFIRM_PROMPT_FOREGROUND = "6";
-    GUM_CONFIRM_SELECTED_FOREGROUND = "0";
-    GUM_CONFIRM_SELECTED_BACKGROUND = "2";
-    GUM_CONFIRM_UNSELECTED_FOREGROUND = "0";
-    GUM_CONFIRM_UNSELECTED_BACKGROUND = "8";
   };
 }

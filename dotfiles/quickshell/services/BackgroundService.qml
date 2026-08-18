@@ -18,7 +18,7 @@ Singleton {
     function selectBackground(path, closeCallback) {
         if (!path) return;
 
-        Quickshell.execDetached(["my-theme-bg-set", path]);
+        Quickshell.execDetached(["my-bg-set", path]);
 
         if (typeof closeCallback === "function") {
             closeCallback();

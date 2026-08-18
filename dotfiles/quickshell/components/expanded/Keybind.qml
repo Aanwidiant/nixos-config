@@ -13,11 +13,7 @@ Item {
     implicitWidth: 480
     implicitHeight: 400
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     onVisibleChanged: {
         if (!visible) {

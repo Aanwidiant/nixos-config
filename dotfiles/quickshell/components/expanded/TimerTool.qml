@@ -18,11 +18,7 @@ Item {
 
     property string currentTab: "timer"
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     ColumnLayout {
         anchors.fill: parent

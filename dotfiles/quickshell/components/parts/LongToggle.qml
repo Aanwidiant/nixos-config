@@ -118,11 +118,10 @@ GridLayout {
                         }
                     }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        hoverEnabled: true
-                        onClicked: {
+                    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
+                    TapHandler {
+                        onTapped: {
                             switch (model.btnId) {
                                 case "wifi":
                                 NetworkService.toggleWifi()
@@ -156,20 +155,16 @@ GridLayout {
 
                     Text {
                         anchors.centerIn: parent
-                        text: "\uf078"
+                        text: "\uf054"
                         font.family: Theme.iconFont
                         font.pixelSize: Metrics.iconSM
                         color: btnContainer.checked ? Theme.background : Theme.foreground
-                        opacity: expandArea.containsMouse ? 1.0 : 0.7
                     }
 
-                    MouseArea {
-                        id: expandArea
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        hoverEnabled: true
+                    HoverHandler { cursorShape: Qt.PointingHandCursor }
 
-                        onClicked: {
+                    TapHandler {
+                        onTapped: {
                             switch (model.btnId) {
                                 case "wifi":
                                 controller.openNetwork() 

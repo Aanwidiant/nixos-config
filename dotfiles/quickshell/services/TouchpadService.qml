@@ -33,7 +33,7 @@ Singleton {
     Process {
         id: initProcess
         command: ["bash", "-c", `
-            grep -E '^disable_trackpad=' "$HOME/.config/mango/config.conf" 2>/dev/null | tail -n1 | cut -d= -f2
+        grep -E '^disable_trackpad=' "$HOME/.config/mango/config.conf" 2>/dev/null | tail -n1 | cut -d= -f2
         `]
         stdout: SplitParser {
             onRead: (data) => {
@@ -54,7 +54,7 @@ Singleton {
                 notifyProcess.message = "Gagal toggle trackpad"
             } else {
                 notifyProcess.message = root.isTouchpadActive
-                    ? "Touchpad Enabled" : "Touchpad Disabled"
+                ? "Touchpad Enabled" : "Touchpad Disabled"
             }
             notifyProcess.running = true
         }

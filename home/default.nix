@@ -9,6 +9,7 @@
     ../modules/home/development.nix
     ../modules/home/env.nix
     ../modules/home/git.nix
+    ../modules/home/idle.nix
     ../modules/home/compositor.nix
     ../modules/home/shell.nix
     ../modules/home/styling.nix

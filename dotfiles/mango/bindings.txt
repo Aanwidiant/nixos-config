@@ -1,21 +1,21 @@
 #  System & Config
 SUPER+SHIFT+r                   Reload MangoWM Configuration
-SUPER+CTRL+i                    Toggle Idle Inhibitor (Prevent Sleep)
+SUPER+CTRL+i                    Toggle Idle Inhibitor 
 SUPER+CTRL,n                    Toggle Night Light / Blue Light Filter
 SUPER+CTRL,t                    Show Current Date & Time
 SUPER+CTRL,b                    Show Battery Status
 NONE,XF86Display                Launch htop (System Monitor)
 
 # Apps & Launchers
-SUPER+Return                    Launch Terminal (Kitty)
-SUPER+space                     App Launcher (Fuzzel DRUN)
+SUPER+Return                    Launch Terminal 
+SUPER+space                     App Launcher
 SUPER+ALT+space                 Main Menu
 SUPER+Escape                    System Menu
 SUPER+CTRL,e                    Emoji Picker
 SUPER+k                         Keybinding List
-SUPER+SHIFT+f                   File Manager (Thunar)
+SUPER+SHIFT+f                   File Manager 
 SUPER+SHIFT,b                   Launch Browser
-SUPER+SHIFT+ALT+b               Launch Browser (Private Mode)
+SUPER+SHIFT+ALT+b               Launch Browser Private Mode
 SUPER+SHIFT,e                   Launch Zeditor
 SUPER+SHIFT+n                   Launch Neovim in Terminal
 SUPER+SHIFT,w                   WhatsApp Web App
@@ -28,7 +28,7 @@ NONE,XF86Favorites              Launch Zeditor
 # TUI & Special Tools
 SUPER+SHIFT,a                   Launch About / Fastfetch Info
 SUPER+CTRL,w                    Toggle Webcam Preview
-SUPER+CTRL+v                    Clipboard History (Cliphist + Fuzzel)
+SUPER+CTRL+v                    Clipboard History
 
 # Clipboard & Wtype
 SUPER+SHIFT+c                   Paste as Plain Text (Ctrl+Insert)
@@ -52,10 +52,6 @@ SUPER+,                         Dismiss Last Notification
 SUPER+SHIFT+,                   Dismiss All Notifications
 SUPER+CTRL+,                    Toggle Do Not Disturb Mode
 SUPER+ALT+,                     Invoke Notification Action
-
-# Aesthetics & Theme
-SUPER+SHIFT+space               Toggle Waybar Visibility
-SUPER+CTRL+space                Cycle Background / Theme
 
 # Screenshot & Recording
 Print                           Screenshot Region

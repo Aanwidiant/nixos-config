@@ -10,8 +10,7 @@ Item {
 
     property string iconText: "\uf060"
     property int iconSize: Metrics.textXL
-    property color normalColor: Theme.muted
-    property color hoverColor: Theme.primary
+    property color normalColor: Theme.foreground
 
     Text {
         id: backIcon
@@ -19,17 +18,19 @@ Item {
         text: root.iconText 
         font.family: Theme.iconFont
         font.pixelSize: root.iconSize
-        color: mouseArea.containsMouse ? root.hoverColor : root.normalColor
+        color: hoverHandler.hovered ? root.normalColor: Qt.alpha(root.normalColor, 0.9)
 
-        Behavior on color { ColorAnimation { duration: 150 } }
+        Behavior on color {
+            ColorAnimation { duration: 100 }
+        }
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        hoverEnabled: true
+    HoverHandler {
+        id: hoverHandler
         cursorShape: Qt.PointingHandCursor
-        
-        onClicked: root.clicked()
+    }
+
+    TapHandler {
+        onTapped: root.clicked()
     }
 }

@@ -10,11 +10,7 @@ Item {
     implicitWidth: 400
     implicitHeight: 205
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     ColumnLayout {
         anchors.fill: parent

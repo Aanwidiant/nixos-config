@@ -18,8 +18,8 @@ QtObject {
     }
 
     // 2. STATE PROPERTIES
-    readonly property string trackTitle: activePlayer ? (activePlayer.trackTitle || "Not Available") : "Not Available"
-    readonly property string trackArtist: activePlayer ? (activePlayer.trackArtist || "Not Available") : "Not Available"
+    readonly property string trackTitle: activePlayer ? (activePlayer.trackTitle || "Nothing Played") : "Nothing Played"
+    readonly property string trackArtist: activePlayer ? (activePlayer.trackArtist || "Nothing Played") : "Nothing Played"
     
     readonly property bool isPlaying: activePlayer ? activePlayer.isPlaying : false
     readonly property bool canGoNext: activePlayer ? activePlayer.canGoNext : false

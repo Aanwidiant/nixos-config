@@ -10,11 +10,7 @@ Item {
     implicitWidth: 400
     implicitHeight: RecordService.isRecording ? 240 : 400
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     ColumnLayout {
         anchors.fill: parent
@@ -289,7 +285,7 @@ Item {
                 spacing: Metrics.spacingLG
 
                 Text {
-                    text: RecordService.isRecording ? "\ueba5" : "\uf03d"  
+                    text: RecordService.isRecording ? "\uf28e" : "\uf03d"  
                     color: Theme.background 
                     font.pixelSize: Metrics.iconLG
                     font.family: Theme.iconFont

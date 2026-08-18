@@ -1,8 +1,8 @@
 # Matikan monitor setelah 10 menit (600 detik)
-timeout 600 'mmsg dispatch sleep_monitor'
+# timeout 600 'mmsg dispatch sleep_monitor'
 
 # Suspend sistem setelah 11 menit 40 detik (700 detik)
-timeout 700 'systemctl suspend'
+# timeout 700 'systemctl suspend'
 
 # Nyalakan kembali monitor dan kembalikan kecerahan saat resume
-after-resume 'mmsg dispatch wakeup_monitor && brightnessctl -r'
+# after-resume 'mmsg dispatch wakeup_monitor && brightnessctl -r'

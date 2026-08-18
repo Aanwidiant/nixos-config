@@ -149,14 +149,13 @@ Item {
                 maximumLength: 128
                 cursorPosition: text.length
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: parent.enabled ? Qt.IBeamCursor : Qt.ArrowCursor
-                    onClicked: {
-                        if (passwordInput.enabled) {
-                            passwordInput.forceActiveFocus()
-                        }
-                    }
+                HoverHandler {
+                    cursorShape: passwordInput.enabled ? Qt.IBeamCursor : Qt.ArrowCursor
+                }
+
+                TapHandler {
+                    enabled: passwordInput.enabled
+                    onTapped: passwordInput.forceActiveFocus()
                 }
 
                 Text {
@@ -203,7 +202,11 @@ Item {
                 color: Theme.surface 
                 radius: Metrics.radiusSM
                 enabled: !polkitContent.isLocked
-                opacity: enabled ? 1.0 : 0.5
+                opacity: enabled ? (cancelHover.hovered ? 0.9 : 1.0) : 0.5
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
 
                 Text { 
                     anchors.centerIn: parent
@@ -215,14 +218,14 @@ Item {
                     }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: parent.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                    onClicked: {
-                        if (cancelBtn.enabled) {
-                            polkitContent.userCancel()
-                        }
-                    }
+                HoverHandler {
+                    id: cancelHover
+                    cursorShape: cancelBtn.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+
+                TapHandler {
+                    enabled: cancelBtn.enabled
+                    onTapped: polkitContent.userCancel()
                 }
             }
 
@@ -233,7 +236,11 @@ Item {
                 color: Theme.primary 
                 radius: Metrics.radiusSM
                 enabled: !polkitContent.isLocked 
-                opacity: enabled ? 1.0 : 0.5
+                opacity: enabled ? (confirmHover.hovered ? 0.9 : 1.0) : 0.5
+
+                Behavior on opacity {
+                    NumberAnimation { duration: 100 }
+                }
 
                 Text {
                     anchors.centerIn: parent
@@ -245,14 +252,14 @@ Item {
                     }
                 }
 
-                MouseArea {
-                    anchors.fill: parent
-                    cursorShape: parent.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
-                    onClicked: {
-                        if (confirmBtn.enabled) {
-                            polkitContent.confirmAuth()
-                        }
-                    }
+                HoverHandler {
+                    id: confirmHover
+                    cursorShape: confirmBtn.enabled ? Qt.PointingHandCursor : Qt.ArrowCursor
+                }
+
+                TapHandler {
+                    enabled: confirmBtn.enabled
+                    onTapped: polkitContent.confirmAuth()
                 }
             }
         }

@@ -8,7 +8,6 @@ RowLayout {
     Layout.fillWidth: true
     spacing: 0
 
-    // --- PROPERTY INTERFACE ---
     property real value: 0.0
     property real minVal: 0.0
     property real maxVal: 1.0
@@ -16,11 +15,9 @@ RowLayout {
     property string iconText: ""
     property bool hasIconClickAction: false
 
-    // --- SIGNALS / CALLBACKS ---
     signal valueMoved(real newValue)
     signal iconClicked()
 
-    // Internal Calculations
     readonly property int percentVal: Math.round(value * 100)
 
     Item {
@@ -28,25 +25,24 @@ RowLayout {
         Layout.fillWidth: true
         implicitHeight: 44
 
-        property bool isDragging: sliderArea.pressed
+        property bool isDragging: dragHandler.active
 
-        // --- TRACK CONTAINER ---
         ClippingRectangle {
             id: track
             anchors.fill: parent
             radius: height / 2
-            color: sliderArea.containsMouse ? Qt.alpha(Theme.foreground, 0.12) : Qt.alpha(Theme.foreground, 0.08)
+            color: sliderHover.hovered
+            ? Qt.alpha(Theme.foreground, 0.12)
+            : Qt.alpha(Theme.foreground, 0.08)
 
             Behavior on color { ColorAnimation { duration: 150 } }
 
-            // --- TRACK FILL ---
             Rectangle {
                 id: trackFill
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
-                // Visual mentok di 100% (1.0)
                 width: Math.max(0, Math.min(1.0, root.value / 1.0) * parent.width)
 
                 color: root.isMuted
@@ -60,14 +56,13 @@ RowLayout {
                 }
             }
 
-            // --- THUMB ---
             Rectangle {
                 id: thumb
                 z: 3
                 anchors.verticalCenter: parent.verticalCenter
                 x: Math.max(0, Math.min(track.width - width, (Math.min(1.0, root.value) * track.width) - (width / 2)))
                 width: 2
-                height: parent.height 
+                height: parent.height
                 color: Theme.foreground
 
                 Behavior on x {
@@ -77,7 +72,6 @@ RowLayout {
             }
         }
 
-        // --- ICON AREA (KIRI) ---
         Item {
             id: iconArea
             anchors.left: parent.left
@@ -96,40 +90,91 @@ RowLayout {
                 Behavior on color { ColorAnimation { duration: 150 } }
             }
 
-            MouseArea {
-                anchors.fill: parent
+            HoverHandler {
+                id: iconHover
+                cursorShape: root.hasIconClickAction
+                ? Qt.PointingHandCursor
+                : Qt.ArrowCursor
+            }
+
+            TapHandler {
                 enabled: root.hasIconClickAction
-                cursorShape: root.hasIconClickAction ? Qt.PointingHandCursor : Qt.ArrowCursor
-                onClicked: root.iconClicked()
-                onPressed: (mouse) => {
-                    if (root.hasIconClickAction) mouse.accepted = true
+                grabPermissions: PointerHandler.CanTakeOverFromAnything
+                onTapped: root.iconClicked()
+            }
+        }
+
+        Text {
+            id: percentText
+            anchors.right: parent.right
+            anchors.rightMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
+            z: 2
+
+            text: root.percentVal + "%"
+            font.pixelSize: Metrics.textSM
+            font.weight: Font.DemiBold
+
+            color: {
+                if (root.isMuted) return Theme.foreground;
+                return (trackFill.width > parent.width - width - 16)
+                ? Theme.background
+                : Theme.foreground;
+            }
+
+            Behavior on color { ColorAnimation { duration: 150 } }
+        }
+
+        HoverHandler {
+            id: sliderHover
+            cursorShape: Qt.PointingHandCursor
+        }
+
+        TapHandler {
+            grabPermissions: PointerHandler.CanTakeOverFromItems
+            onPressedChanged: {
+                if (pressed && point.position.x > iconArea.width) {
+                    var rawRatio = point.position.x / track.width
+                    var newVal = Math.max(root.minVal, Math.min(rawRatio, root.maxVal))
+                    root.valueMoved(newVal)
                 }
             }
         }
 
-        // --- SLIDER MOUSE AREA (DRAG & WHEEL) ---
-        MouseArea {
-            id: sliderArea
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            hoverEnabled: true
-            preventStealing: true
-            z: 1
+        DragHandler {
+            id: dragHandler
+            target: null
+            xAxis.enabled: true
+            yAxis.enabled: false
+            grabPermissions: PointerHandler.CanTakeOverFromItems
 
-            function updateValueFromMouse(mouseXPos) {
-                var rawRatio = mouseXPos / track.width
-                var newVal = Math.max(root.minVal, Math.min(rawRatio * 1.0, root.maxVal))
-                root.valueMoved(newVal)
+            onActiveChanged: {
+                if (active && centroid.position.x > iconArea.width) {
+                    var rawRatio = centroid.position.x / track.width
+                    var newVal = Math.max(root.minVal, Math.min(rawRatio, root.maxVal))
+                    root.valueMoved(newVal)
+                }
             }
 
-            onPressed: (mouse) => updateValueFromMouse(mouse.x)
-            onPositionChanged: (mouse) => { if (pressed) updateValueFromMouse(mouse.x) }
+            onCentroidChanged: {
+                if (active) {
+                    var rawRatio = centroid.position.x / track.width
+                    var newVal = Math.max(root.minVal, Math.min(rawRatio, root.maxVal))
+                    root.valueMoved(newVal)
+                }
+            }
+        }
+        WheelHandler {
+            id: wheelHandler
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+            blocking: false
+            target: null
 
-            onWheel: (wheel) => {
+            onWheel: (event) => {
                 var step = 0.05
-                var delta = wheel.angleDelta.y > 0 ? step : -step
-                var targetVal = Math.max(root.minVal, Math.min(root.value + delta, root.maxVal))
-                root.valueMoved(targetVal)
+                var delta = event.angleDelta.y > 0 ? step : -step
+                var newVal = Math.max(root.minVal, Math.min(root.value + delta, root.maxVal))
+                root.valueMoved(newVal)
             }
         }
     }

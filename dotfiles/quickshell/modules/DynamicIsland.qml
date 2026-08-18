@@ -2,6 +2,7 @@ import QtQuick
 import Quickshell
 import "../theme"
 import "../components/expanded"
+import "../services"
 
 Item {
     id: root
@@ -53,14 +54,17 @@ Item {
         width: activeContent ? activeContent.implicitWidth : 148
         height: (controller.currentState === "hidden" || !controller.islandVisible) ? 6 : (activeContent ? activeContent.implicitHeight : 32)
 
-        color: Theme.background
+        color: (controller.currentState === "notification" && NotificationService.activeCount > 1) ? "transparent" : Theme.background
         anchors.horizontalCenter: parent.horizontalCenter
         y: (controller.currentState === "hidden" || !controller.islandVisible) ? 0 : 8
 
-        topLeftRadius: isFullyHidden ? 0 : ((controller.isExpandedState && !controller.isClosingExpanded) ? 24 : Metrics.radiusFull) 
-        topRightRadius: isFullyHidden ? 0 : ((controller.isExpandedState && !controller.isClosingExpanded) ? 24 : Metrics.radiusFull)  
-        bottomLeftRadius: isFullyHidden ? 16 : ((controller.isExpandedState && !controller.isClosingExpanded) ? 24 : Metrics.radiusFull)
-        bottomRightRadius: isFullyHidden ? 16 : ((controller.isExpandedState && !controller.isClosingExpanded) ? 24 : Metrics.radiusFull)
+        readonly property bool isRegularExpanded: controller.isExpandedState 
+        && !controller.isClosingExpanded 
+
+        topLeftRadius: isFullyHidden ? 0 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
+        topRightRadius: isFullyHidden ? 0 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
+        bottomLeftRadius: isFullyHidden ? 16 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
+        bottomRightRadius: isFullyHidden ? 16 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
 
         Behavior on width { SpringAnimation { spring: 4.5; damping: 0.35; epsilon: 0.25 } }
         Behavior on height { SpringAnimation { spring: 4.5; damping: 0.35; epsilon: 0.25 } }

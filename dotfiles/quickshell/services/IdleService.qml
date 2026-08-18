@@ -1,5 +1,5 @@
 pragma Singleton
-import QtQuick 
+import QtQuick
 import Quickshell
 import Quickshell.Io
 
@@ -11,16 +11,18 @@ Singleton {
     Component.onCompleted: checkStatus()
 
     function checkStatus() {
+        if (!checkProcess.running)
         checkProcess.running = true
     }
 
     function toggle() {
+        if (!toggleProcess.running)
         toggleProcess.running = true
     }
 
     Process {
         id: checkProcess
-        command: ["pgrep", "-x", "swayidle"]
+        command: ["systemctl", "--user", "is-active", "--quiet", "swayidle"]
         onExited: (exitCode) => {
             root.isIdleActive = (exitCode === 0)
         }
@@ -28,17 +30,18 @@ Singleton {
 
     Process {
         id: toggleProcess
-        command: ["bash", "-c", `
-        if pgrep -x swayidle >/dev/null; then
-        pkill -x swayidle
-        notify-send "Stop locking computer when idle"
-        else
-        swayidle -w -C "$HOME/.config/swayidle/config" >/dev/null 2>&1 &
-        notify-send "Now locking computer when idle"
-        fi
-        `]
-        onExited: {
-            root.checkStatus()
+        command: [
+            "bash", "-c", `
+            if systemctl --user is-active --quiet swayidle; then
+            systemctl --user stop swayidle
+            notify-send "Idle Inhibitor" "Locking & idle actions DISABLED"
+            else
+            systemctl --user start swayidle
+            notify-send "Idle Inhibitor" "Locking & idle actions ENABLED"
+            fi
+            `]
+            onExited: () => {
+                root.checkStatus()
+            }
         }
     }
-}

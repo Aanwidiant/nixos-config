@@ -6,99 +6,78 @@ import "../../theme"
 Item {
     id: root
 
-    implicitWidth: 144
+    implicitWidth: 156
     implicitHeight: 32
 
-    // Properti reaktif: Mengambil data live dari RecordService
     readonly property bool active: RecordService.isRecording
     readonly property string displayTime: active ? RecordService.formattedTime : "00:00"
 
-    Rectangle {
+    RowLayout {
         anchors.fill: parent
-        radius: height / 2
-        color: Theme.surface
-        border.color: active 
-                        ? "#f38ba8" 
-                        : Qt.alpha(Theme.foreground, 0.15)
-        border.width: 1
+        anchors.leftMargin: 6
+        anchors.rightMargin: 6
+        spacing: Metrics.spacingLG
 
         RowLayout {
-            anchors.centerIn: parent
-            spacing: Metrics.spacingSM ?? 6
+            spacing: Metrics.spacingLG 
+            Layout.alignment: Qt.AlignVCenter
 
-            // Status Indicator (Red Dot / Idle Dot)
-            Rectangle {
-                id: statusDot
-                implicitWidth: 8
-                implicitHeight: 8
-                radius: 4
-                color: active 
-                        ? "#f38ba8" 
-                        : Qt.alpha(Theme.foreground, 0.3)
-                
-                // Pastikan opacity kembali ke 1.0 saat perekaman berhenti
-                opacity: 1.0
+            Text {
+                text: "\udb81\udc4b"
+                font.pixelSize: Metrics.iconSM
+                font.family: Theme.iconFont
+                color: root.active ? Theme.danger : Theme.foreground
 
-                // Kedip hanya jika recording sedang aktif
-                SequentialAnimation {
-                    running: root.active
+                SequentialAnimation on opacity {
+                    running: RecordService.isRecording
                     loops: Animation.Infinite
 
-                    NumberAnimation { 
-                        target: statusDot
-                        property: "opacity"
-                        from: 1.0
-                        to: 0.3
-                        duration: 800 
-                    }
-                    NumberAnimation { 
-                        target: statusDot
-                        property: "opacity"
-                        from: 0.3
-                        to: 1.0
-                        duration: 800 
-                    }
+                    NumberAnimation { to: 0.3; duration: 800 }
+                    NumberAnimation { to: 1.0; duration: 800 }
                 }
             }
 
-            // Timer Text
             Text {
                 text: root.displayTime
-                color: root.active ? Theme.foreground : Qt.alpha(Theme.foreground, 0.5)
-                font.pixelSize: Metrics.textSM ?? 12
+                color: Theme.foreground
+                font.pixelSize: Metrics.textSM 
                 font.bold: true
-                font.family: "JetBrainsMono Nerd Font"
+            }
+        }
+
+        Item {
+            implicitWidth: 12
+            implicitHeight: 12
+            Layout.alignment: Qt.AlignVCenter
+
+            Text {
+                anchors.centerIn: parent
+                text: root.active ? "\uf28e" : "\uf03d" 
+                font.pixelSize: Metrics.iconSM
+                font.family: Theme.iconFont
+                color: root.active ? Theme.danger : Theme.foreground
             }
 
-            // Action Button (Stop Recording saat aktif, Start Recording saat idle)
-            Rectangle {
-                implicitWidth: 20
-                implicitHeight: 20
-                radius: 10
-                color: root.active 
-                        ? Qt.alpha("#f38ba8", 0.2) 
-                        : Qt.alpha(Theme.primary ?? "#89b4fa", 0.2)
+            HoverHandler {
+                cursorShape: root.active ? Qt.PointingHandCursor : Qt.ArrowCursor
+            }
 
-                Text {
-                    anchors.centerIn: parent
-                    text: root.active ? "󰓛" : "󰑋" // Icon Stop (󰓛) atau Record (󰑋)
-                    color: root.active 
-                            ? "#f38ba8" 
-                            : (Theme.primary ?? "#89b4fa")
-                    font.pixelSize: 10
-                }
+            TapHandler {
+                gesturePolicy: TapHandler.WithinBounds
 
-                HoverHandler { cursorShape: Qt.PointingHandCursor }
-                TapHandler {
-                    onTapped: {
-                        if (root.active) {
-                            RecordService.stopRecording();
-                        } else {
-                            controller.openScreenrecord()
-                        }
+                onTapped: (eventPoint) => {
+                    if (root.active) {
+                        RecordService.stopRecording();
+                        eventPoint.accepted = true; 
                     }
                 }
             }
         }
+    }
+
+    HoverHandler { cursorShape: Qt.PointingHandCursor }
+
+    TapHandler {
+        onTapped: controller.openScreenrecord()
     }
 }

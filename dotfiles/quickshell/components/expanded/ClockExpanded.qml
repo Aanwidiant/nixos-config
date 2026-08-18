@@ -7,62 +7,36 @@ import "../../services"
 Item {
     id: root
     implicitWidth: 280
-    implicitHeight: 72
+    implicitHeight: 220
+
+    CloseButton {}
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.leftMargin: 16
-        anchors.rightMargin: 16
-        anchors.topMargin: 8
-        anchors.bottomMargin: 8
-        spacing: 6
+        anchors.margins: 16
+        spacing: Metrics.spacingLG
 
-        Item {
+        AnalogClock {
+            id: analogClock
             Layout.alignment: Qt.AlignHCenter
-            implicitWidth: headerRow.implicitWidth
-            implicitHeight: headerRow.implicitHeight
+        }
 
-            RowLayout {
-                id: headerRow
-                anchors.fill: parent
-                spacing: 8
-
-                Date {
-                    id: dateText
-                    customFont: Qt.font({
-                        pixelSize: Metrics.textSM,
-                        weight: Font.Medium
-                    })
-                }
-
-                Text {
-                    text: "•"
-                    font.pixelSize: Metrics.textSM
-                    color: Theme.muted
-                }
-
-                Clock {
-                    id: clockText
-                    customFont: Qt.font({
-                        pixelSize: Metrics.textMD,
-                        weight: Font.Bold
-                    })
-                }
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: controller.closeExpandedState()
-            }
+        Date {
+            id: dateText
+            Layout.alignment: Qt.AlignHCenter
+            customFont: Qt.font({
+                pixelSize: Metrics.textSM,
+                weight: Font.Medium
+            })
         }
 
         RowLayout {
             Layout.alignment: Qt.AlignHCenter
-            spacing: 1
+            spacing: Metrics.spacingMD
 
             Repeater {
                 model: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
                 delegate: Rectangle {
                     id: tagBtn
                     required property int modelData
@@ -72,23 +46,23 @@ Item {
 
                     implicitWidth: 24
                     implicitHeight: 24
-                    color: "transparent"
+                    radius: Metrics.radiusSM 
+                    color: tagBtn.isActive ? Theme.surface : "transparent"
 
                     Text {
                         anchors.centerIn: parent
                         text: tagBtn.modelData.toString()
                         font.pixelSize: Metrics.textSM
-                        font.weight: tagBtn.isActive ? Font.Bold : Font.Normal
-
-                        color: tagBtn.isActive 
-                        ? Theme.primary 
-                        : (tagBtn.isOccupied ? Theme.foreground : Theme.muted)
+                        font.bold: tagBtn.isActive
+                        color: tagBtn.isActive ? Theme.primary : (tagBtn.isOccupied ? Theme.foreground : Theme.muted)
                     }
 
-                    MouseArea {
-                        anchors.fill: parent
+                    HoverHandler {
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: TagService.switchTag(tagBtn.modelData)
+                    }
+
+                    TapHandler {
+                        onTapped: TagService.switchTag(tagBtn.modelData)
                     }
                 }
             }

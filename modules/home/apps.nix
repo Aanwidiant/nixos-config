@@ -16,5 +16,8 @@
     geary
     blanket
     organicmaps
+    keepassxc
+    obsidian
+    brave-origin
   ];
 }

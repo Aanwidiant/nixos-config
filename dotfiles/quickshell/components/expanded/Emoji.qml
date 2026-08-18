@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Widgets
 import "../../services"
 import "../../theme"
+import "../parts"
 
 Item {
     id: root
@@ -12,11 +12,7 @@ Item {
     implicitWidth: 400
     implicitHeight: 400
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     onVisibleChanged: {
         if (!visible) {
@@ -45,7 +41,6 @@ Item {
         anchors.margins: 16
         spacing: Metrics.spacingLG
 
-        // 1. Search Bar
         Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 42
@@ -54,17 +49,25 @@ Item {
 
             RowLayout {
                 anchors.fill: parent
-                anchors.leftMargin: 10
-                anchors.rightMargin: 10
-                spacing: 8
+                anchors.leftMargin: 6
+                anchors.rightMargin: 6
+                spacing: Metrics.spacingLG
 
-                Text {
-                    text: ""
-                    font.family: Theme.iconFont
-                    color: Theme.primary
-                    font.pixelSize: Metrics.textXL
-                    font.weight: Font.ExtraBold
-                    verticalAlignment: Text.AlignVCenter
+                Rectangle {
+                    Layout.preferredWidth: 24
+                    Layout.preferredHeight: 24
+                    color: "transparent"
+
+                    Text {
+                        anchors.fill: parent 
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.family: Theme.iconFont
+                        text: "" 
+                        color: Theme.primary
+                        font.pixelSize: Metrics.textXL
+                        font.weight: Font.ExtraBold
+                    }
                 }
 
                 TextField {
@@ -72,9 +75,10 @@ Item {
                     Layout.fillWidth: true
                     placeholderText: "Search emoji..."
                     placeholderTextColor: Theme.muted
-                    color: Theme.foreground
+                    color: Theme.foreground 
                     font.pixelSize: Metrics.textMD
                     padding: 0
+
                     background: Rectangle { color: "transparent" }
 
                     Keys.onPressed: (event) => {
@@ -95,7 +99,6 @@ Item {
                         } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                             event.accepted = true;
                             if (grid.currentItem) {
-                                // SALIN KE CLIPBOARD DAN TUTUP VIEW
                                 EmojiService.copyEmoji(
                                     grid.currentItem.modelData.emoji, 
                                     controller.closeExpandedState
@@ -106,26 +109,33 @@ Item {
                 }
 
                 Rectangle {
+                    id: clearBtn
                     Layout.preferredWidth: 24
                     Layout.preferredHeight: 24
                     radius: Metrics.radiusFull
                     visible: searchInput.text !== ""
-                    color: clearMouse.containsMouse ? Theme.accent : "transparent"
+                    color: clearHover.hovered ? Theme.accent : "transparent"
+
+                    Behavior on color { ColorAnimation { duration: 150 } }
 
                     Text {
-                        anchors.centerIn: parent
-                        text: ""
+                        anchors.fill: parent 
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        text: ""                             
                         font.family: Theme.iconFont
-                        color: clearMouse.containsMouse ? Theme.background : Theme.accent
-                        font.pixelSize: Metrics.textMD
+                        color: clearHover.hovered ? Theme.background : Theme.accent
+                        font.pixelSize: Metrics.textXL
+                        font.weight: Font.ExtraBold
                     }
 
-                    MouseArea {
-                        id: clearMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
+                    HoverHandler {
+                        id: clearHover
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
+                    }
+
+                    TapHandler {
+                        onTapped: {
                             searchInput.clear();
                             searchInput.forceActiveFocus();
                         }
@@ -134,65 +144,68 @@ Item {
             }
         }
 
-        // 2. Emoji Grid View
         GridView {
             id: grid
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip: true
 
-            cellWidth: 48
-            cellHeight: 48
+            cellWidth: 40
+            cellHeight: 40
 
-            readonly property int columns: Math.floor(width / cellWidth)
+            readonly property int columns: Math.max(1, Math.floor(width / cellWidth))
             leftMargin: Math.floor((width - (columns * cellWidth)) / 2)
-            rightMargin: leftMargin
 
             model: filteredModel.values
 
-            delegate: Rectangle {
-                id: emojiCell
+            delegate: Item {
+                id: cellDelegate
                 required property var modelData
                 required property int index
 
-                readonly property bool isCurrent: GridView.isCurrentItem
-                readonly property bool isHovered: cellHover.hovered
+                width: grid.cellWidth
+                height: grid.cellHeight
 
-                width: grid.cellWidth - 6
-                height: grid.cellHeight - 6
-                radius: Metrics.radiusSM
-
-                color: isCurrent 
-                ? Qt.alpha(Theme.primary, 0.75) 
-                : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
-
-                Behavior on color { ColorAnimation { duration: 120 } }
-
-                HoverHandler {
-                    id: cellHover
-                    cursorShape: Qt.PointingHandCursor
-                }
-
-                Text {
+                Rectangle {
+                    id: emojiCell
                     anchors.centerIn: parent
-                    text: emojiCell.modelData.emoji
-                    font.pixelSize: 22
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
+                    width: parent.width - 6
+                    height: parent.height - 6
+                    radius: Metrics.radiusSM
 
-                TapHandler {
-                    acceptedButtons: Qt.LeftButton
-                    onTapped: {
-                        if (grid.currentIndex === emojiCell.index) {
-                            // Klik Kedua -> Salin ke clipboard & tutup view
-                            EmojiService.copyEmoji(
-                                emojiCell.modelData.emoji, 
-                                controller.closeExpandedState
-                            );
-                        } else {
-                            // Klik Pertama -> Pilih item
-                            grid.currentIndex = emojiCell.index;
+                    readonly property bool isCurrent: cellDelegate.GridView.isCurrentItem
+                    readonly property bool isHovered: cellHover.hovered
+
+                    color: isCurrent 
+                    ? Qt.alpha(Theme.primary, 0.75) 
+                    : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
+
+                    Behavior on color { ColorAnimation { duration: 120 } }
+
+                    HoverHandler {
+                        id: cellHover
+                        cursorShape: Qt.PointingHandCursor
+                    }
+
+                    Text {
+                        anchors.centerIn: parent
+                        text: cellDelegate.modelData.emoji
+                        font.pixelSize: 22
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    TapHandler {
+                        acceptedButtons: Qt.LeftButton
+                        onTapped: {
+                            if (grid.currentIndex === cellDelegate.index) {
+                                EmojiService.copyEmoji(
+                                    cellDelegate.modelData.emoji, 
+                                    controller.closeExpandedState
+                                );
+                            } else {
+                                grid.currentIndex = cellDelegate.index;
+                            }
                         }
                     }
                 }

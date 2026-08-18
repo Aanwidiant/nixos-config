@@ -43,7 +43,8 @@ Item {
                 controller.pendingType === "screenrecord" ||
                 controller.pendingType === "theme" ||
                 controller.pendingType === "timer" ||
-                controller.pendingType === "emoji"
+                controller.pendingType === "emoji" ||
+                controller.pendingType === "notification"
             ) 
             {
                 controller.currentState = controller.pendingType

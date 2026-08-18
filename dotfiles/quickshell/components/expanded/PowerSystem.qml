@@ -5,6 +5,7 @@ import QtQuick.Controls
 import Quickshell.Io
 import "../../theme"
 import "../../services"
+import "../parts"
 
 Item {
     id: root
@@ -39,11 +40,7 @@ Item {
         }
     }
 
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     Item {
         id: container
@@ -74,7 +71,7 @@ Item {
                     Layout.preferredHeight: 72
                     radius: Metrics.radiusLG
 
-                    color: (btnMouse.containsMouse || btnRect.activeFocus) ? Qt.alpha(Theme.primary, 0.15) : Theme.surface 
+                    color: (btnHover.hovered || btnRect.activeFocus) ? Qt.alpha(Theme.primary, 0.15) : Theme.surface 
 
                     border.width: btnRect.activeFocus ? 2 : 0
                     border.color: Theme.primary 
@@ -107,8 +104,8 @@ Item {
                             Layout.alignment: Qt.AlignHCenter
                             text: modelData.icon
                             font.family: Theme.iconFont 
-                            font.pixelSize: (btnMouse.containsMouse || btnRect.activeFocus) ? Metrics.text2XL : Metrics.textXL
-                            color: (btnMouse.containsMouse || btnRect.activeFocus) ? Theme.primary : Qt.alpha(Theme.primary, 0.8)
+                            font.pixelSize: (btnHover.hovered || btnRect.activeFocus) ? Metrics.text2XL : Metrics.textXL
+                            color: (btnHover.hovered || btnRect.activeFocus) ? Theme.primary : Qt.alpha(Theme.primary, 0.8)
 
                             Behavior on font.pixelSize {
                                 NumberAnimation { duration: 150; easing.type: Easing.OutQuad }
@@ -124,7 +121,7 @@ Item {
                             text: modelData.label
                             font.pixelSize: Metrics.textXS
                             font.weight: Font.Medium
-                            color: (btnMouse.containsMouse || btnRect.activeFocus) ? Theme.primary : Qt.alpha(Theme.primary, 0.8)
+                            color: (btnHover.hovered || btnRect.activeFocus) ? Theme.primary : Qt.alpha(Theme.primary, 0.8)
 
                             Behavior on color {
                                 ColorAnimation { duration: 150 }
@@ -132,12 +129,13 @@ Item {
                         }
                     }
 
-                    MouseArea {
-                        id: btnMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
+                    HoverHandler {
+                        id: btnHover
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
+                    }
+                    
+                    TapHandler {
+                        onTapped: {
                             if (btnRect.activeFocus) {
                                 btnRect.performAction()
                             } else {

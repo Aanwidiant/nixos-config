@@ -11,11 +11,9 @@
     htop
     powertop
     calcure
-    clock-rs
-    gum
     ncdu
     yazi
     cava
-    termusic
+    cliamp
   ];
 }

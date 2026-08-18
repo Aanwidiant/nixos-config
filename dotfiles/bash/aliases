@@ -55,7 +55,7 @@ alias gbr='git branch -r'
 # checkout / switch
 alias gco='git checkout'
 alias gsw='git switch'
-alias gswc='git switch -c'   # create branch baru
+alias gswc='git switch -c'
 
 # push & pull
 alias gp='git push'
@@ -76,7 +76,7 @@ alias grbi='git rebase -i'
 alias grbc='git rebase --continue'
 alias grba='git rebase --abort'
 
-# reset (hati-hati ini)
+# reset 
 alias grh='git reset --hard'
 alias grs='git reset --soft HEAD~1'
 
@@ -131,7 +131,3 @@ sudo nmcli con up "enp0s31f6"'
 
 # LAN - DHCP
 alias connect-home='sudo nmcli con modify "enp0s31f6" ipv4.method auto && sudo nmcli con up "enp0s31f6"'
-
-# Mount External SSD
-alias create-mount='sudo mkdir -p "/run/media/aanwidiant/New Volume"'
-alias mount-external='sudo mount -t ntfs-3g /dev/sda2 "/run/media/aanwidiant/New Volume"'

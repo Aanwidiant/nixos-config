@@ -12,3 +12,6 @@ HeaderIcon 1.0 HeaderIcon.qml
 Stopwatch 1.0 Stopwatch.qml
 Timer 1.0 Timer.qml
 DigitSpinBox 1.0 DigitSpinBox.qml
+AnalogClock 1.0 AnalogClock.qml
+CustomComboBox 1.0 CustomComboBox.qml
+CloseButton 1.0 CloseButton.qml

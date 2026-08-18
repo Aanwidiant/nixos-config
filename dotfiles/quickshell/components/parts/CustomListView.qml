@@ -31,7 +31,7 @@ ColumnLayout {
 
     RowLayout {
         Layout.fillWidth: true
-        spacing: 8
+        spacing: Metrics.spacingLG
 
         Rectangle {
             Layout.fillWidth: true
@@ -43,7 +43,7 @@ ColumnLayout {
                 anchors.fill: parent
                 anchors.leftMargin: 6
                 anchors.rightMargin: 6
-                spacing: 8
+                spacing: Metrics.spacingLG
 
                 Rectangle {
                     Layout.preferredWidth: 24
@@ -64,6 +64,8 @@ ColumnLayout {
 
                 TextField {
                     id: searchInput
+
+    focus: true
                     Layout.fillWidth: true
                     placeholderText: "Search..."
                     placeholderTextColor: Theme.muted
@@ -103,7 +105,7 @@ ColumnLayout {
                     Layout.preferredHeight: 24
                     radius: Metrics.radiusFull
                     visible: searchInput.text !== ""
-                    color: clearBtnMouse.containsMouse ? Theme.accent : "transparent"
+                    color: clearHover.hovered ? Theme.accent : "transparent"
 
                     Behavior on color { ColorAnimation { duration: 150 } }
 
@@ -113,17 +115,18 @@ ColumnLayout {
                         verticalAlignment: Text.AlignVCenter
                         text: ""                             
                         font.family: Theme.iconFont
-                        color: clearBtnMouse.containsMouse ? Theme.background : Theme.accent
+                        color: clearHover.hovered ? Theme.background : Theme.accent
                         font.pixelSize: Metrics.textXL
                         font.weight: Font.ExtraBold
                     }
 
-                    MouseArea {
-                        id: clearBtnMouse
-                        anchors.fill: parent
-                        hoverEnabled: true
+                    HoverHandler {
+                        id: clearHover
                         cursorShape: Qt.PointingHandCursor
-                        onClicked: {
+                    }
+                    
+                    TapHandler {
+                        onTapped: {
                             searchableRoot.reset();
                             searchInput.forceActiveFocus();
                         }

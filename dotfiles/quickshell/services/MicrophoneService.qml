@@ -7,19 +7,18 @@ Item {
 
     property var defaultSource: Pipewire.defaultAudioSource
     property bool muted: false
+    property real volume: 0.0
     property bool initialized: false
 
-    // Model untuk menyimpan daftar perangkat mikrofon fisik
     property var inputDevices: []
 
     signal microphoneToggled()
     signal sourceChanged()
 
     PwObjectTracker {
-        objects: [ Pipewire.defaultAudioSource ]
+        objects: Pipewire.defaultAudioSource ? [Pipewire.defaultAudioSource, ...root.inputDevices] : root.inputDevices
     }
 
-    // Fungsi untuk memperbarui daftar node audio source (perangkat fisik)
     function updateInputDevices() {
         var devices = []
         var nodesList = Pipewire.nodes.values
@@ -29,8 +28,8 @@ Item {
             if (!node || !node.properties) continue
 
             var mediaClass = node.properties["media.class"] || ""
-            // Filter hanya node yang bertipe Audio/Source (mikrofon/input device)
-            if (mediaClass === "Audio/Source") {
+            // Filter node bertipe Audio/Source (mikrofon/input device)
+            if (mediaClass === "Audio/Source" || (!node.isStream && !node.isSink && node.audio)) {
                 devices.push(node)
             }
         }
@@ -41,6 +40,7 @@ Item {
         var source = Pipewire.defaultAudioSource
         if (source && source.audio) {
             root.muted = source.audio.muted || false
+            root.volume = source.audio.volume || 0.0
             root.initialized = true
         }
         updateInputDevices()
@@ -50,7 +50,6 @@ Item {
         syncInitialState()
     }
 
-    // Listener ketika ada perubahan pada node-node Pipewire
     Connections {
         target: Pipewire.nodes
         function onValuesChanged() {
@@ -76,6 +75,17 @@ Item {
                 }
             }
         }
+
+        function onVolumeChanged() {
+            var source = Pipewire.defaultAudioSource
+            if (!source || !source.audio) return
+
+            var newVol = source.audio.volume || 0.0
+
+            if (Math.abs(newVol - root.volume) > 0.001) {
+                root.volume = newVol
+            }
+        }
     }
 
     Connections {
@@ -88,28 +98,42 @@ Item {
         }
     }
 
-    // Menjadikan perangkat tertentu sebagai default input source
     function setDefaultSource(node) {
         if (node) {
-            Pipewire.defaultAudioSource = node
+            Pipewire.preferredDefaultAudioSource = node
         }
     }
 
-    function toggleMute() {
+    function setVolume(newVolume: real): void {
+        var source = Pipewire.defaultAudioSource
+        if (source && source.audio) {
+            source.audio.volume = Math.max(0.0, Math.min(1.0, newVolume))
+        }
+    }
+
+    function incrementVolume(amount: real): void {
+        setVolume(root.volume + (amount || 0.05))
+    }
+
+    function decrementVolume(amount: real): void {
+        setVolume(root.volume - (amount || 0.05))
+    }
+
+    function toggleMute(): void {
         var source = Pipewire.defaultAudioSource
         if (source && source.audio) {
             source.audio.muted = !source.audio.muted
         }
     }
 
-    function mute() {
+    function mute(): void {
         var source = Pipewire.defaultAudioSource
         if (source && source.audio) {
             source.audio.muted = true
         }
     }
 
-    function unmute() {
+    function unmute(): void {
         var source = Pipewire.defaultAudioSource
         if (source && source.audio) {
             source.audio.muted = false

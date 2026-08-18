@@ -10,7 +10,6 @@ Item {
     implicitHeight: swipeView.currentItem ? swipeView.currentItem.implicitHeight : 32
 
     property int lastIndex: 0
-
     property bool scrollCooldown: false
 
     SwipeView {
@@ -24,6 +23,17 @@ Item {
         Component.onCompleted: {
             if (swipeView.contentItem) {
                 swipeView.contentItem.highlightMoveDuration = 0
+
+                swipeView.contentItem.movementEnded.connect(function() {
+                    if (swipeView.count === 0) return;
+
+                    if (swipeView.currentIndex === swipeView.count - 1 && swipeView.contentItem.contentX > (swipeView.count - 1) * swipeView.width) {
+                        swipeView.setCurrentIndex(0)
+                    } 
+                    else if (swipeView.currentIndex === 0 && swipeView.contentItem.contentX < 0) {
+                        swipeView.setCurrentIndex(swipeView.count - 1)
+                    }
+                })
             }
         }
 
@@ -39,7 +49,7 @@ Item {
 
         CavaSlide {}
 
-        EyeSlide {}
+        // EyeSlide {}
 
         RecordSlide {}
 
@@ -53,31 +63,25 @@ Item {
         onTriggered: root.scrollCooldown = false
     }
 
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor 
-        acceptedButtons: Qt.NoButton 
+    WheelHandler {
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+        blocking: false
+        target: null
 
-        onWheel: wheel => {
-            if (root.scrollCooldown) return;
+        onWheel: (event) => {
+            if (root.scrollCooldown || swipeView.count === 0) return;
 
-            let delta = wheel.angleDelta.y !== 0 ? wheel.angleDelta.y : wheel.angleDelta.x;
-            if (Math.abs(delta) < 20) return; 
+            let delta = event.angleDelta.y !== 0 ? event.angleDelta.y : event.angleDelta.x;
+            if (Math.abs(delta) < 20) return;
 
             if (delta < 0) {
-                if (swipeView.currentIndex < swipeView.count - 1) {
-                    swipeView.currentIndex++
-                    root.scrollCooldown = true
-                    scrollDebounceTimer.restart()
-                }
+                swipeView.currentIndex = (swipeView.currentIndex + 1) % swipeView.count;
             } else {
-                if (swipeView.currentIndex > 0) {
-                    swipeView.currentIndex--
-                    root.scrollCooldown = true
-                    scrollDebounceTimer.restart()
-                }
+                swipeView.currentIndex = (swipeView.currentIndex - 1 + swipeView.count) % swipeView.count;
             }
+
+            root.scrollCooldown = true;
+            scrollDebounceTimer.restart();
         }
     }
-
 }

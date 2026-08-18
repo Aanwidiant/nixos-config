@@ -33,6 +33,8 @@
     thunar-archive-plugin
   ];
 
+  programs.gpu-screen-recorder.enable = true;
+
   # Nix-LD
   programs.nix-ld = {
     enable = true;

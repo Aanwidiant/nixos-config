@@ -22,7 +22,7 @@ GridLayout {
         delegate: Item {
             id: toggleContainer
             Layout.fillWidth: true
-            implicitHeight: 48
+            implicitHeight: 42
 
             property bool isActive: {
                 switch (model.toggleId) {
@@ -58,25 +58,25 @@ GridLayout {
                 }
             }
 
-            MouseArea {
+            Rectangle {
                 anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-                preventStealing: true
+                radius: parent.height / 2
+                color: Theme.foreground
+                opacity: hoverHandler.hovered ? 0.08 : 0
+                visible: opacity > 0
 
-                Rectangle {
-                    anchors.fill: parent
-                    radius: parent.height / 2
-                    color: Theme.foreground
-                    opacity: parent.containsMouse ? 0.08 : 0
-                    visible: opacity > 0
-
-                    Behavior on opacity { 
-                        NumberAnimation { duration: 100 } 
-                    }
+                Behavior on opacity { 
+                    NumberAnimation { duration: 100 } 
                 }
+            }
 
-                onClicked: {
+            HoverHandler {
+                id: hoverHandler
+                cursorShape: Qt.PointingHandCursor
+            }
+
+            TapHandler {
+                onTapped: {
                     toggleContainer.isActive = !toggleContainer.isActive
 
                     switch (model.toggleId) {

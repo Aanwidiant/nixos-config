@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
 import "../../services" 
 import "../../theme" 
 
@@ -12,11 +11,11 @@ GridLayout {
 
     Repeater {
         model: [
-            { actionId: "calculator", icon: "\uf1ec" },
             { actionId: "timer", icon: "\uf520" },
             { actionId: "screenshot", icon: "\udb80\udd04" },
             { actionId: "screenrecord", icon: "\uf03d" },
             { actionId: "colorpicker", icon: "\uf1fb" },
+            { actionId: "emoji", icon: "\udb83\udc68" },
 
             { actionId: "theme", icon: "\udb80\udfd8" },
             { actionId: "bg", icon: "\uf03e" },
@@ -28,7 +27,7 @@ GridLayout {
         delegate: Item {
             id: actionBtnContainer
             Layout.fillWidth: true
-            implicitHeight: 48
+            implicitHeight: 42
 
             readonly property var btnData: modelData
 
@@ -36,7 +35,7 @@ GridLayout {
                 id: btnBg
                 anchors.fill: parent
                 radius: height / 2
-                color: btnMouseArea.pressed ? Theme.primary : Theme.surface
+                color: tapHandler.pressed ? Theme.primary : Theme.surface
 
                 Behavior on color {
                     ColorAnimation { duration: 100 }
@@ -48,37 +47,36 @@ GridLayout {
                 text: actionBtnContainer.btnData.icon
                 font.family: Theme.iconFont
                 font.pixelSize: Metrics.iconLG
-                color: btnMouseArea.pressed ? Theme.background : Theme.foreground
+                color: tapHandler.pressed ? Theme.background : Theme.foreground
 
                 Behavior on color {
                     ColorAnimation { duration: 100 }
                 }
             }
 
-            MouseArea {
-                id: btnMouseArea
+            Rectangle {
                 anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                hoverEnabled: true
-                preventStealing: true
+                radius: parent.height / 2
+                color: Theme.foreground
+                opacity: hoverHandler.hovered ? 0.08 : 0
+                visible: opacity > 0
 
-                Rectangle {
-                    anchors.fill: parent
-                    radius: parent.height / 2
-                    color: Theme.foreground
-                    opacity: parent.containsMouse ? 0.08 : 0
-                    visible: opacity > 0
-
-                    Behavior on opacity { 
-                        NumberAnimation { duration: 100 } 
-                    }
+                Behavior on opacity { 
+                    NumberAnimation { duration: 100 } 
                 }
+            }
 
-                onClicked: {
+            HoverHandler {
+                id: hoverHandler
+                cursorShape: Qt.PointingHandCursor
+            }
+
+            TapHandler {
+                id: tapHandler
+                onTapped: {
                     switch (actionBtnContainer.btnData.actionId) {
-                        case "calculator":
-                        Quickshell.execDetached(["gnome-calculator"])
-                        controller.closeExpandedState()
+                        case "emoji":
+                        controller.openEmoji() 
                         break
                         case "timer":
                         controller.openTimer()

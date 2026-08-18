@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Music
 Comment=TUI termusic
-Exec=my-launch-or-focus-tui termusic
+Exec=my-launch-or-focus-tui cliamp
 Icon=playmymusic
 Terminal=false
 Type=Application

@@ -27,9 +27,5 @@
     tree-sitter
     ollama
     jre
-    qt6.qtdeclarative
-
-    #android-studio    
-    #jetbrains.webstorm
   ];
 }

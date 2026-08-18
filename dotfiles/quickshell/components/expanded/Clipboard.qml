@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
@@ -14,13 +13,7 @@ Item {
     implicitWidth: 500
     implicitHeight: 400
 
-    property bool expanded: false
-
-    Shortcut {
-        sequence: "Escape"
-        enabled: root.visible
-        onActivated: controller.closeExpandedState()
-    }
+    CloseButton {}
 
     onVisibleChanged: {
         if (!visible) {

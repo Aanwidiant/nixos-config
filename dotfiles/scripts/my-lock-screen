@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# prevent multiple lock instances
 pgrep hyprlock >/dev/null && exit 0
 
-# lock screen
 hyprlock

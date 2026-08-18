@@ -6,7 +6,6 @@ import Quickshell.Services.Pipewire
 Item {
     id: root
 
-    // --- Core Master Volume State ---
     property var defaultSink: Pipewire.defaultAudioSink
     property real volume: 0
     property bool muted: false
@@ -14,16 +13,16 @@ Item {
 
     readonly property alias isMuted: root.muted
 
+    readonly property list<PwNode> sinks: Pipewire.nodes.values.filter(node => node.isSink && !node.isStream)
+
     signal volumeUpdated()
     signal muteToggled()
     signal sinkChanged()
 
-    // --- Card Profiles State ---
     property string activeCardName: ""
     property string activeProfileKey: ""
     property var profileList: []
 
-    // --- Application Streams Tracker ---
     property alias appLinkTracker: linkTracker
 
     PwNodeLinkTracker {
@@ -55,10 +54,9 @@ Item {
     }
 
     PwObjectTracker {
-        objects: [ Pipewire.defaultAudioSink ]
+        objects: Pipewire.defaultAudioSink ? [ Pipewire.defaultAudioSink, ...root.sinks ] : [...root.sinks]
     }
 
-    // --- Master Volume Connections ---
     Connections {
         target: Pipewire.defaultAudioSink ? Pipewire.defaultAudioSink.audio : null
         enabled: Pipewire.defaultAudioSink !== null && Pipewire.defaultAudioSink.audio !== null
@@ -98,7 +96,6 @@ Item {
         }
     }
 
-    // --- Master Control Functions ---
     function setVolume(newVolume) {
         var sink = Pipewire.defaultAudioSink
         if (!sink || !sink.audio) return
@@ -131,7 +128,25 @@ Item {
         return "\uf028"
     }
 
-    // --- Card Profiles Management ---
+    function setAudioSink(newSink) {
+        if (newSink && newSink.isSink) {
+            Pipewire.preferredDefaultAudioSink = newSink
+        }
+    }
+
+    function setSinkVolume(node, newVolume) {
+        if (node && node.ready && node.audio) {
+            node.audio.muted = false
+            node.audio.volume = Math.max(0.0, Math.min(1.5, newVolume))
+        }
+    }
+
+    function toggleSinkMute(node) {
+        if (node && node.audio) {
+            node.audio.muted = !node.audio.muted
+        }
+    }
+
     Process {
         id: fetchCardProcess
         command: ["pactl", "-f", "json", "list", "cards"]
