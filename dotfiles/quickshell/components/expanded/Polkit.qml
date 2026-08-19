@@ -5,7 +5,7 @@ import "../../services"
 
 Item {
     id: polkitContent
-    implicitWidth: 480 
+    implicitWidth: 480
     implicitHeight: 190
 
     readonly property var service: PolkitService
@@ -97,10 +97,10 @@ Item {
 
             Text {
                 text: "\uf084"
-                color: Theme.foreground 
+                color: Theme.foreground
                 font.pixelSize: Metrics.iconMD
                 font.family: Theme.iconFont
-                Layout.alignment: Qt.AlignVCenter 
+                Layout.alignment: Qt.AlignVCenter
             }
             Text {
                 text: "Authentication Required"
@@ -110,7 +110,7 @@ Item {
                     weight: Font.Bold
                 }
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignVCenter 
+                Layout.alignment: Qt.AlignVCenter
             }
         }
 
@@ -142,9 +142,9 @@ Item {
                 anchors.leftMargin: 12
                 anchors.rightMargin: 12
                 verticalAlignment: Text.AlignVCenter
-                color: Theme.foreground 
+                color: Theme.foreground
                 font.pixelSize: Metrics.textSM
-                enabled: !polkitContent.isLocked  
+                enabled: !polkitContent.isLocked
                 clip: true
                 maximumLength: 128
                 cursorPosition: text.length
@@ -160,7 +160,7 @@ Item {
 
                 Text {
                     text: "Enter password..."
-                    color: Theme.muted 
+                    color: Theme.muted
                     font.pixelSize: Metrics.textSM
                     visible: parent.text.length === 0 && !parent.activeFocus
                     anchors.verticalCenter: parent.verticalCenter
@@ -199,7 +199,7 @@ Item {
                 id: cancelBtn
                 implicitWidth: 72
                 implicitHeight: 36
-                color: Theme.surface 
+                color: Theme.surface
                 radius: Metrics.radiusSM
                 enabled: !polkitContent.isLocked
                 opacity: enabled ? (cancelHover.hovered ? 0.9 : 1.0) : 0.5
@@ -208,7 +208,7 @@ Item {
                     NumberAnimation { duration: 100 }
                 }
 
-                Text { 
+                Text {
                     anchors.centerIn: parent
                     text: "Cancel"
                     color: Theme.foreground
@@ -233,9 +233,9 @@ Item {
                 id: confirmBtn
                 implicitWidth: 120
                 implicitHeight: 36
-                color: Theme.primary 
+                color: Theme.primary
                 radius: Metrics.radiusSM
-                enabled: !polkitContent.isLocked 
+                enabled: !polkitContent.isLocked
                 opacity: enabled ? (confirmHover.hovered ? 0.9 : 1.0) : 0.5
 
                 Behavior on opacity {
@@ -245,7 +245,7 @@ Item {
                 Text {
                     anchors.centerIn: parent
                     text: "Authenticate"
-                    color: Theme.background 
+                    color: Theme.background
                     font {
                         pixelSize: Metrics.textSM
                         weight: Font.DemiBold

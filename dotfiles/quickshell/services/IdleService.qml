@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+import "../theme"
 
 Singleton {
     id: root
@@ -12,17 +13,19 @@ Singleton {
 
     function checkStatus() {
         if (!checkProcess.running)
-        checkProcess.running = true
+            checkProcess.running = true
     }
 
     function toggle() {
         if (!toggleProcess.running)
-        toggleProcess.running = true
+            toggleProcess.running = true
     }
 
     Process {
         id: checkProcess
+
         command: ["systemctl", "--user", "is-active", "--quiet", "swayidle"]
+
         onExited: (exitCode) => {
             root.isIdleActive = (exitCode === 0)
         }
@@ -30,18 +33,27 @@ Singleton {
 
     Process {
         id: toggleProcess
+
         command: [
             "bash", "-c", `
-            if systemctl --user is-active --quiet swayidle; then
-            systemctl --user stop swayidle
-            notify-send "Idle Inhibitor" "Locking & idle actions DISABLED"
-            else
-            systemctl --user start swayidle
-            notify-send "Idle Inhibitor" "Locking & idle actions ENABLED"
-            fi
-            `]
-            onExited: () => {
-                root.checkStatus()
-            }
+                if systemctl --user is-active --quiet swayidle; then
+                    systemctl --user stop swayidle
+                    notify-send \
+                        -i "${Theme.nixosIcon}" \
+                        "Idle Inhibitor" \
+                        "Disabled · Locking & idle actions inactive"
+                else
+                    systemctl --user start swayidle
+                    notify-send \
+                        -i "${Theme.nixosIcon}" \
+                        "Idle Inhibitor" \
+                        "Enabled · Locking & idle actions active"
+                fi
+            `
+        ]
+
+        onExited: () => {
+            root.checkStatus()
         }
     }
+}

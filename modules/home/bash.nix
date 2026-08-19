@@ -115,6 +115,8 @@
     };
 
     initExtra = ''
+      export NIXOS_ICON="$HOME/nixos-config/dotfiles/quickshell/assets/nixos.png"
+
       zd() {
         if [ $# -eq 0 ]; then
           builtin cd ~ && return

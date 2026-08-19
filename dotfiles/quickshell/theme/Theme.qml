@@ -5,8 +5,10 @@ import QtQuick
 
 QtObject {
     id: root
+    
+    readonly property string nixosIcon:
+        Quickshell.env("HOME") + "/nixos-config/dotfiles/quickshell/assets/nixos.png"
 
-    // exposed supaya bisa dipanggil Theme.themeFile.reload() dari luar
     readonly property FileView themeFile: FileView {
         id: themeFile
         path: Quickshell.env("HOME") + "/.config/theme/current/theme/qs.json"

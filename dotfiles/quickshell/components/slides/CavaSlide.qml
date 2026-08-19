@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Effects
 import QtQuick.Layouts
 import "../../theme"
@@ -11,7 +12,9 @@ Item {
     implicitWidth: 156
     implicitHeight: 32
 
-    readonly property bool isCavaVisible: root.visible
+    readonly property bool isCavaVisible: SwipeView.isCurrentItem
+
+    onIsCavaVisibleChanged: titleContainer.updateAnimation()
 
     RowLayout {
         anchors.fill: parent
@@ -104,7 +107,7 @@ Item {
                 titleBounce.stop()
                 titleText.x = 0
 
-                if (titleText.implicitWidth > titleContainer.width) {
+                if (root.isCavaVisible && titleText.implicitWidth > titleContainer.width) {
                     titleBounce.start()
                 }
             }

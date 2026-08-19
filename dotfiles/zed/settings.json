@@ -11,6 +11,43 @@
   // "show_completions_on_input": false,
   "proxy": "",
   "language_models": {
+    "openai_compatible": {
+      "belanjalabs": {
+        "api_url": "https://models-free.belanjalabs.com/v1",
+        "available_models": [
+          {
+            "name": "deepseek-v4-flash",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "deepseek-v4-pro",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          }
+        ]
+      }
+    },
     "anthropic_compatible": {
       "agentrouter": {
         "api_url": "https://agentrouter.org/",
@@ -102,10 +139,9 @@
     "favorite_models": [],
     "default_profile": "write",
     "default_model": {
-      "effort": "medium",
-      "enable_thinking": true,
-      "provider": "openai-subscribed",
-      "model": "gpt-5.5",
+      "enable_thinking": false,
+      "provider": "belanjalabs",
+      "model": "deepseek-v4-flash",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],

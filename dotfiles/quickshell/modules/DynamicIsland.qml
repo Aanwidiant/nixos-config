@@ -46,7 +46,7 @@ Item {
         readonly property Item activeContent: {
             if (controller.isExpandedState && !controller.isClosingExpanded) return expandedPopup
             if (controller.currentState === "hidden" || !controller.islandVisible) return null
-            return clockLoader.item 
+            return clockLoader.item
         }
 
         readonly property bool isFullyHidden: (controller.currentState === "hidden" || !controller.islandVisible) && height <= 12
@@ -58,8 +58,8 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         y: (controller.currentState === "hidden" || !controller.islandVisible) ? 0 : 8
 
-        readonly property bool isRegularExpanded: controller.isExpandedState 
-        && !controller.isClosingExpanded 
+        readonly property bool isRegularExpanded: controller.isExpandedState
+        && !controller.isClosingExpanded
 
         topLeftRadius: isFullyHidden ? 0 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
         topRightRadius: isFullyHidden ? 0 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
@@ -96,7 +96,7 @@ Item {
 
                 Behavior on opacity {
                     id: expandedFadeOut
-                    NumberAnimation { 
+                    NumberAnimation {
                         duration: 150
                         easing.type: Easing.OutQuad
                         onRunningChanged: {
@@ -121,7 +121,7 @@ Item {
                 Loader {
                     id: clockLoader
                     anchors.fill: parent
-                    source: "DefaultIsland.qml" 
+                    source: "DefaultIsland.qml"
                     visible: controller.currentState === "clock" || (controller.isClosingExpanded && osdContainer._showClock)
                 }
             }

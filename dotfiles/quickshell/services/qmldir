@@ -25,4 +25,5 @@ singleton ScreenshotService 1.0 ScreenshotService.qml
 singleton HyprpickerService 1.0 HyprpickerService.qml
 singleton TimerService 1.0 TimerService.qml
 singleton EmojiService 1.0 EmojiService.qml
+singleton States 1.0 States.qml
 

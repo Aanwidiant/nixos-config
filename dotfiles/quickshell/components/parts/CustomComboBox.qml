@@ -6,6 +6,10 @@ import "../../theme"
 ComboBox {
     id: control
 
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
+    }
+
     // --- CUSTOM PROPERTIES ---
     property var selectedKey: null
     property string keyRole: "id"
@@ -68,10 +72,10 @@ ComboBox {
 
     // --- HEADER TEXT DISPLAY ---
     contentItem: Text {
-        leftPadding: 10
-        rightPadding: 30 
-        topPadding: 8
-        bottomPadding: 8
+        leftPadding: Metrics.spacingLG
+        rightPadding: control.indicator ? control.indicator.width + Metrics.spacingLG : Metrics.spacing2XL
+        topPadding: Metrics.spacingLG
+        bottomPadding: Metrics.spacingLG
         text: {
             var activeIndex = control.currentIndex
             if (activeIndex >= 0 && control.model) {
@@ -81,25 +85,43 @@ ComboBox {
             return control.defaultText
         }
         font.pixelSize: Metrics.textMD
-        color: Theme.foreground
+        color: (control.currentIndex >= 0 && control.model) ? Theme.foreground : Theme.muted
         wrapMode: Text.Wrap
+        verticalAlignment: Text.AlignVCenter
+    }
+
+    // --- DROPDOWN ARROW ---
+    indicator: Text {
+        x: control.width - width - Metrics.spacingLG
+        y: control.topPadding + (control.availableHeight - height) / 2
+        text: "\uf107"
+        font.family: Theme.iconFont
+        font.pixelSize: Metrics.textSM
+        color: control.hovered ? Theme.primary : Theme.muted
         verticalAlignment: Text.AlignVCenter
     }
 
     // --- BACKGROUND ---
     background: Rectangle {
-        implicitHeight: Math.max(45, control.contentItem.implicitHeight)
-        color: control.hovered ? Theme.primary : Theme.surface
-        border.color: Theme.border
+        implicitHeight: Math.max(42, control.contentItem.implicitHeight)
+        color: control.hovered ? Qt.alpha(Theme.primary, 0.2) : Theme.surface
+        border.color: control.activeFocus ? Theme.primary : Theme.border
         border.width: 1
-        radius: Metrics.radiusSM ?? 6
+        radius: Metrics.radiusSM
+
+        Behavior on color { ColorAnimation { duration: Metrics.durationFast } }
     }
 
     // --- ITEM DELEGATE ---
     delegate: ItemDelegate {
         id: delegate
-        width: control.width
+        // Lebar mengikuti ListView (bukan control) agar tidak ter-clip oleh padding popup
+        width: ListView.view.width
         highlighted: control.highlightedIndex === index
+
+        HoverHandler {
+            cursorShape: Qt.PointingHandCursor
+        }
 
         contentItem: Text {
             id: delegateText
@@ -112,22 +134,27 @@ ComboBox {
         }
 
         background: Rectangle {
-            color: delegate.hovered || delegate.highlighted ? Theme.primary : Theme.surface
+            color: (delegate.hovered || delegate.highlighted)
+            ? Qt.alpha(Theme.primary, 0.15)
+            : "transparent"
+            radius: Metrics.radiusXS
         }
     }
 
     // --- POPUP CONTAINER ---
     popup: Popup {
-        y: control.height + 4
+        y: control.height + Metrics.spacingMD
         width: control.width
         implicitHeight: contentItem.implicitHeight
-        padding: 4
+        padding: Metrics.spacingMD
 
         contentItem: ListView {
             clip: true
             implicitHeight: contentHeight > 250 ? 250 : contentHeight
             model: control.delegateModel
             currentIndex: control.highlightedIndex
+            // Snap highlight tanpa animasi agar tidak goyang saat hover antar item
+            highlightMoveDuration: 0
             ScrollIndicator.vertical: ScrollIndicator {}
         }
 
@@ -135,7 +162,7 @@ ComboBox {
             color: Theme.surface
             border.color: Theme.border
             border.width: 1
-            radius: Metrics.radiusSM ?? 6
+            radius: Metrics.radiusSM
         }
     }
 }

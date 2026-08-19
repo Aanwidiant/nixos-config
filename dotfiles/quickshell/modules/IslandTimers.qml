@@ -1,4 +1,5 @@
 import QtQuick
+import "../services"
 
 Item {
     id: timersRoot
@@ -26,27 +27,7 @@ Item {
         id: expandTimer
         interval: 250
         onTriggered: {
-            if (
-                controller.pendingType === "polkit" ||
-                controller.pendingType === "launcher" ||
-                controller.pendingType === "power_system" ||
-                controller.pendingType === "power_profile" ||
-                controller.pendingType === "network" ||
-                controller.pendingType === "bluetooth" ||
-                controller.pendingType === "control_center" ||
-                controller.pendingType === "audio_output" ||
-                controller.pendingType === "clipboard" ||
-                controller.pendingType === "keybind" ||
-                controller.pendingType === "background" ||
-                controller.pendingType === "font" ||
-                controller.pendingType === "screenshot" ||
-                controller.pendingType === "screenrecord" ||
-                controller.pendingType === "theme" ||
-                controller.pendingType === "timer" ||
-                controller.pendingType === "emoji" ||
-                controller.pendingType === "notification"
-            ) 
-            {
+            if (States.isPendingType(controller.pendingType)) {
                 controller.currentState = controller.pendingType
                 controller.pendingType = ""
             }

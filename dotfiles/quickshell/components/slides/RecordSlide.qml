@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import "../../services"
 import "../../theme"
@@ -29,7 +30,7 @@ Item {
                 color: root.active ? Theme.danger : Theme.foreground
 
                 SequentialAnimation on opacity {
-                    running: RecordService.isRecording
+                    running: RecordService.isRecording && SwipeView.isCurrentItem
                     loops: Animation.Infinite
 
                     NumberAnimation { to: 0.3; duration: 800 }

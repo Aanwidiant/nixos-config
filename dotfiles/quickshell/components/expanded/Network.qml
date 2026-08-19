@@ -375,7 +375,7 @@ Item {
                             readonly property var net: modelData
                             readonly property string netSsid: net ? (net.ssid || net.name || "") : ""
                             readonly property bool isNotKnown: net ? (!net.known) : false
-                            readonly property bool isEncrypted: net ? (net.securityType !== WifiSecurityType.Open) : false
+                            readonly property bool isEncrypted: net ? (net.security !== WifiSecurityType.Open) : false
                             readonly property bool isSelected: root.selectedSsid !== "" && root.selectedSsid === netSsid
 
                             width: availableColumn.width
@@ -440,8 +440,15 @@ Item {
                                     visible: isSelected 
                                     spacing: Metrics.spacingLG
 
+                                    // Spacer agar tombol Connect tetap di kanan saat field password disembunyikan
+                                    Item {
+                                        Layout.fillWidth: true
+                                        visible: !availableDelegate.isEncrypted
+                                    }
+
                                     TextField {
                                         id: passInput
+                                        visible: availableDelegate.isEncrypted
                                         Layout.fillWidth: true
                                         placeholderText: "Enter password"
                                         echoMode: root.showPassword ? TextInput.Normal : TextInput.Password
@@ -503,7 +510,11 @@ Item {
                                         onClicked: {
                                             if (net) {
                                                 root.errorMessage = ""
-                                                NetworkService.connectWithPassword(net, root.passwordText)
+                                                if (availableDelegate.isEncrypted) {
+                                                    NetworkService.connectWithPassword(net, root.passwordText)
+                                                } else {
+                                                    NetworkService.connectToNetwork(net)
+                                                }
                                             }
                                         }
 
@@ -553,19 +564,15 @@ Item {
                                 z: -1
                                 onClicked: {
                                     if (!net) return
-                                    if (availableDelegate.isEncrypted) {
-                                        if (isSelected) {
-                                            root.selectedSsid = ""
-                                            root.errorMessage = ""
-                                            root.showPassword = false
-                                        } else {
-                                            root.selectedSsid = availableDelegate.netSsid
-                                            root.passwordText = ""
-                                            root.errorMessage = ""
-                                            root.showPassword = false
-                                        }
+                                    if (isSelected) {
+                                        root.selectedSsid = ""
+                                        root.errorMessage = ""
+                                        root.showPassword = false
                                     } else {
-                                        NetworkService.connectToNetwork(net)
+                                        root.selectedSsid = availableDelegate.netSsid
+                                        root.passwordText = ""
+                                        root.errorMessage = ""
+                                        root.showPassword = false
                                     }
                                 }
                             }

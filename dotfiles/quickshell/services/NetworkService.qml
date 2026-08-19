@@ -6,23 +6,17 @@ import Quickshell.Networking
 Item {
     id: root
 
-    readonly property bool debug: true
+    readonly property bool debug: false
 
-    // ==========================================
-    // LOGGING HELPERS
-    // ==========================================
+    // Logging helpers
     function log(...args) { if (debug) console.log("[NetworkService]", ...args) }
     function warn(...args) { if (debug) console.warn("[NetworkService]", ...args) }
 
-    // ==========================================
-    // SIGNALS
-    // ==========================================
+    // Signals
     signal passwordRequired(var network)
     signal connectionFailed(string name, string errorMessage)
 
-    // ==========================================
-    // 1. GLOBAL STATE & BACKEND
-    // ==========================================
+    // Global state & backend
     readonly property bool wifiEnabled: Networking.wifiEnabled
     readonly property bool wifiHardwareEnabled: Networking.wifiHardwareEnabled
     readonly property var backend: Networking.backend
@@ -36,9 +30,7 @@ Item {
 
     onWifiHardwareEnabledChanged: log("🔌 Wi-Fi hardware →", wifiHardwareEnabled)
 
-    // ==========================================
-    // 2. DEVICE RESOLUTION
-    // ==========================================
+    // Device resolution
     property WifiDevice wifiDevice: null
     property WiredDevice wiredDevice: null
     property var _previousActiveNetwork: null
@@ -76,9 +68,7 @@ Item {
         }
     }
 
-    // ==========================================
-    // 3. EXPOSED PROPERTIES & WIRED DETAILS
-    // ==========================================
+    // Exposed properties
     readonly property bool isWifiConnected: wifiDevice ? wifiDevice.connected : false
     readonly property bool isWiredConnected: wiredDevice ? wiredDevice.connected : false
     readonly property bool wiredHasLink: wiredDevice ? wiredDevice.hasLink : false
@@ -87,9 +77,7 @@ Item {
     property bool isScanning: false
     readonly property var wifiNetworksModel: wifiDevice ? wifiDevice.networks : null
 
-    // ==========================================
-    // 4. TIMERS (SCAN & ROLLBACK)
-    // ==========================================
+    // Timers
     Timer {
         id: scanAnimationTimer
         interval: 3000
@@ -99,7 +87,7 @@ Item {
         }
     }
 
-    // DIPERBAIKI: Gunakan Timer statis daripada Qt.createQmlObject (lebih aman & ringan)
+    // Timer statis untuk rollback ke jaringan sebelumnya
     Timer {
         id: rollbackTimer
         interval: 1000
@@ -125,9 +113,7 @@ Item {
         scanAnimationTimer.restart()
     }
 
-    // ==========================================
-    // 5. ICONS CONSTANTS
-    // ==========================================
+    // Icons
     readonly property var _wifiIcons: ({
         "limited":   ["\udb82\udd2b", "\udb82\udd20", "\udb82\udd23", "\udb82\udd26", "\udb82\udd29"],
         "encrypted": ["\udb82\udd2c", "\udb82\udd21", "\udb82\udd24", "\udb82\udd27", "\udb82\udd2a"],
@@ -142,9 +128,7 @@ Item {
         return 0
     }
 
-    // ==========================================
-    // 6. ACTIONS & LOGIC
-    // ==========================================
+    // Actions
     function toggleWifi() {
         if (!wifiHardwareEnabled) { warn("⚠️ Hardware disabled"); return }
         const newState = !wifiEnabled
@@ -176,8 +160,8 @@ Item {
 
     function connectToNetwork(network) {
         if (!network) return
-        // Diperbaiki: Menggunakan None (standar) alih-alih Open agar konsisten di seluruh file
-        const isEncrypted = network.security !== WifiSecurityType.Open 
+        // Pakai WifiSecurityType.Open (standar) untuk cek jaringan terbuka
+        const isEncrypted = network.security !== WifiSecurityType.Open
 
         if (isEncrypted && !network.known) {
             log("🔑 Jaringan butuh password:", network.name)
@@ -194,7 +178,7 @@ Item {
         const networkName = network.name
         const wasKnownBefore = network.known === true
 
-        // 1. Simpan jaringan aktif sebelumnya sebagai fallback
+        // Simpan jaringan aktif sebagai fallback
         root._previousActiveNetwork = null
         const connectedNet = _iterateModel(function(net) {
             return net && net !== network && (net.connected === true || net.isConnected === true)
@@ -214,7 +198,7 @@ Item {
                 network.connectionFailed.disconnect(onFailedHandler)
                 network.connectedChanged.disconnect(onConnectedHandler)
             } catch (e) {
-                // Abaikan error jika sinyal terlanjur terputus / objek network hancur
+                // Abaikan error jika sinyal terlanjur terputus / objek hancur
             }
         }
 
@@ -237,7 +221,6 @@ Item {
                 log("⏳ Menunggu NetworkManager idle, lalu reconnect ke:", targetFallback.name)
                 errorMsg += " (Reconnecting to " + targetFallback.name + "...)"
 
-                // Gunakan timer statis
                 rollbackTimer.targetNetwork = targetFallback
                 rollbackTimer.restart()
             }
@@ -249,7 +232,7 @@ Item {
         onConnectedHandler = function() {
             if (network.connected) {
                 log("🎉 Berhasil terhubung ke:", networkName)
-                root._previousActiveNetwork = null 
+                root._previousActiveNetwork = null
                 cleanup()
             }
         }
@@ -257,14 +240,13 @@ Item {
         network.connectionFailed.connect(onFailedHandler)
         network.connectedChanged.connect(onConnectedHandler)
 
-        // Bungkus dalam try-catch untuk mencegah crash jika object rusak di tengah jalan
         try {
             network.connectWithPsk(password)
         } catch (e) {
             cleanup()
             warn("Error saat memanggil connectWithPsk:", e)
         }
-    } 
+    }
 
     function disconnectNetwork(network) {
         if (!network) return
@@ -284,24 +266,21 @@ Item {
         const s = net.signalStrength || 0
         const idx = _getIconIndex(s)
 
-        // 1. Kondisi Terhubung Tapi Terbatas / Tanpa Internet
+        // Terhubung tapi terbatas / tanpa internet
         if (net.connected && (Networking.connectivity === NetworkConnectivity.Limited)) {
             return _wifiIcons.limited[idx]
         }
 
-        // 2. Kondisi Terkunci (Encrypted)
+        // Terkunci (encrypted)
         if (net.security !== WifiSecurityType.Open) {
             return _wifiIcons.encrypted[idx]
-        } 
+        }
 
-        // 3. Kondisi Terbuka / Standar (Open / Normal)
+        // Terbuka / standar
         return _wifiIcons.open[idx]
     }
 
-    // ==========================================
-    // 7. HELPER ITERASI MODEL
-    // ==========================================
-    // Mencegah duplikasi kode loop pada model.values vs rowCount()
+    // Helper iterasi model (values vs rowCount)
     function _iterateModel(callback) {
         var model = wifiNetworksModel
         if (!model) return null
@@ -310,7 +289,7 @@ Item {
             for (var i = 0; i < model.values.length; i++) {
                 if (callback(model.values[i])) return model.values[i]
             }
-        } 
+        }
         else if (typeof model.rowCount === "function") {
             var count = model.rowCount()
             for (var j = 0; j < count; j++) {
@@ -334,24 +313,20 @@ Item {
     }
 
     function activeWifiIcon() {
-        if (!wifiEnabled) return "\udb82\udd2f" 
-        return getWifiIcon(getConnectedWifiObject()) 
+        if (!wifiEnabled) return "\udb82\udd2f"
+        return getWifiIcon(getConnectedWifiObject())
     }
 
-    // ==========================================
-    // 8. INITIALIZATION LOG
-    // ==========================================
+    // Log status awal setelah inisialisasi
     Timer {
         id: initTimer
         interval: 500
         onTriggered: {
-            log("🚀 === Status Akhir ===")
-            log("   ├─ Backend:", NetworkBackendType.toString(root.backend))
-            log("   ├─ Hardware:", root.wifiHardwareEnabled)
-            log("   ├─ Software:", root.wifiEnabled)
-            log("   ├─ Connectivity:", NetworkConnectivity.toString(root.connectivity))
-            log("   ├─ Wi-Fi:", root.wifiDevice ? root.wifiDevice.name : "❌ Not Found")
-            log("   └─ Wired:", root.wiredDevice ? (root.wiredDevice.name + " (Link: " + root.wiredHasLink + ")") : "❌ Not Found")
+            log("Status Akhir — Backend:", NetworkBackendType.toString(root.backend))
+            log("  Hardware:", root.wifiHardwareEnabled, "| Software:", root.wifiEnabled)
+            log("  Connectivity:", NetworkConnectivity.toString(root.connectivity))
+            log("  Wi-Fi:", root.wifiDevice ? root.wifiDevice.name : "Not Found")
+            log("  Wired:", root.wiredDevice ? (root.wiredDevice.name + " (Link: " + root.wiredHasLink + ")") : "Not Found")
         }
     }
 

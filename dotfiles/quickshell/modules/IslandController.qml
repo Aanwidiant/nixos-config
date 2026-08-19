@@ -9,39 +9,14 @@ Item {
 
     property bool islandVisible: false
     property bool isHovering: false
-    property string currentState: "hidden" 
+    property string currentState: "hidden"
     property bool pendingContent: false
-    property string pendingType: "" 
+    property string pendingType: ""
     property bool isClosingExpanded: false
     property var onClosed: null
 
-    readonly property bool isOsdState: currentState === "volume" 
-    || currentState === "brightness" 
-    || currentState === "microphone"
-
-    readonly property bool isExpandedState: currentState === "polkit" 
-    || currentState === "clock_details" 
-    || currentState === "music_details" 
-    || currentState === "launcher"
-    || currentState === "power_system"
-    || currentState === "power_profile"
-    || currentState === "network"
-    || currentState === "bluetooth"
-    || currentState === "bluetooth_setting"
-    || currentState === "control_center"
-    || currentState === "audio_output"
-    || currentState === "audio_input"
-    || currentState === "clipboard"
-    || currentState === "keybind"
-    || currentState === "background"
-    || currentState === "font"
-    || currentState === "theme"
-    || currentState === "screenshot"
-    || currentState === "screenrecord"
-    || currentState === "timer"
-    || currentState === "emoji"
-    || currentState === "notification"
-    || isOsdState
+    readonly property bool isOsdState: States.isOsd(currentState)
+    readonly property bool isExpandedState: States.isExpanded(currentState)
 
     readonly property bool isExpandedOrClosing: isExpandedState || isClosingExpanded
     readonly property bool isBusy: isHovering || isExpandedOrClosing || pendingContent
@@ -55,6 +30,19 @@ Item {
 
     function stopAllTimers() {
         timers.stopAll()
+    }
+
+    function openExpanded(type) {
+        stopAllTimers()
+        isClosingExpanded = false
+        if (!islandVisible) {
+            pendingType = type
+            currentState = "clock"
+            islandVisible = true
+            timers.startExpandTimer()
+        } else {
+            currentState = type
+        }
     }
 
     function startExitSequence() {
@@ -77,76 +65,15 @@ Item {
         currentState = "music_details"
     }
 
-    function openLauncher() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openLauncher() { openExpanded("launcher") }
 
-        if (!islandVisible) {
-            pendingType = "launcher"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "launcher"
-        }
-    }
+    function openPowerSystem() { openExpanded("power_system") }
 
-    function openPowerSystem() {
+    function openPowerProfile() { openExpanded("power_profile") }
 
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openNetwork() { openExpanded("network") }
 
-        if (!islandVisible) {
-            pendingType = "power_system"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "power_system"
-        }
-    }
-
-    function openPowerProfile() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "power_profile"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "power_profile"
-        }
-    }
-
-    function openNetwork() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "network"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "network"
-        }
-    }
-
-    function openBluetooth() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "bluetooth"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "bluetooth"
-        }
-    }
+    function openBluetooth() { openExpanded("bluetooth") }
 
     function openBluetoothSettings() {
         stopAllTimers()
@@ -154,179 +81,35 @@ Item {
         currentState = "bluetooth_setting"
     }
 
-    function openControlCenter() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openControlCenter() { openExpanded("control_center") }
 
-        if (!islandVisible) {
-            pendingType = "control_center"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "control_center"
-        }
-    }
+    function openAudioOutput() { openExpanded("audio_output") }
 
-    function openAudioOutput() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openAudioInput() { openExpanded("audio_input") }
 
-        if (!islandVisible) {
-            pendingType = "audio_output"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "audio_output"
-        }
-    }
+    function openClipboard() { openExpanded("clipboard") }
 
-    function openAudioInput() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openKeybind() { openExpanded("keybind") }
 
-        if (!islandVisible) {
-            pendingType = "audio_input"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "audio_input"
-        }
-    }
+    function openBackground() { openExpanded("background") }
 
-    function openClipboard() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openFont() { openExpanded("font") }
 
-        if (!islandVisible) {
-            pendingType = "clipboard"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "clipboard"
-        }
-    }
+    function openTheme() { openExpanded("theme") }
 
-    function openKeybind() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openScreenshot() { openExpanded("screenshot") }
 
-        if (!islandVisible) {
-            pendingType = "keybind"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "keybind"
-        }
-    }
+    function openScreenrecord() { openExpanded("screenrecord") }
 
-    function openBackground() {
-        stopAllTimers()
-        isClosingExpanded = false 
+    function openTimer() { openExpanded("timer") }
 
-        if (!islandVisible) {
-            pendingType = "background"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "background"
-        }
-    }
-
-    function openFont() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "font"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "font"
-        }
-    }
-
-    function openTheme() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "theme"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "theme"
-        }
-    }
-
-    function openScreenshot() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "screenshot"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "screenshot"
-        }
-    }
-
-    function openScreenrecord() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "screenrecord"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "screenrecord"
-        }
-    }  
-
-    function openTimer() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "timer"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "timer"
-        }
-    }
-
-    function openEmoji() {
-        stopAllTimers()
-        isClosingExpanded = false 
-
-        if (!islandVisible) {
-            pendingType = "emoji"
-            currentState = "clock"
-            islandVisible = true
-            timers.startExpandTimer()
-        } else {
-            currentState = "emoji"
-        }
-    }
+    function openEmoji() { openExpanded("emoji") }
 
     function closeExpandedState(callback = null) {
         if (isExpandedState) {
             onClosed = callback;
             if (osdContainer) osdContainer._showClock = false
-            isClosingExpanded = true 
+            isClosingExpanded = true
         }
     }
 
@@ -452,7 +235,7 @@ Item {
 
         function onRequestPowerProfile() {
             controller.openPowerProfile()
-        } 
+        }
 
         function onRequestControlCenter() {
             controller.openControlCenter()
