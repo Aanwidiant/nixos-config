@@ -2,6 +2,8 @@
 
 BG_PATH="$1"
 CURRENT_BACKGROUND_LINK="$HOME/.config/theme/current/background"
+ICON_PATH="$HOME/nixos-config/dotfiles/quickshell/assets/nixos.png"
+
 [[ -z "$BG_PATH" ]] && exit 1
 
 ln -nsf "$BG_PATH" "$CURRENT_BACKGROUND_LINK"
@@ -9,4 +11,7 @@ REAL_PATH="$(readlink -f "$CURRENT_BACKGROUND_LINK")"
 
 pkill swaybg 2>/dev/null || true
 swaybg -i "$REAL_PATH" -m fill &
-notify-send "Background changed" "$(basename "$REAL_PATH")" -t 2000
+notify-send "Background changed" \
+    "Background changed to $(basename "$REAL_PATH")" \
+    -i "$ICON_PATH" \
+    -a "System"

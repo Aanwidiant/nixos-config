@@ -16,10 +16,9 @@ link() {
     ln -sfn "$src" "$dest"
 }
 
-link hypr .config/hypr
 link mango .config/mango
 link quickshell .config/quickshell
-link kitty .config/kitty
+link foot .config/foot
 link theme .config/theme
 link btop .config/btop
 link zed .config/zed

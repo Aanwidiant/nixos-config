@@ -52,7 +52,7 @@ Item {
         onTriggered: {
             if (controller.isOsdState) {
                 controller.currentState = "clock"
-                if (!controller.isHovering) {
+                if (!controller.isHovering && !controller.stayVisible) {
                     slideOutDelayTimer.restart()
                 }
             }
@@ -63,6 +63,7 @@ Item {
         id: hideTimer
         interval: 1500
         onTriggered: {
+            if (controller.stayVisible) return
             if (!controller.isBusy) {
                 if (controller.currentState !== "clock") {
                     controller.currentState = "clock"
@@ -76,6 +77,7 @@ Item {
         id: slideOutDelayTimer
         interval: 300
         onTriggered: {
+            if (controller.stayVisible) return
             if (!controller.isBusy) {
                 slideOutTimer.restart()
             }
@@ -86,6 +88,7 @@ Item {
         id: slideOutTimer
         interval: 120
         onTriggered: {
+            if (controller.stayVisible) return
             if (!controller.isBusy) {
                 controller.islandVisible = false
                 controller.currentState = "hidden"

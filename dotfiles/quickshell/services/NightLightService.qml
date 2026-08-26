@@ -37,6 +37,7 @@ Singleton {
             if pgrep -x wlsunset >/dev/null; then
                 pkill -x wlsunset
                 notify-send \
+                    -a "System" \
                     -i "${Theme.nixosIcon}" \
                     "Night Light" \
                     "Disabled · Daylight screen temperature"
@@ -49,6 +50,7 @@ Singleton {
                     >/dev/null 2>&1 &
     
                 notify-send \
+                    -a "System" \
                     -i "${Theme.nixosIcon}" \
                     "Night Light" \
                     "Enabled · Warm screen temperature"

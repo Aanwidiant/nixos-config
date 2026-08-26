@@ -15,13 +15,7 @@ Item {
 
     property bool expanded: false
 
-    Process {
-        id: runnerProcess
-
-        onExited: () => {
-            controller.closeExpandedState()
-        }
-    }
+    // 1. Process lokal dihapus karena eksekusi dipindah ke PowerService
 
     function resetSelection() {
         if (repeater.count > 0) {
@@ -44,6 +38,13 @@ Item {
         }
     }
 
+    Connections {
+        target: PowerService
+        function onFinished() {
+            controller.closeExpandedState()
+        }
+    }
+
     CloseButton {}
 
     Item {
@@ -58,12 +59,13 @@ Item {
 
             Repeater {
                 id: repeater
+                // 2. Properti `cmd` diganti dengan memanggil function JavaScript langsung
                 model: [
-                    { icon: "\uf023",     label: "Lock",     cmd: "my-lock-screen" },
-                    { icon: "\udb80\udf43", label: "Logout",   cmd: "my-cmd-logout" },
-                    { icon: "\udb81\udcb2", label: "Suspend",  cmd: "systemctl suspend" },
-                    { icon: "\udb81\udf09", label: "Reboot",   cmd: "my-cmd-reboot" },
-                    { icon: "\uf011",     label: "Shutdown", cmd: "my-cmd-shutdown" }
+                    { icon: "\uf023",     label: "Lock",     action: () => PowerService.lock() },
+                    { icon: "\udb80\udf43", label: "Logout",   action: () => PowerService.logout() },
+                    { icon: "\udb81\udcb2", label: "Suspend",  action: () => PowerService.suspend() },
+                    { icon: "\udb81\udf09", label: "Reboot",   action: () => PowerService.reboot() },
+                    { icon: "\uf011",     label: "Shutdown", action: () => PowerService.shutdown() }
                 ]
 
                 delegate: Rectangle {
@@ -93,9 +95,9 @@ Item {
                     Keys.onReturnPressed: performAction()
                     Keys.onSpacePressed: performAction()
 
+                    // 3. performAction() memanggil action() dan menutup expanded state
                     function performAction() {
-                        runnerProcess.command = ["sh", "-c", modelData.cmd]
-                        runnerProcess.running = true
+                        modelData.action()
                     }
 
                     ColumnLayout {

@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-my-state clear "re*-required" || true
-my-window-close-all || true
-
-sleep 2
-sync
-
-loginctl terminate-session "$XDG_SESSION_ID"

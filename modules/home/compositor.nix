@@ -7,8 +7,6 @@
   };
 
   home.packages = with pkgs; [
-    wayidle
-    hyprlock
     hyprpicker
     wlsunset
     swaybg

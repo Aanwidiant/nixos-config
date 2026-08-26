@@ -14,6 +14,7 @@ Item {
     property string pendingType: ""
     property bool isClosingExpanded: false
     property var onClosed: null
+    property bool stayVisible: IpcService.stayVisible
 
     readonly property bool isOsdState: States.isOsd(currentState)
     readonly property bool isExpandedState: States.isExpanded(currentState)
@@ -52,7 +53,20 @@ Item {
             currentState = "clock"
         }
 
+        if (stayVisible) return
         timers.restartSlideOutDelay()
+    }
+
+    onStayVisibleChanged: {
+        if (stayVisible) {
+            stopAllTimers()
+            if (!islandVisible || currentState === "hidden") {
+                currentState = "clock"
+                islandVisible = true
+            }
+        } else if (!isBusy) {
+            startExitSequence()
+        }
     }
 
     function openClockDetails() {
@@ -105,11 +119,31 @@ Item {
 
     function openEmoji() { openExpanded("emoji") }
 
+    function openNotifCenter() { openExpanded("notif-center") }
+
     function closeExpandedState(callback = null) {
         if (isExpandedState) {
             onClosed = callback;
             if (osdContainer) osdContainer._showClock = false
             isClosingExpanded = true
+
+            var delayTimer = Qt.createQmlObject('import QtQuick; Timer { interval: 150; repeat: false; }', controller)
+            delayTimer.triggered.connect(function() {
+                isClosingExpanded = false
+                currentState = "clock"
+
+                if (onClosed && typeof onClosed === "function") {
+                    onClosed()
+                    onClosed = null
+                }
+
+                if (!isHovering && !stayVisible) {
+                    startExitSequence()
+                }
+
+                delayTimer.destroy() 
+            })
+            delayTimer.start()
         }
     }
 
@@ -198,21 +232,24 @@ Item {
         function onNotificationReceived(notification) {
             if (controller.currentState === "polkit") return
 
-            if (controller.currentState === "notification") {
+            if (controller.currentState === "notif-popup") {
                 timers.restartResetTimer()
                 return
             }
 
-            if (controller.isExpandedState) {
-                controller.closeExpandedState(function() {
-                    controller.pendingType = "notification"
-                    controller.triggerContentChange()
-                })
-                return
-            }
+            controller.isClosingExpanded = false
+            controller.pendingType = "notif-popup"
 
-            controller.pendingType = "notification"
-            controller.triggerContentChange()
+            if (!controller.islandVisible) {
+                controller.islandVisible = true
+                controller.currentState = "clock"
+                controller.pendingContent = true
+                timers.startExpandToContentTimer()
+            } else {
+                controller.currentState = "notif-popup"
+                timers.stopHideTimer()
+                timers.restartResetTimer()
+            }
         }
 
         function onNotificationDismissed(notification) {

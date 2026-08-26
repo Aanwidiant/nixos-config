@@ -9,7 +9,8 @@ vim.pack.add({
     "https://github.com/folke/tokyonight.nvim",
     "https://github.com/shaunsingh/nord.nvim",
     "https://github.com/mofiqul/dracula.nvim",
-    "https://github.com/morhetz/gruvbox"
+    "https://github.com/morhetz/gruvbox",
+    "https://github.com/folke/persistence.nvim",
 })
 
 ---- project management ----
@@ -167,8 +168,8 @@ local function remove_recent_project()
 end
 
 local function git_changes_picker()
-    local is_git = vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null")
-    if not is_git or is_git:find("true") == nil then
+    local is_git = vim.fn.trim(vim.fn.system("git rev-parse --is-inside-work-tree 2>/dev/null"))
+    if is_git ~= "true" then
         vim.notify("Not a git repository", vim.log.levels.WARN)
         return
     end
@@ -373,3 +374,25 @@ vim.keymap.set("n", "<leader>bD", function()
         end
     end
 end, { desc = "Delete All Buffers" })
+
+
+---- sessionoptions ----
+vim.opt.sessionoptions = { "buffers", "curdir", "folds", "help", "tabpages", "winsize", "winpos", "terminal" }
+
+---- persistence setup ----
+require("persistence").setup({
+    dir = vim.fn.stdpath("state") .. "/sessions/",
+    options = { "buffers", "curdir", "folds", "tabpages", "winsize" },
+})
+
+vim.keymap.set("n", "<leader>qs", function()
+    require("persistence").load()
+end, { desc = "Restore Session (Current Directory)" })
+
+vim.keymap.set("n", "<leader>ql", function()
+    require("persistence").load({ last = true })
+end, { desc = "Restore Last Session" })
+
+vim.keymap.set("n", "<leader>qd", function()
+    require("persistence").stop()
+end, { desc = "Stop Session Persistence (Don't Save)" })

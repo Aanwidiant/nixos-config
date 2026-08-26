@@ -11,7 +11,7 @@ QtObject {
         "power_system", "power_profile", "network", "bluetooth",
         "bluetooth_setting", "control_center", "audio_output", "audio_input",
         "clipboard", "keybind", "background", "font", "theme",
-        "screenshot", "screenrecord", "timer", "emoji", "notification"
+        "screenshot", "screenrecord", "timer", "emoji", "notif-popup", "notif-center"
     ]
 
     // ── OSD (overlay sementara) ──
@@ -24,14 +24,14 @@ QtObject {
     readonly property var exclusiveFocusStates: [
         "polkit", "launcher", "clipboard", "control_center",
         "font", "keybind", "emoji", "background", "theme",
-        "power_system", "power_profile"
+        "power_system", "power_profile", "notif-center"
     ]
 
     // ── Cukup OnDemand ──
     readonly property var onDemandFocusStates: [
         "clock_details", "music_details", "network", "bluetooth",
         "bluetooth_setting", "audio_output", "audio_input",
-        "screenshot", "screenrecord", "timer", "notification"
+        "screenshot", "screenrecord", "timer", "notif-popup"
     ]
 
     // ── Set untuk lookup cepat ──

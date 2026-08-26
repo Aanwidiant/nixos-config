@@ -26,6 +26,7 @@ Singleton {
 
         command: [
             "notify-send",
+            "-a", "System",
             "-i", Theme.nixosIcon,
             "Touchpad",
             message

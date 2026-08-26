@@ -39,7 +39,8 @@ Item {
         case "screenrecord": return screenrecordComp
         case "timer": return timerComp
         case "emoji": return emojiComp
-        case "notification": return notifComp
+        case "notif-popup": return notifComp
+        case "notif-center": return notifCenterComp
         default: return null
         }
     }
@@ -84,4 +85,5 @@ Item {
     Component { id: timerComp; TimerTool {} }
     Component { id: emojiComp; Emoji {} }
     Component { id: notifComp; Notification {} }
+    Component { id: notifCenterComp; NotificationCenter {} }
 }

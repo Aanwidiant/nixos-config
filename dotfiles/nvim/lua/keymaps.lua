@@ -44,7 +44,7 @@ vim.keymap.set("n", "<leader>ob", function()
 end, { desc = "Open HTML in browser" })
 
 vim.keymap.set({ "i", "s" }, "<C-l>", function()
-  require("luasnip").unlink_current()
+  require("mini.snippets").unlink_current()
 end)
 
 -- block keybind

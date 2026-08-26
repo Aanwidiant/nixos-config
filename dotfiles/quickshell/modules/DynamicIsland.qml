@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Shapes
 import Quickshell
 import "../theme"
 import "../components/expanded"
@@ -51,24 +52,94 @@ Item {
 
         readonly property bool isFullyHidden: (controller.currentState === "hidden" || !controller.islandVisible) && height <= 12
 
-        width: activeContent ? activeContent.implicitWidth : 148
-        height: (controller.currentState === "hidden" || !controller.islandVisible) ? 6 : (activeContent ? activeContent.implicitHeight : 32)
+        width: activeContent ? activeContent.implicitWidth : 156
+        height: (controller.currentState === "hidden" || !controller.islandVisible) ? 10 : (activeContent ? activeContent.implicitHeight : 36)
 
-        color: (controller.currentState === "notification" && NotificationService.activeCount > 1) ? "transparent" : Theme.background
+        color: "transparent"
         anchors.horizontalCenter: parent.horizontalCenter
-        y: (controller.currentState === "hidden" || !controller.islandVisible) ? 0 : 8
+        y: 0
 
-        readonly property bool isRegularExpanded: controller.isExpandedState
-        && !controller.isClosingExpanded
+        readonly property bool isRegularExpanded: controller.isExpandedState && !controller.isClosingExpanded
 
-        topLeftRadius: isFullyHidden ? 0 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
-        topRightRadius: isFullyHidden ? 0 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
-        bottomLeftRadius: isFullyHidden ? 16 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
-        bottomRightRadius: isFullyHidden ? 16 : (isRegularExpanded ? Metrics.radiusXL : Metrics.radiusFull)
+        property real concaveRadius: Metrics.radiusSM
 
-        Behavior on width { SpringAnimation { spring: 4.5; damping: 0.35; epsilon: 0.25 } }
-        Behavior on height { SpringAnimation { spring: 4.5; damping: 0.35; epsilon: 0.25 } }
+        readonly property real rawBottomRadius: isFullyHidden ? Metrics.radiusXS : (isRegularExpanded ? Metrics.radiusLG : Metrics.radiusMD)
+        readonly property real bottomRadius: Math.min(rawBottomRadius, height / 2)
+
+        Behavior on width { SpringAnimation { spring: 6; damping: 0.4; epsilon: 0.25 } }
+        Behavior on height { SpringAnimation { spring: 6; damping: 0.4; epsilon: 0.25 } }
         Behavior on y { NumberAnimation { duration: 120; easing.type: Easing.OutBack } }
+
+        Shape {
+            id: islandBackground
+            anchors.fill: parent
+            anchors.leftMargin: -island.concaveRadius
+            anchors.rightMargin: -island.concaveRadius
+
+            visible: !island.isFullyHidden
+            z: 0
+
+            layer.enabled: true
+            layer.samples: 8
+            smooth: true
+
+            ShapePath {
+                fillColor: Qt.alpha(Theme.background, 0.75)
+                strokeColor: Qt.alpha(Theme.primary, 0.1) 
+
+                startX: 0
+                startY: 0
+
+                PathArc {
+                    x: island.concaveRadius
+                    y: island.concaveRadius
+                    radiusX: island.concaveRadius
+                    radiusY: island.concaveRadius
+                    direction: PathArc.Clockwise
+                }
+
+                PathLine { 
+                    x: island.concaveRadius
+                    y: island.height - island.bottomRadius 
+                }
+
+                PathArc {
+                    x: island.concaveRadius + island.bottomRadius
+                    y: island.height
+                    radiusX: island.bottomRadius
+                    radiusY: island.bottomRadius
+                    direction: PathArc.Counterclockwise
+                }
+
+                PathLine { 
+                    x: island.concaveRadius + island.width - island.bottomRadius
+                    y: island.height 
+                }
+
+                PathArc {
+                    x: island.concaveRadius + island.width
+                    y: island.height - island.bottomRadius
+                    radiusX: island.bottomRadius
+                    radiusY: island.bottomRadius
+                    direction: PathArc.Counterclockwise
+                }
+
+                PathLine { 
+                    x: island.concaveRadius + island.width
+                    y: island.concaveRadius 
+                }
+
+                PathArc {
+                    x: island.concaveRadius * 2 + island.width
+                    y: 0
+                    radiusX: island.concaveRadius
+                    radiusY: island.concaveRadius
+                    direction: PathArc.Clockwise
+                }
+
+                PathLine { x: 0; y: 0 }
+            }
+        }
 
         onHeightChanged: {
             if (controller.isClosingExpanded && Math.abs(height - 32) < 0.5) {

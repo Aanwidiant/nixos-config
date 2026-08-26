@@ -10,7 +10,7 @@ Item {
     id: root
 
     implicitWidth: 156
-    implicitHeight: 32
+    implicitHeight: 36
 
     readonly property bool isCavaVisible: SwipeView.isCurrentItem
 

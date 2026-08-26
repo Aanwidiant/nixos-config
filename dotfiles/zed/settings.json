@@ -16,7 +16,7 @@
         "api_url": "https://models-free.belanjalabs.com/v1",
         "available_models": [
           {
-            "name": "deepseek-v4-flash",
+            "name": "blabs/deepseek-v4-flash",
             "max_tokens": 200000,
             "max_output_tokens": 32000,
             "max_completion_tokens": 200000,
@@ -31,7 +31,52 @@
             }
           },
           {
-            "name": "deepseek-v4-pro",
+            "name": "blabs/deepseek-v4-pro",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "blabs/grok-4.5",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "blabs/minimax-m3",
+            "max_tokens": 200000,
+            "max_output_tokens": 32000,
+            "max_completion_tokens": 200000,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false,
+              "chat_completions": true,
+              "interleaved_reasoning": false,
+              "max_tokens_parameter": false
+            }
+          },
+          {
+            "name": "blabs/qwen-3.8-max",
             "max_tokens": 200000,
             "max_output_tokens": 32000,
             "max_completion_tokens": 200000,
@@ -141,7 +186,7 @@
     "default_model": {
       "enable_thinking": false,
       "provider": "belanjalabs",
-      "model": "deepseek-v4-flash",
+      "model": "blabs/deepseek-v4-pro",
     },
     "notify_when_agent_waiting": "primary_screen",
     "model_parameters": [],

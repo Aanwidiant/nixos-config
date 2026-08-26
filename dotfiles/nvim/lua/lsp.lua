@@ -35,7 +35,7 @@ vim.keymap.set("n", "<leader>f", function()
             end
         end
         if has_formatter then
-            vim.lsp.buf.format()
+            vim.lsp.buf.format({ async = true })
         else
             vim.cmd("normal! gg=G")
         end

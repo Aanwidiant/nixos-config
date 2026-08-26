@@ -6,7 +6,7 @@ Item {
     id: root
 
     implicitWidth: 156
-    implicitHeight: 32
+    implicitHeight: 36
 
     RowLayout {
         anchors.centerIn: parent
@@ -16,14 +16,14 @@ Item {
             model: [
                 { icon: "\udb81\udf2c", onClicked: controller.openLauncher },
                 { icon: "\uf085", onClicked: controller.openControlCenter },
-                { icon: "\uf0f3", onClicked: controller.openNotifManager }
+                { icon: "\uf0f3", onClicked: controller.openNotifCenter }
             ]
 
             delegate: Rectangle {
                 required property var modelData
 
-                Layout.preferredWidth: 32
-                Layout.preferredHeight: 32
+                Layout.preferredWidth: 36
+                Layout.preferredHeight: 36
                 color: "transparent"
 
                 Text {

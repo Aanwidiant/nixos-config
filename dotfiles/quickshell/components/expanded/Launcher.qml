@@ -26,7 +26,7 @@ Item {
         if (!app) return;
         if (app.runInTerminal) {
             Quickshell.execDetached({
-                command: ["kitty", "-e"].concat(app.command)
+                command: ["foot", "-e"].concat(app.command)
             });
         } else {
             app.execute();
@@ -41,7 +41,7 @@ Item {
         const manuallyHidden = [
             "base", "gvim", "calc", "draw", "impress", 
             "math", "thunar-bulk-rename", "thunar-settings", 
-            "thunar-volman-settings", "writer"
+            "thunar-volman-settings", "writer", "footclient", "foot-server"
         ];
 
         return Array.from(DesktopEntries.applications.values)

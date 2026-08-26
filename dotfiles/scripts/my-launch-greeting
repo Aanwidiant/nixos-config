@@ -27,4 +27,4 @@ MESSAGES=(
 
 RANDOM_MESSAGE=${MESSAGES[$RANDOM % ${#MESSAGES[@]}]}
 
-notify-send "$GREETING, $USER" "$RANDOM_MESSAGE" -i "/home/aanwidiant/nixos-config/dotfiles/quickshell/assets/nixos.png"
+notify-send "$GREETING, $USER" "$RANDOM_MESSAGE" -i "/home/aanwidiant/nixos-config/dotfiles/quickshell/assets/nixos.png" -a "System"

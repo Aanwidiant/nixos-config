@@ -15,14 +15,10 @@ Singleton {
         fetchProcess.running = true
     }
 
-    function selectBackground(path, closeCallback) {
+    function selectBackground(path) {
         if (!path) return;
 
         Quickshell.execDetached(["my-bg-set", path]);
-
-        if (typeof closeCallback === "function") {
-            closeCallback();
-        }
     }
 
     Process {

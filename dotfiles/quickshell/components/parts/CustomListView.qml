@@ -64,8 +64,6 @@ ColumnLayout {
 
                 TextField {
                     id: searchInput
-
-    focus: true
                     Layout.fillWidth: true
                     placeholderText: "Search..."
                     placeholderTextColor: Theme.muted

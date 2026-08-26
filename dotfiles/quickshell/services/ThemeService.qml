@@ -15,16 +15,12 @@ Singleton {
         fetchProcess.running = true
     }
 
-    function selectTheme(themePath, closeCallback) {
+    function selectTheme(themePath) {
         if (!themePath) return;
 
         const themeName = themePath.split("/").pop();
 
         Quickshell.execDetached(["my-theme-set", themeName]);
-
-        if (typeof closeCallback === "function") {
-            closeCallback();
-        }
     }
 
     Process {

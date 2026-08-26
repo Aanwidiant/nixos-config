@@ -68,7 +68,7 @@
       unbind -T copy-mode-vi MouseDragEnd1Pane
 
       # tmux-resurrect
-      set -g @resurrect-processes '"nvim->nvim *" lazygit'
+      set -g @resurrect-processes 'nvim lazygit lazydocker'
 
       # Load Modular Theme
       source-file ~/.config/theme/current/theme/tmux.conf

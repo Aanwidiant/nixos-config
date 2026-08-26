@@ -66,7 +66,7 @@ Item {
             Keys.onPressed: (event) => {
                 if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
                     if (currentIndex >= 0 && currentIndex < model.length) {
-                        ThemeService.selectTheme(model[currentIndex], controller.closeExpandedState);
+                        ThemeService.selectTheme(model[currentIndex]);
                         event.accepted = true;
                     }
                 }

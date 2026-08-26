@@ -6,8 +6,8 @@ import "../components/slides"
 Item {
     id: root
 
-    implicitWidth: swipeView.currentItem ? swipeView.currentItem.implicitWidth : 144
-    implicitHeight: swipeView.currentItem ? swipeView.currentItem.implicitHeight : 32
+    implicitWidth: swipeView.currentItem ? swipeView.currentItem.implicitWidth : 156 
+    implicitHeight: swipeView.currentItem ? swipeView.currentItem.implicitHeight : 36
 
     property int lastIndex: 0
     property bool scrollCooldown: false
@@ -49,11 +49,13 @@ Item {
 
         CavaSlide {}
 
-        // EyeSlide {}
+        EyeSlide {}
 
         RecordSlide {}
 
         TimerSlide {}
+
+        TagsSlide {}
     }
 
     Timer {

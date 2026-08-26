@@ -11,7 +11,7 @@
       format = "[$directory$git_branch$git_status]($style)$character";
 
       character = {
-        error_symbol = "[✗](bold cyan)";
+        error_symbol = "[✗](bold red)";
         success_symbol = "[❯](bold cyan)";
       };
 
@@ -37,10 +37,10 @@
         up_to_date = " ";
         untracked = "? ";
         modified = " ";
-        stashed = "";
-        staged = "";
-        renamed = "";
-        deleted = "";
+        stashed = " ";
+        staged = "+ ";
+        renamed = "r ";
+        deleted = "- ";
       };
     };
   };

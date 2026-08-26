@@ -6,6 +6,7 @@ if [[ -z "$1" || "$1" == "CNCLD" ]]; then
 fi
 
 THEMES_DIR="$HOME/.config/theme/themes"
+ICON_PATH="$HOME/nixos-config/dotfiles/quickshell/assets/nixos.png"
 CURRENT_THEME_DIR="$HOME/.config/theme/current/theme"
 THEME_NAME=$(echo "$1" |
     sed -E 's/<[^>]+>//g' |
@@ -24,12 +25,20 @@ ln -nsf "$THEME_PATH" "$CURRENT_THEME_DIR"
 mmsg dispatch reload_config
 # reload quickshell 
 quickshell ipc call island reloadTheme
-# reload kitty
-pkill -SIGUSR1 kitty 2>/dev/null || true
+# reload foot (OSC 10/11)
+FOOT_THEME="$CURRENT_THEME_DIR/foot.ini"
+if [[ -f "$FOOT_THEME" ]]; then
+    BG=$(sed -n 's/^background=\(.*\)/\1/p' "$FOOT_THEME" | head -n 1)
+    FG=$(sed -n 's/^foreground=\(.*\)/\1/p' "$FOOT_THEME" | head -n 1)
+
+    if [[ -n "$BG" && -n "$FG" ]]; then
+        for pts in /dev/pts/[0-9]*; do
+            [ -w "$pts" ] && printf "\033]10;#%s\007\033]11;#%s\007" "$FG" "$BG" > "$pts" 2>/dev/null || true
+        done
+    fi
+fi
 # reload btop
 pkill -SIGUSR2 btop 2>/dev/null || true
-# reload mako
-makoctl reload
 # reload tmux
 tmux source-file "$CURRENT_THEME_DIR/tmux.conf" 2>/dev/null || true 
 # reload nvim
@@ -55,7 +64,7 @@ ZED_CONF="$HOME/.config/zed/settings.json"
 
 if [[ -f "$CURRENT_THEME_DIR/zed.json" && -f "$ZED_CONF" ]]; then
     NEW_ZED_THEME=$(jq -r '."theme"' "$CURRENT_THEME_DIR/zed.json" 2>/dev/null)
-    
+
     if [[ -n "$NEW_ZED_THEME" && "$NEW_ZED_THEME" != "null" ]]; then
         # Abaikan baris komentar // dan ganti nilai setelah "theme": "
         sed -i -E "/^[[:space:]]*\/\//b; s/(\"theme\"[[:space:]]*:[[:space:]]*\")[^\"]*/\1$NEW_ZED_THEME/" "$ZED_CONF"
@@ -63,5 +72,12 @@ if [[ -f "$CURRENT_THEME_DIR/zed.json" && -f "$ZED_CONF" ]]; then
 fi
 
 my-hook theme-set "$THEME_NAME"
+
+FORMATTED_THEME=$(echo "$THEME_NAME" | sed 's/-/ /g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2); print}')
+
+notify-send "Theme Changed" \
+    "Theme switched to $FORMATTED_THEME" \
+    -i "$ICON_PATH" \
+    -a "System"
 
 

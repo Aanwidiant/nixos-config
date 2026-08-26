@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    kitty
+    foot
     impala
     bluetui
     wiremix

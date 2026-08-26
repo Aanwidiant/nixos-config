@@ -39,12 +39,14 @@ Singleton {
                 if systemctl --user is-active --quiet swayidle; then
                     systemctl --user stop swayidle
                     notify-send \
+                        -a "System" \
                         -i "${Theme.nixosIcon}" \
                         "Idle Inhibitor" \
                         "Disabled · Locking & idle actions inactive"
                 else
                     systemctl --user start swayidle
                     notify-send \
+                        -a "System" \
                         -i "${Theme.nixosIcon}" \
                         "Idle Inhibitor" \
                         "Enabled · Locking & idle actions active"

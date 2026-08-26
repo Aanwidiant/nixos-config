@@ -16,6 +16,8 @@ Item {
     signal requestKeybinds()
     signal requestEmoji()
 
+    property bool stayVisible: true
+
     IpcHandler {
         target: "island" 
 
@@ -105,6 +107,11 @@ Item {
 
         function reloadTheme(): void {
             Theme.themeFile.reload()
+        }
+
+        function toggleStayVisible(): bool {
+            root.stayVisible = !root.stayVisible
+            return root.stayVisible
         }
     }
 }

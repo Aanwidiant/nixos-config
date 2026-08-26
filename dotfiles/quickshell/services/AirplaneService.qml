@@ -28,6 +28,7 @@ Singleton {
 
         command: [
             "notify-send",
+            "-a", "System",
             "-i", Theme.nixosIcon,
             "Airplane Mode",
             message

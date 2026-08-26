@@ -11,10 +11,11 @@ Item {
     property int cardBaseHeight: 72
     property int cardMaxHeight: 88
     property int stackOffset: 14
+    property int verticalMargin: 5
 
     implicitWidth: 320
     implicitHeight: stackRepeater.count > 0
-    ? cardBaseHeight + (Math.min(stackRepeater.count, 3) - 1) * stackOffset
+    ? cardBaseHeight + (Math.min(stackRepeater.count, 3) - 1) * stackOffset + verticalMargin * 2
     : 0
 
     property int focusedIndex: 0
@@ -53,7 +54,7 @@ Item {
 
             visible: visualIndex < 3
 
-            width: 320
+            width: 310
             height: Math.min(
                 Math.max(root.cardBaseHeight, contentRow.implicitHeight + 16),
                 root.cardMaxHeight
@@ -61,16 +62,16 @@ Item {
 
             anchors.horizontalCenter: parent.horizontalCenter
 
-            y: visualIndex * root.stackOffset
+            y: root.verticalMargin + visualIndex * root.stackOffset
             scale: 1.0 - (visualIndex * 0.05)
             opacity: 1.0 - (visualIndex * 0.2)
             z: 10 - visualIndex
 
-            radius: Metrics.radiusXL
+            radius: Metrics.radiusMD
             color: Theme.background
 
             border.width: 1
-            border.color: modelData.urgency === NotificationUrgency.Critical ? Theme.danger : Theme.background
+            border.color: modelData.urgency === NotificationUrgency.Critical ? Theme.danger : Theme.primary
 
             Behavior on y {
                 NumberAnimation { duration: 200; easing.type: Easing.OutCubic }

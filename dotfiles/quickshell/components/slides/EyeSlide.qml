@@ -3,13 +3,13 @@ import QtQuick
 Item {
     id: root
 
-    implicitWidth: 144
-    implicitHeight: 32
+    implicitWidth: 156
+    implicitHeight: 36
 
     AnimatedImage {
         id: myIcon
-        source: "../../eye.gif"
-        height: 20
+        source: "../../assets/eye.gif"
+        height: 28
 
         anchors.centerIn: parent
 

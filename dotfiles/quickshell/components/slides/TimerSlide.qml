@@ -7,7 +7,7 @@ Item {
     id: root
 
     implicitWidth: 156
-    implicitHeight: 32
+    implicitHeight: 36
 
     readonly property bool isTimerActive: TimerService.tmRunning || TimerService.tmRemaining > 0
     readonly property bool isSwActive: TimerService.swRunning || TimerService.swSeconds > 0

@@ -17,7 +17,7 @@
 
     # Runtimes & Build Tools
     gcc
-    nodejs_24
+    nodejs_26
     pnpm
     android-tools
     gnumake

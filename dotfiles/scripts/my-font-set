@@ -11,20 +11,10 @@ if ! fc-list | grep -iq "$font_name"; then
 fi
 # Base path to dotfiles
 DOTFILES="$HOME/nixos-config/dotfiles"
-# Kitty
-if [[ -f "$DOTFILES/kitty/kitty.conf" ]]; then
-    sed -i "s/^font_family[[:space:]]\+.*/font_family $font_name/" "$DOTFILES/kitty/kitty.conf"
-    echo "✓ Updated kitty.conf"
-fi
-# Hyprlock
-if [[ -f "$DOTFILES/hyprlock/hyprlock.conf" ]]; then
-    sed -i "s/^font_family =.*/font_family = $font_name/" "$DOTFILES/hyprlock/hyprlock.conf"
-    echo "✓ Updated hyprlock config"
-fi
-# Mako
-if [[ -f "$DOTFILES/mako/config" ]]; then
-    sed -i "s/^font=\(.*\)[[:space:]]\+\([0-9]\+\)$/font=$font_name \2/" "$DOTFILES/mako/config"
-    echo "✓ Updated mako config"
+# Foot
+if [[ -f "$DOTFILES/.config/foot/foot.ini" ]]; then
+    sed -i "s/^font=.*/font=$font_name:size=10/" "$DOTFILES/.config/foot/foot.ini"
+    echo "✓ Updated Foot font"
 fi
 # Fontconfig
 if [[ -f "$HOME/.config/fontconfig/fonts.conf" ]]; then
@@ -37,7 +27,6 @@ fi
 echo ""
 echo "Font changed to: $font_name"
 echo "Restarting services..."
-pkill -USR1 kitty 2>/dev/null
-makoctl reload 2>/dev/null
+pkill -SIGUSR2 foot 2>/dev/null || true
 my-hook font-set "$font_name" 2>/dev/null
 echo "Done!"

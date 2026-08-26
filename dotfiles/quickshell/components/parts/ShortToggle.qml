@@ -29,7 +29,7 @@ GridLayout {
                     case "nightlight": return NightLightService.isNightLightActive
                     case "trackpad": return !TouchpadService.isTouchpadActive
                     case "idle": return !IdleService.isIdleActive
-                    case "dnd": return false
+                    case "dnd": return NotificationService.isDndActive
                     case "airplane": return AirplaneService.isAirplaneActive
                     default: return false
                 }
@@ -90,7 +90,7 @@ GridLayout {
                         IdleService.toggle()
                         break
                         case "dnd":
-                        console.log("Do Not Disturb:", toggleContainer.isActive ? "ENABLED" : "DISABLED")
+                        NotificationService.toggleDnd()
                         break
                         case "airplane":
                         AirplaneService.toggle()

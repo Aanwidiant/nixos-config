@@ -3,7 +3,7 @@ import Quickshell.Wayland
 import QtQuick
 import "modules"
 import "services"
- 
+
 ShellRoot {
     id: root
 
@@ -21,7 +21,7 @@ ShellRoot {
         screen: {
             if (!requiresKeyboardFocus || lockedScreen === null) {
                 return targetScreen
-            }
+            } 
             return lockedScreen
         }
 
@@ -32,7 +32,7 @@ ShellRoot {
         }
 
         anchors.top: true
-        exclusiveZone: 0
+        exclusiveZone: 0 
         color: "transparent"
 
         implicitWidth: mainPanel.screen ? mainPanel.screen.width * 1/2 : 0

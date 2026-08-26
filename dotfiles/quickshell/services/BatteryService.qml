@@ -2,58 +2,121 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
+import Quickshell.Io
+import "../theme"
 
 Item {
     id: root
 
-    // ==========================================
-    // 1. UPOWER DEVICE (BATERAI)
-    // ==========================================
+    // 1. UPOWER DEVICE (BATTERY)
     readonly property UPowerDevice device: UPower.displayDevice
 
-    // Status dasar
     readonly property bool isReady: device?.ready ?? false
     readonly property bool isValidBattery: device?.isLaptopBattery ?? false
 
-    // Persentase baterai (0 - 100)
     readonly property int percentage: Math.round((device?.percentage ?? 0) * 100)
 
-    // Status Pengisian Daya
+    // Device state enum
     readonly property int state: device?.state ?? UPowerDeviceState.Unknown
+
+    // Pengecekan status colok charger berdasarkan Enum UPower
     readonly property bool isCharging: state === UPowerDeviceState.Charging
     readonly property bool isFullyCharged: state === UPowerDeviceState.FullyCharged
-    readonly property bool isPluggedIn: isCharging || isFullyCharged || state === UPowerDeviceState.PendingCharge
+    readonly property bool isPendingCharge: state === UPowerDeviceState.PendingCharge
+    readonly property bool isPluggedIn: isCharging || isFullyCharged || isPendingCharge
 
     // Estimasi Sisa Waktu (Detik)
     readonly property real timeRemainingSeconds: isCharging ? (device?.timeToFull ?? 0) : (device?.timeToEmpty ?? 0)
 
-    // Formatter Sisa Waktu ("1j 30m" atau "45m")
+    // Formatter Sisa Waktu ("1h 30m" atau "45m")
     readonly property string formattedTimeRemaining: {
         if (timeRemainingSeconds <= 0) return ""
         var hours = Math.floor(timeRemainingSeconds / 3600)
         var minutes = Math.floor((timeRemainingSeconds % 3600) / 60)
 
-        if (hours > 0) return hours + "j " + minutes + "m"
+        if (hours > 0) return hours + "h " + minutes + "m"
         return minutes + "m"
     }
 
-    // ==========================================
-    // 2. POWER PROFILES DAEMON
-    // ==========================================
-    // Mengakses Singleton PowerProfiles bawaan Quickshell
+    // 2. PROCESS UNTUK NOTIFIKASI
+    Process {
+        id: notifyProcess
+    }
+
+    function sendNotification(summary, body, urgency = "normal") {
+        var cmd = `notify-send -u "${urgency}" -a "System" -i "${Theme.nixosIcon}" "${summary}" "${body}"`
+        notifyProcess.command = ["/bin/sh", "-c", cmd]
+        notifyProcess.running = true
+    }
+
+    // 3. TRACKER & LOGIKA TRIGGER
+    property var lastPluggedState: null
+    property bool lowBatteryNotified: false
+
+    // Memantau perubahan status colokan
+    onIsPluggedInChanged: {
+        if (!isReady) return
+
+        if (lastPluggedState === null) {
+            lastPluggedState = isPluggedIn
+            return
+        }
+
+        if (isPluggedIn && !lastPluggedState) {
+            var msgIn = "Battery is charging (" + percentage + "%)."
+            if (formattedTimeRemaining !== "") {
+                msgIn += " Time until full: " + formattedTimeRemaining + "."
+            }
+            sendNotification("Charger Connected", msgIn, "normal")
+            lowBatteryNotified = false
+        } else if (!isPluggedIn && lastPluggedState) {
+            var msgOut = "Charger disconnected (" + percentage + "%)."
+            if (formattedTimeRemaining !== "") {
+                msgOut += " Time remaining: " + formattedTimeRemaining + "."
+            }
+            sendNotification("Charger Disconnected", msgOut, "normal")
+        }
+
+        lastPluggedState = isPluggedIn
+    }
+
+    // Memantau Baterai Lemah (<= 20%)
+    onPercentageChanged: {
+        if (!isReady || isPluggedIn) return
+
+        if (percentage <= 20 && !lowBatteryNotified) {
+            var msgLow = "Battery is low (" + percentage + "%)."
+            if (formattedTimeRemaining !== "") {
+                msgLow += " Time to empty: " + formattedTimeRemaining + "."
+            }
+            msgLow += " Please plug in your charger!"
+
+            sendNotification("Low Battery Warning", msgLow, "critical" )
+            lowBatteryNotified = true
+        } else if (percentage > 20) {
+            lowBatteryNotified = false
+        }
+    }
+
+    // Inisialisasi awal saat UPower siap
+    onIsReadyChanged: {
+        if (isReady && lastPluggedState === null) {
+            lastPluggedState = isPluggedIn
+        }
+    }
+
+    // 4. POWER PROFILES DAEMON
     readonly property int activeProfile: PowerProfiles.profile
     readonly property bool hasPerformance: PowerProfiles.hasPerformanceProfile
 
-    // Fungsi untuk mengubah Power Profile menggunakan Enum
     function setPowerProfile(newProfile) {
         if (newProfile === PowerProfile.Performance && !hasPerformance) {
-            console.warn("BatteryService: Profil Performance tidak didukung pada sistem ini.")
+            console.warn("BatteryService: Performance profile is not supported on this system.")
             return
         }
         PowerProfiles.profile = newProfile
     }
 
-    // Fungsi berganti profil secara sekuensial (Toggle/Cycle)
     function cyclePowerProfile() {
         if (activeProfile === PowerProfile.PowerSaver) {
             setPowerProfile(PowerProfile.Balanced)
@@ -68,7 +131,6 @@ Item {
         }
     }
 
-    // Mendapatkan nama string/label untuk UI
     function getProfileName(profile) {
         var p = (profile !== undefined) ? profile : activeProfile
         return PowerProfile.toString(p)
