@@ -6,11 +6,11 @@ import "../parts"
 Item {
     id: root
     implicitWidth: 280
-    implicitHeight: 180
+    implicitHeight: 160
 
     CloseButton {}
 
-    ColumnLayout {
+    RowLayout {
         anchors.fill: parent
         anchors.margins: 16
         spacing: Metrics.spacingLG
@@ -19,15 +19,28 @@ Item {
             id: analogClock
             Layout.alignment: Qt.AlignHCenter
         }
+        ColumnLayout { 
+            spacing: Metrics.spacingLG
 
-        Date {
-            id: dateText
-            Layout.alignment: Qt.AlignHCenter
-            customFont: Qt.font({
-                pixelSize: Metrics.textSM,
-                weight: Font.Medium
-            })
+            Clock {
+                id: clockText
+                Layout.alignment: Qt.AlignHCenter
+                customFont: Qt.font({
+                    pixelSize: Metrics.text3XL,
+                    weight: Font.DemiBold
+                })
+                customColor: Theme.primary
+            }
+
+            Date {
+                id: dateText
+                dateFormat: "dddd\ndd MMMM yyyy"
+                Layout.alignment: Qt.AlignHCenter
+                customFont: Qt.font({
+                    pixelSize: Metrics.textMD,
+                    weight: Font.Medium
+                })
+            }
         }
-
     }
 }

@@ -10,9 +10,10 @@ Text {
         pixelSize: Metrics.textSM,
         weight: Font.DemiBold
     })
+    property color customColor: Theme.foreground
 
     text: Qt.formatDateTime(clock.date, timeFormat)
-    color: Theme.foreground
+    color: root.customColor
     font: root.customFont
 
     SystemClock {

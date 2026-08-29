@@ -49,7 +49,7 @@ Item {
 
         CavaSlide {}
 
-        EyeSlide {}
+        // EyeSlide {}
 
         RecordSlide {}
 

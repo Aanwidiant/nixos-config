@@ -67,4 +67,6 @@ ShellRoot {
     Component.onCompleted: {
         IpcService
     }
+
+    Watermark {}
 }

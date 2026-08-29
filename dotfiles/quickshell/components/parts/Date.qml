@@ -4,7 +4,8 @@ import "../../theme"
 
 Text {
     id: root
-    property string dateFormat: "dddd, dd MMMM yyyy"
+    
+    property string dateFormat: "dddd dd MMMM yyyy" 
     property int precision: SystemClock.Minutes
     property font customFont: Qt.font({
         pixelSize: Metrics.textSM,
@@ -14,6 +15,9 @@ Text {
     text: Qt.formatDateTime(clock.date, dateFormat)
     color: Theme.foreground
     font: root.customFont
+    
+    horizontalAlignment: Text.AlignHCenter 
+    lineHeight: 1.2
 
     SystemClock {
         id: clock

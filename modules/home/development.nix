@@ -27,5 +27,6 @@
     tree-sitter
     ollama
     jre
+    opencode
   ];
 }

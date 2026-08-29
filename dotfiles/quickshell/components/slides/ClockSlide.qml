@@ -11,6 +11,11 @@ Item {
     Clock {
         id: clockText
         anchors.centerIn: parent
+        customColor: Theme.primary
+        customFont: Qt.font({
+            pixelSize: Metrics.textMD,
+            weight: Font.DemiBold
+        })
     }
 
     HoverHandler {
