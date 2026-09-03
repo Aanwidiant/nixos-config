@@ -34,7 +34,7 @@ Item {
 
             Date {
                 id: dateText
-                dateFormat: "dddd\ndd MMMM yyyy"
+                dateFormat: "dddd\ndd MMM yyyy"
                 Layout.alignment: Qt.AlignHCenter
                 customFont: Qt.font({
                     pixelSize: Metrics.textMD,

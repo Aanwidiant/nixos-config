@@ -6,11 +6,15 @@ vim.pack.add({
     "https://github.com/mason-org/mason.nvim",
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/nvim-tree/nvim-tree.lua",
+    "https://github.com/folke/persistence.nvim",
+    'https://github.com/yetone/avante.nvim',
+    'https://github.com/MeanderingProgrammer/render-markdown.nvim',
+    'https://github.com/nvim-lua/plenary.nvim',
+    'https://github.com/MunifTanjim/nui.nvim',
     "https://github.com/folke/tokyonight.nvim",
     "https://github.com/shaunsingh/nord.nvim",
     "https://github.com/mofiqul/dracula.nvim",
     "https://github.com/morhetz/gruvbox",
-    "https://github.com/folke/persistence.nvim",
 })
 
 ---- project management ----
@@ -223,7 +227,11 @@ local function git_changes_picker()
     })
 end
 
-MiniPick.setup()
+MiniPick.setup({
+    mappings = {
+        paste = "+",
+    },
+})
 
 vim.keymap.set("n", "<leader>pf", function() MiniPick.builtin.files() end, { desc = "Mini File Picker" })
 vim.keymap.set("n", "<leader>ps", function()
@@ -382,7 +390,6 @@ vim.opt.sessionoptions = { "buffers", "curdir", "folds", "help", "tabpages", "wi
 ---- persistence setup ----
 require("persistence").setup({
     dir = vim.fn.stdpath("state") .. "/sessions/",
-    options = { "buffers", "curdir", "folds", "tabpages", "winsize" },
 })
 
 vim.keymap.set("n", "<leader>qs", function()
@@ -396,3 +403,93 @@ end, { desc = "Restore Last Session" })
 vim.keymap.set("n", "<leader>qd", function()
     require("persistence").stop()
 end, { desc = "Stop Session Persistence (Don't Save)" })
+
+--- markdown render ---
+require("render-markdown").setup({
+    file_types = {
+        "markdown",
+        "Avante",
+    },
+})
+
+vim.g.avante_loaded = 1
+
+local avante_setup = {
+    mode = "legacy",
+    provider = "belanjalabs",
+
+    providers = {
+        belanjalabs = {
+            __inherited_from = "openai",
+            endpoint = "https://models-free.belanjalabs.com/v1",
+            model = "blabs/deepseek-v4-pro",
+        },
+        naraya = {
+            __inherited_from = "openai",
+            endpoint = "https://router.bynara.id/v1",
+            model = "minimax-m3-free",
+        },
+    },
+
+    behaviour = {
+        auto_add_current_file = false,
+        auto_apply_diff_after_generation = false,
+        auto_suggestions = false,
+    },
+}
+
+local avante_loaded = false
+local function load_avante()
+    if avante_loaded then
+        return
+    end
+    avante_loaded = true
+
+    vim.g.avante_loaded = nil
+
+    require("avante").setup(avante_setup)
+
+    pcall(vim.cmd.runtime, { "plugin/avante.lua" })
+end
+
+local function avante_cmd(cmd)
+    return function()
+        load_avante()
+        vim.cmd(cmd)
+    end
+end
+
+vim.keymap.set("n", "<leader>ab", function()
+    load_avante()
+    require("avante.api").ask({
+        new_chat = true,
+        without_selection = true,
+    })
+end, {
+    desc = "Avante Brainstorm",
+})
+
+vim.keymap.set("n", "<leader>aa", avante_cmd("AvanteAsk"), {
+    desc = "Avante Ask",
+})
+
+vim.keymap.set("n", "<leader>an", avante_cmd("AvanteChatNew"), {
+    desc = "Avante New Chat",
+})
+
+vim.keymap.set("n", "<leader>ah", avante_cmd("AvanteHistory"), {
+    desc = "Avante History",
+})
+
+vim.keymap.set("n", "<leader>at", avante_cmd("AvanteToggle"), {
+    desc = "Avante Toggle",
+})
+
+vim.keymap.set("n", "<leader>af", function()
+    load_avante()
+    require("avante.api").add_selected_file(
+        vim.api.nvim_buf_get_name(0)
+    )
+end, {
+    desc = "Avante Add Current File",
+})

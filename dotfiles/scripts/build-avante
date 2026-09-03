@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -e
+
+AVANTE="$HOME/.local/share/nvim/site/pack/core/opt/avante.nvim"
+
+cd "$AVANTE"
+
+nix shell \
+  nixpkgs#gcc \
+  nixpkgs#gnumake \
+  nixpkgs#cargo \
+  nixpkgs#rustc \
+  --command make

@@ -4,6 +4,7 @@
   imports = [
     ../modules/home/apps.nix
     ../modules/home/bash.nix
+    ../modules/home/btop.nix
     ../modules/home/capture.nix
     ../modules/home/cli.nix
     ../modules/home/database.nix

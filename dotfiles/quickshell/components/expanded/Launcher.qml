@@ -63,11 +63,25 @@ Item {
             if (q === "") return root.masterApps;
 
             return root.masterApps.filter(d => {
-                const name       = (d.name || "").toLowerCase();
-                const keywords   = (d.keywords || []).join(" ").toLowerCase();
-                const categories = (d.categories || []).join(" ").toLowerCase();
+                const name        = (d.name || "").toLowerCase();
+                const genericName = (d.genericName || "").toLowerCase();
+                const comment     = (d.comment || "").toLowerCase();
+                const categories  = Array.isArray(d.categories) 
+                ? d.categories.join(" ").toLowerCase() 
+                : (d.categories || "").toString().toLowerCase();
 
-                return name.includes(q) || keywords.includes(q) || categories.includes(q);
+                let keywords = "";
+                if (Array.isArray(d.keywords)) {
+                    keywords = d.keywords.join(" ").toLowerCase();
+                } else if (typeof d.keywords === "string") {
+                    keywords = d.keywords.toLowerCase();
+                }
+
+                return name.includes(q) 
+                || genericName.includes(q)
+                || keywords.includes(q) 
+                || categories.includes(q)
+                || comment.includes(q);
             });
         }
     }

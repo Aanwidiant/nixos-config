@@ -3,7 +3,7 @@ SUPER+SHIFT+r                    Reload MangoWM Configuration
 SUPER+CTRL+i                     Toggle Idle Inhibitor 
 SUPER+CTRL+n                     Toggle Night Light / Blue Light Filter
 SUPER+SHIFT+m                    Toggle Touchpad
-NONE,XF86Display                 Launch htop (System Monitor)
+NONE,XF86Display                 Launch btop (System Dashboard)
 
 # Apps & Launchers
 SUPER+Return                     Launch Terminal 
@@ -24,7 +24,7 @@ NONE,XF86WLAN                    Quick Open File Manager
 NONE,XF86NotificationCenter      Launch DbGate
 NONE,XF86PickupPhone             Launch Bruno API Client
 NONE,XF86HangupPhone             Launch Browser
-NONE,XF86Favorites               Launch Zeditor
+NONE,XF86Favorites               Launch Neovim
 
 # TUI & Special Tools
 SUPER+SHIFT+a                    Launch About / Fastfetch Info

@@ -124,26 +124,34 @@ Item {
     function closeExpandedState(callback = null) {
         if (isExpandedState) {
             onClosed = callback;
-            if (osdContainer) osdContainer._showClock = false
-            isClosingExpanded = true
 
-            var delayTimer = Qt.createQmlObject('import QtQuick; Timer { interval: 150; repeat: false; }', controller)
+            if (osdContainer)
+            osdContainer._showClock = false;
+
+            isClosingExpanded = true;
+
+            var delayTimer = Qt.createQmlObject(
+                'import QtQuick; Timer { interval: 150; repeat: false; }',
+                controller
+            );
+
             delayTimer.triggered.connect(function() {
-                isClosingExpanded = false
-                currentState = "clock"
+                isClosingExpanded = false;
+                currentState = "clock";
 
                 if (onClosed && typeof onClosed === "function") {
-                    onClosed()
-                    onClosed = null
+                    onClosed();
+                    onClosed = null;
                 }
 
-                if (!isHovering && !stayVisible) {
-                    startExitSequence()
+                if (!isHovering && !NotificationService.stayVisible) {
+                    startExitSequence();
                 }
 
-                delayTimer.destroy() 
-            })
-            delayTimer.start()
+                delayTimer.destroy();
+            });
+
+            delayTimer.start();
         }
     }
 

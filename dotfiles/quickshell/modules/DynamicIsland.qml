@@ -84,8 +84,8 @@ Item {
             smooth: true
 
             ShapePath {
-                fillColor: Qt.alpha(Theme.background, 0.75)
-                strokeColor: Qt.alpha(Theme.primary, 0.1) 
+                fillColor: Qt.alpha(Theme.background, 0.95)
+                strokeColor: Qt.alpha(Theme.secondary, 0.1) 
 
                 startX: 0
                 startY: 0

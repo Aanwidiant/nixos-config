@@ -6,7 +6,6 @@
     impala
     bluetui
     wiremix
-    btop
     htop
     powertop
     calcure

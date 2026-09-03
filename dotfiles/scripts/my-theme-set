@@ -8,6 +8,7 @@ fi
 THEMES_DIR="$HOME/.config/theme/themes"
 ICON_PATH="$HOME/nixos-config/dotfiles/quickshell/assets/nixos.png"
 CURRENT_THEME_DIR="$HOME/.config/theme/current/theme"
+BTOP_THEME_DIR="$HOME/.config/btop/themes"
 THEME_NAME=$(echo "$1" |
     sed -E 's/<[^>]+>//g' |
     tr '[:upper:]' '[:lower:]' |
@@ -38,6 +39,7 @@ if [[ -f "$FOOT_THEME" ]]; then
     fi
 fi
 # reload btop
+ln -nsf "$CURRENT_THEME_DIR/btop.theme" "$BTOP_THEME_DIR/current.theme"
 pkill -SIGUSR2 btop 2>/dev/null || true
 # reload tmux
 tmux source-file "$CURRENT_THEME_DIR/tmux.conf" 2>/dev/null || true 

@@ -20,10 +20,9 @@ link mango .config/mango
 link quickshell .config/quickshell
 link foot .config/foot
 link theme .config/theme
-link btop .config/btop
 link zed .config/zed
 link scripts .local/bin
 link applications .local/share/applications
 link nvim .config/nvim
 
-echo "Dotfiles linked ✔"
+echo "Dotfiles linked"

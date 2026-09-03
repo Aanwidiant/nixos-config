@@ -146,20 +146,32 @@ Item {
 
         GridView {
             id: grid
+
             Layout.fillWidth: true
             Layout.fillHeight: true
+
             clip: true
 
             cellWidth: 40
             cellHeight: 40
 
-            readonly property int columns: Math.max(1, Math.floor(width / cellWidth))
-            leftMargin: Math.floor((width - (columns * cellWidth)) / 2)
+            readonly property int columns: Math.max(
+                1,
+                Math.floor(width / cellWidth)
+            )
+
+            leftMargin: Math.max(
+                0,
+                (width - columns * cellWidth) / 2
+            )
+
+            rightMargin: leftMargin
 
             model: filteredModel.values
 
             delegate: Item {
                 id: cellDelegate
+
                 required property var modelData
                 required property int index
 
@@ -168,19 +180,25 @@ Item {
 
                 Rectangle {
                     id: emojiCell
+
                     anchors.centerIn: parent
+
                     width: parent.width - 6
                     height: parent.height - 6
+
                     radius: Metrics.radiusSM
 
-                    readonly property bool isCurrent: cellDelegate.GridView.isCurrentItem
-                    readonly property bool isHovered: cellHover.hovered
+                    readonly property bool isCurrent:
+                    cellDelegate.GridView.isCurrentItem
 
-                    color: isCurrent 
-                    ? Qt.alpha(Theme.primary, 0.75) 
-                    : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
+                    readonly property bool isHovered:
+                    cellHover.hovered
 
-                    Behavior on color { ColorAnimation { duration: 120 } }
+                    color: isCurrent
+                    ? Qt.alpha(Theme.primary, 0.75)
+                    : (isHovered
+                    ? Qt.alpha(Theme.surface, 0.6)
+                    : "transparent")
 
                     HoverHandler {
                         id: cellHover
@@ -188,28 +206,32 @@ Item {
                     }
 
                     Text {
-                        anchors.centerIn: parent
+                        anchors.fill: parent
+
                         text: cellDelegate.modelData.emoji
-                        font.pixelSize: 22
+
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
+
+                        font.pixelSize: 22
                     }
 
                     TapHandler {
                         acceptedButtons: Qt.LeftButton
+
                         onTapped: {
                             if (grid.currentIndex === cellDelegate.index) {
                                 EmojiService.copyEmoji(
-                                    cellDelegate.modelData.emoji, 
+                                    cellDelegate.modelData.emoji,
                                     controller.closeExpandedState
-                                );
+                                )
                             } else {
-                                grid.currentIndex = cellDelegate.index;
+                                grid.currentIndex = cellDelegate.index
                             }
                         }
                     }
                 }
             }
-        }
+        } 
     }
 }

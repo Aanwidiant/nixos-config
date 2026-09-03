@@ -37,7 +37,7 @@ end, {desc = "Toggle built-in undotree"})
 vim.keymap.set("n", "<leader>ob", function()
     local file = vim.api.nvim_buf_get_name(0)
     if vim.bo.filetype ~= "html" then
-        vim.notify("Bukan file HTML", vim.log.levels.WARN)
+        vim.notify("Not an HTML file", vim.log.levels.WARN)
         return
     end
     vim.fn.jobstart({ "xdg-open", file }, { detach = true })
