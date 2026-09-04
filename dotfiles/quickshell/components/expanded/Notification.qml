@@ -115,6 +115,7 @@ Item {
                         color: Theme.foreground
                         font.pixelSize: Metrics.textSM
                         font.bold: true
+                        font.family: Theme.textFont
                         elide: Text.ElideRight
                     }
 
@@ -123,6 +124,7 @@ Item {
                         text: card.modelData.body || ""
                         color: Theme.foreground
                         font.pixelSize: Metrics.textXS
+                        font.family: Theme.textFont
                         wrapMode: Text.Wrap
                         maximumLineCount: 3
                         elide: Text.ElideRight

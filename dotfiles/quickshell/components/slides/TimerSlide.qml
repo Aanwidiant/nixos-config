@@ -10,7 +10,7 @@ Item {
     implicitHeight: 36
 
     readonly property bool isTimerActive: TimerService.tmRunning || TimerService.tmRemaining > 0
-    readonly property bool isSwActive: TimerService.swRunning || TimerService.swSeconds > 0
+    readonly property bool isSwActive: TimerService.swRunning || TimerService.swMilliseconds > 0
     readonly property bool isActive: isTimerActive || isSwActive
 
     RowLayout {
@@ -43,12 +43,13 @@ Item {
 
                 text: {
                     if (TimerService.tmRemaining > 0) return TimerService.tmFormatted;
-                    if (TimerService.swSeconds > 0) return TimerService.swFormatted;
+                    if (TimerService.swMilliseconds > 0) return TimerService.swFormatted;
                     return "Stopwatch";
                 }
 
                 font.pixelSize: Metrics.textSM
                 font.bold: root.isActive
+                font.family: Theme.textFont
                 color: root.isActive ? Theme.primary : Theme.foreground
                 elide: Text.ElideRight
 
@@ -71,7 +72,7 @@ Item {
                 Layout.alignment: Qt.AlignVCenter
                 text: {
                     if (TimerService.tmRemaining > 0) return TimerService.tmRunning ? "\uf04c" : "\uf04b";
-                    if (TimerService.swSeconds > 0) return TimerService.swRunning ? "\uf04c" : "\uf04b";
+                    if (TimerService.swMilliseconds > 0) return TimerService.swRunning ? "\uf04c" : "\uf04b";
                     return "\uf04b";
                 }
                 font.pixelSize: Metrics.iconSM
@@ -87,7 +88,7 @@ Item {
                     onTapped: {
                         if (TimerService.tmRemaining > 0) {
                             TimerService.tmToggle();
-                        } else if (TimerService.swSeconds > 0) {
+                        } else if (TimerService.swMilliseconds > 0) {
                             TimerService.swToggle();
                         } else {
                             TimerService.swToggle();
@@ -108,7 +109,7 @@ Item {
 
                 readonly property bool canReset: {
                     if (TimerService.tmRemaining > 0) return !TimerService.tmRunning;
-                    if (TimerService.swSeconds > 0) return TimerService.swCanReset;
+                    if (TimerService.swMilliseconds > 0) return TimerService.swCanReset;
                     return false;
                 }
 
@@ -127,7 +128,7 @@ Item {
                     onTapped: {
                         if (TimerService.tmRemaining > 0) {
                             TimerService.tmReset();
-                        } else if (TimerService.swSeconds > 0) {
+                        } else if (TimerService.swMilliseconds > 0) {
                             TimerService.swReset();
                         }
                     }

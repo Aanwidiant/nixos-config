@@ -31,6 +31,7 @@ Item {
                 text: "Notification Center"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -43,6 +44,7 @@ Item {
                 text: "Clear All"
                 font.pixelSize: Metrics.textSM
                 font.weight: Font.Medium
+                font.family: Theme.textFont
                 color: clearHover.hovered ? Theme.primary : Qt.alpha(Theme.primary, 0.9)
                 Layout.alignment: Qt.AlignVCenter
                 visible: NotificationService.historyCount > 0
@@ -86,6 +88,7 @@ Item {
                     text: "No notifications"
                     color: Theme.muted
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                 }
             }
         }
@@ -165,6 +168,7 @@ Item {
                                         text: card.modelData.appName || ""
                                         color: Theme.muted
                                         font.pixelSize: Metrics.textXS
+                                        font.family: Theme.textFont
                                         elide: Text.ElideRight
                                         visible: text !== ""
                                     }
@@ -174,6 +178,7 @@ Item {
                                         text: card.modelData.summary || ""
                                         color: Theme.foreground
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         font.bold: true
                                         elide: Text.ElideRight
                                     }
@@ -185,6 +190,7 @@ Item {
                                 text: card.modelData.body || ""
                                 color: Theme.foreground
                                 font.pixelSize: Metrics.textXS
+                                font.family: Theme.textFont
                                 wrapMode: Text.Wrap
                                 visible: text !== ""
                             }
@@ -218,6 +224,7 @@ Item {
                             text: card.modelData.time || ""
                             color: Theme.muted
                             font.pixelSize: Metrics.textXS
+                            font.family: Theme.textFont
                             visible: text !== ""
                         }
                     }

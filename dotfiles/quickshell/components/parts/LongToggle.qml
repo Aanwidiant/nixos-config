@@ -98,6 +98,7 @@ GridLayout {
                             Text {
                                 text: model.title 
                                 font.pixelSize: Metrics.textSM
+                                font.family: Theme.textFont
                                 font.bold: true
                                 color: btnContainer.checked ? Theme.background : Theme.foreground
                                 verticalAlignment: Text.AlignVCenter
@@ -108,6 +109,7 @@ GridLayout {
                             Text {
                                 text: btnContainer.getSubtitle()
                                 font.pixelSize: Metrics.textXS
+                                font.family: Theme.textFont
                                 color: btnContainer.checked ? Theme.background : Theme.foreground
                                 opacity: 0.8
                                 verticalAlignment: Text.AlignVCenter

@@ -75,6 +75,7 @@ Item {
                 color: Theme.foreground
                 font.pixelSize: Metrics.textXS
                 font.bold: true
+                font.family: Theme.textFont
             }
 
             SequentialAnimation {

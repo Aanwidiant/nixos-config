@@ -29,6 +29,7 @@ Item {
                 text: "Screen Capture"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -44,6 +45,7 @@ Item {
             text: "Capture Mode"
             font.pixelSize: Metrics.textSM
             font.bold: true
+            font.family: Theme.textFont
             color: Theme.foreground
         }
 
@@ -75,6 +77,7 @@ Item {
                         color: ScreenshotService.selectedMode === "region" ? Theme.background : Theme.foreground
                         font.pixelSize: Metrics.textMD
                         font.bold: ScreenshotService.selectedMode === "region"
+                        font.family: Theme.textFont
                     }
                 }                
 
@@ -106,6 +109,7 @@ Item {
                         color: ScreenshotService.selectedMode === "fullscreen" ? Theme.background : Theme.foreground
                         font.pixelSize: Metrics.textMD
                         font.bold: ScreenshotService.selectedMode === "fullscreen"
+                        font.family: Theme.textFont
                     }
                 }  
 
@@ -141,6 +145,7 @@ Item {
                     color: Theme.background 
                     font.pixelSize: Metrics.textMD
                     font.bold: true 
+                    font.family: Theme.textFont
                 }
             } 
 

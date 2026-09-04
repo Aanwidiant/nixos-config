@@ -113,6 +113,7 @@ RowLayout {
 
             text: root.percentVal + "%"
             font.pixelSize: Metrics.textSM
+            font.family: Theme.textFont
             font.weight: Font.DemiBold
 
             color: {

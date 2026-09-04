@@ -8,7 +8,6 @@ import "../theme"
 Item {
     id: root
 
-    // 1. UPOWER DEVICE (BATTERY)
     readonly property UPowerDevice device: UPower.displayDevice
 
     readonly property bool isReady: device?.ready ?? false
@@ -16,19 +15,15 @@ Item {
 
     readonly property int percentage: Math.round((device?.percentage ?? 0) * 100)
 
-    // Device state enum
     readonly property int state: device?.state ?? UPowerDeviceState.Unknown
 
-    // Pengecekan status colok charger berdasarkan Enum UPower
     readonly property bool isCharging: state === UPowerDeviceState.Charging
     readonly property bool isFullyCharged: state === UPowerDeviceState.FullyCharged
     readonly property bool isPendingCharge: state === UPowerDeviceState.PendingCharge
     readonly property bool isPluggedIn: isCharging || isFullyCharged || isPendingCharge
 
-    // Estimasi Sisa Waktu (Detik)
     readonly property real timeRemainingSeconds: isCharging ? (device?.timeToFull ?? 0) : (device?.timeToEmpty ?? 0)
 
-    // Formatter Sisa Waktu ("1h 30m" atau "45m")
     readonly property string formattedTimeRemaining: {
         if (timeRemainingSeconds <= 0) return ""
         var hours = Math.floor(timeRemainingSeconds / 3600)
@@ -38,7 +33,6 @@ Item {
         return minutes + "m"
     }
 
-    // 2. PROCESS UNTUK NOTIFIKASI
     Process {
         id: notifyProcess
     }
@@ -49,11 +43,9 @@ Item {
         notifyProcess.running = true
     }
 
-    // 3. TRACKER & LOGIKA TRIGGER
     property var lastPluggedState: null
     property bool lowBatteryNotified: false
 
-    // Memantau perubahan status colokan
     onIsPluggedInChanged: {
         if (!isReady) return
 
@@ -80,7 +72,6 @@ Item {
         lastPluggedState = isPluggedIn
     }
 
-    // Memantau Baterai Lemah (<= 20%)
     onPercentageChanged: {
         if (!isReady || isPluggedIn) return
 
@@ -98,14 +89,12 @@ Item {
         }
     }
 
-    // Inisialisasi awal saat UPower siap
     onIsReadyChanged: {
         if (isReady && lastPluggedState === null) {
             lastPluggedState = isPluggedIn
         }
     }
 
-    // 4. POWER PROFILES DAEMON
     readonly property int activeProfile: PowerProfiles.profile
     readonly property bool hasPerformance: PowerProfiles.hasPerformanceProfile
 

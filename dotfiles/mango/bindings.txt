@@ -1,7 +1,7 @@
 # System & Config
 SUPER+SHIFT+r                    Reload MangoWM Configuration
 SUPER+CTRL+i                     Toggle Idle Inhibitor 
-SUPER+CTRL+n                     Toggle Night Light / Blue Light Filter
+SUPER+CTRL+n                     Toggle Night Light
 SUPER+SHIFT+m                    Toggle Touchpad
 NONE,XF86Display                 Launch btop (System Dashboard)
 

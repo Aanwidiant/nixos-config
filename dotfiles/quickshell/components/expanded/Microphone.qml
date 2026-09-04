@@ -5,7 +5,7 @@ import "../../services"
 Item {
     id: root
     implicitWidth: 160
-    implicitHeight: 32
+    implicitHeight: 36
 
     readonly property bool muted: MicrophoneService.muted
 
@@ -28,6 +28,7 @@ Item {
             text: root.muted ? "Muted" : "Unmuted"
             color: root.muted ? Theme.muted : Theme.foreground
             font.pixelSize: Metrics.textSM
+            font.family: Theme.textFont
             font.weight: Font.Medium
             anchors.verticalCenter: parent.verticalCenter
         }

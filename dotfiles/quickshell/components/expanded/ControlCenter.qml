@@ -46,6 +46,7 @@ Item {
                     id: userName
                     text: currentUser 
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                     color: Theme.primary 
                     Layout.alignment: Qt.AlignVCenter
                 }

@@ -15,8 +15,6 @@ Item {
 
     property bool expanded: false
 
-    // 1. Process lokal dihapus karena eksekusi dipindah ke PowerService
-
     function resetSelection() {
         if (repeater.count > 0) {
             let firstItem = repeater.itemAt(0)
@@ -59,7 +57,6 @@ Item {
 
             Repeater {
                 id: repeater
-                // 2. Properti `cmd` diganti dengan memanggil function JavaScript langsung
                 model: [
                     { icon: "\uf023",     label: "Lock",     action: () => PowerService.lock() },
                     { icon: "\udb80\udf43", label: "Logout",   action: () => PowerService.logout() },
@@ -95,7 +92,6 @@ Item {
                     Keys.onReturnPressed: performAction()
                     Keys.onSpacePressed: performAction()
 
-                    // 3. performAction() memanggil action() dan menutup expanded state
                     function performAction() {
                         modelData.action()
                     }
@@ -125,6 +121,7 @@ Item {
                             text: modelData.label
                             font.pixelSize: Metrics.textXS
                             font.weight: Font.Medium
+                            font.family: Theme.textFont
                             color: (btnHover.hovered || btnRect.activeFocus) ? Theme.primary : Qt.alpha(Theme.primary, 0.8)
 
                             Behavior on color {

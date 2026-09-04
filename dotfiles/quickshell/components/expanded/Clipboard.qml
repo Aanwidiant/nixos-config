@@ -62,7 +62,6 @@ Item {
             property string imagePath: "/tmp/cliphist_preview_" + clipId + ".png"
             property bool imageReady: false
 
-            // Status visual
             readonly property bool isCurrent: ListView.isCurrentItem
             readonly property bool isHovered: hoverHandler.hovered
 
@@ -70,7 +69,6 @@ Item {
             height: isImg ? 120 : 42
             radius: Metrics.radiusMD
 
-            // Warna latar belakang terpisah untuk hover dan item aktif
             color: isCurrent 
             ? Qt.alpha(Theme.primary, 0.75) 
             : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
@@ -86,7 +84,6 @@ Item {
                 }
             }
 
-            // HoverHandler HANYA mengurus indikator kursor dan efek visual
             HoverHandler {
                 id: hoverHandler
                 cursorShape: Qt.PointingHandCursor
@@ -104,15 +101,12 @@ Item {
                 flickableDirection: Flickable.HorizontalFlick
                 clip: true
 
-                // TapHandler dengan logika 2-langkah (Pilih -> Tempel)
                 TapHandler {
                     acceptedButtons: Qt.LeftButton
                     onTapped: {
                         if (searchableList.currentIndex === entry.index) {
-                            // KLIK KEDUA: Item sudah aktif -> Paste/Tempel
                             ClipboardService.selectAndPaste(entry.modelData, controller.closeExpandedState);
                         } else {
-                            // KLIK PERTAMA: Hanya pilih item ini
                             searchableList.currentIndex = entry.index;
                         }
                     }
@@ -138,6 +132,7 @@ Item {
                         color: entry.ListView.isCurrentItem ? Theme.foreground : Theme.primary
                         font.pixelSize: Metrics.textMD
                         font.weight: Font.Medium
+                        font.family: Theme.textFont
                         verticalAlignment: Text.AlignVCenter
                         anchors.verticalCenter: parent.verticalCenter
                         wrapMode: Text.NoWrap

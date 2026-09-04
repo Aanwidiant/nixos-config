@@ -43,6 +43,7 @@ Item {
                 color: Theme.foreground
                 font.pixelSize: Metrics.textSM 
                 font.bold: true
+                font.family: Theme.textFont
             }
         }
 

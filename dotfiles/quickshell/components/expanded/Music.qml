@@ -87,6 +87,7 @@ Item {
                             color: Theme.foreground
                             font.pixelSize: Metrics.textMD
                             font.bold: true
+                            font.family: Theme.textFont
                         }
 
                         SequentialAnimation {
@@ -151,6 +152,7 @@ Item {
                         text: MprisService.trackArtist
                         color: Theme.muted
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         elide: Text.ElideRight
                     }
                 }
@@ -219,6 +221,7 @@ Item {
                         text: MprisService.formatTime(MprisService.position)
                         color: Theme.muted
                         font.pixelSize: Metrics.textXS
+                        font.family: Theme.textFont
                     }
 
                     Item { Layout.fillWidth: true }
@@ -227,7 +230,7 @@ Item {
                         text: MprisService.length > 0 ? MprisService.formatTime(MprisService.length) : "--:--"
                         color: Theme.muted
                         font.pixelSize: Metrics.textXS
-
+                        font.family: Theme.textFont
                     }
                 }
 

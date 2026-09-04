@@ -19,6 +19,7 @@ SpinBox {
         text: control.value
         font.pixelSize: Metrics.text2XL
         font.bold: true
+        font.family: Theme.textFont
         color: Theme.foreground
         selectionColor: Theme.primary
         selectedTextColor: Theme.surface

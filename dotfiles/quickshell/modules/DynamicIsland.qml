@@ -26,6 +26,7 @@ Item {
         id: controller
         expandedPopup: expandedPopup
         osdContainer: osdContainer
+        isActiveScreen: isMainScreen 
     }
 
     IslandTrigger {
@@ -61,9 +62,9 @@ Item {
 
         readonly property bool isRegularExpanded: controller.isExpandedState && !controller.isClosingExpanded
 
-        property real concaveRadius: Metrics.radiusSM
+        property real concaveRadius: Metrics.radiusXS
 
-        readonly property real rawBottomRadius: isFullyHidden ? Metrics.radiusXS : (isRegularExpanded ? Metrics.radiusLG : Metrics.radiusMD)
+        readonly property real rawBottomRadius: isFullyHidden ? Metrics.radiusXS : (isRegularExpanded ? Metrics.radiusLG : Metrics.radiusSM)
         readonly property real bottomRadius: Math.min(rawBottomRadius, height / 2)
 
         Behavior on width { SpringAnimation { spring: 6; damping: 0.4; epsilon: 0.25 } }
@@ -194,6 +195,9 @@ Item {
                     anchors.fill: parent
                     source: "DefaultIsland.qml"
                     visible: controller.currentState === "clock" || (controller.isClosingExpanded && osdContainer._showClock)
+                    onLoaded: {
+                        if (item) item.monitorName = root.monitorName
+                    }
                 }
             }
         }

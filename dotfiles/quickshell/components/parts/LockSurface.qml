@@ -54,7 +54,7 @@ Item {
             customFont: Qt.font({
                 pixelSize: Metrics.text3XL,
                 weight: Font.Medium,
-            family: Theme.iconFont
+                family: Theme.textFont
             })
         }
 
@@ -64,7 +64,7 @@ Item {
             customFont: Qt.font({
                 pixelSize: 2.5 * Metrics.text5XL,
                 weight: Font.Medium,
-            family: Theme.iconFont
+                family: Theme.textFont
             })
         }
 
@@ -79,6 +79,7 @@ Item {
             enabled: !root.service.unlockInProgress && !root.service.showFailure
             font.pixelSize: Metrics.textLG
             font.weight: Font.Medium
+            font.family: Theme.textFont
 
             echoMode: root.service.showFailure ? TextInput.Normal : TextInput.Password
             inputMethodHints: Qt.ImhSensitiveData

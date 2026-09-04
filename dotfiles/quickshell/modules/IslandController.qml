@@ -4,6 +4,7 @@ import "../services"
 Item {
     id: controller
 
+    property bool isActiveScreen: false
     property var expandedPopup
     property var osdContainer
 
@@ -34,6 +35,7 @@ Item {
     }
 
     function openExpanded(type) {
+        if (!isActiveScreen) return;
         stopAllTimers()
         isClosingExpanded = false
         if (!islandVisible) {
@@ -80,13 +82,9 @@ Item {
     }
 
     function openLauncher() { openExpanded("launcher") }
-
     function openPowerSystem() { openExpanded("power_system") }
-
     function openPowerProfile() { openExpanded("power_profile") }
-
     function openNetwork() { openExpanded("network") }
-
     function openBluetooth() { openExpanded("bluetooth") }
 
     function openBluetoothSettings() {
@@ -96,29 +94,17 @@ Item {
     }
 
     function openControlCenter() { openExpanded("control_center") }
-
     function openAudioOutput() { openExpanded("audio_output") }
-
     function openAudioInput() { openExpanded("audio_input") }
-
     function openClipboard() { openExpanded("clipboard") }
-
     function openKeybind() { openExpanded("keybind") }
-
     function openBackground() { openExpanded("background") }
-
     function openFont() { openExpanded("font") }
-
     function openTheme() { openExpanded("theme") }
-
     function openScreenshot() { openExpanded("screenshot") }
-
     function openScreenrecord() { openExpanded("screenrecord") }
-
     function openTimer() { openExpanded("timer") }
-
     function openEmoji() { openExpanded("emoji") }
-
     function openNotifCenter() { openExpanded("notif-center") }
 
     function closeExpandedState(callback = null) {
@@ -156,6 +142,7 @@ Item {
     }
 
     function triggerContentChange() {
+        if (!isActiveScreen) return;
         if (isExpandedOrClosing && !isOsdState) return
 
         if (!islandVisible) {
@@ -174,6 +161,7 @@ Item {
         target: PolkitService
 
         function onRequestStarted() {
+            if (!controller.isActiveScreen) return;
             controller.stopAllTimers()
             controller.isClosingExpanded = false
             if (controller.osdContainer) controller.osdContainer._showClock = false
@@ -199,10 +187,10 @@ Item {
 
     Connections {
         target: VolumeService
+        enabled: controller.isActiveScreen
 
         function onVolumeUpdated() {
             if (controller.isExpandedOrClosing && !controller.isOsdState) return
-
             controller.pendingType = "volume"
             controller.triggerContentChange()
         }
@@ -216,6 +204,7 @@ Item {
 
     Connections {
         target: BrightnessService
+        enabled: controller.isActiveScreen
 
         function onBrightnessUpdated() {
             if (controller.isExpandedOrClosing && !controller.isOsdState) return
@@ -226,6 +215,7 @@ Item {
 
     Connections {
         target: MicrophoneService
+        enabled: controller.isActiveScreen
 
         function onMicrophoneToggled() {
             if (controller.isExpandedOrClosing && !controller.isOsdState) return
@@ -238,6 +228,7 @@ Item {
         target: NotificationService
 
         function onNotificationReceived(notification) {
+            if (!controller.isActiveScreen) return;
             if (controller.currentState === "polkit") return
 
             if (controller.currentState === "notif-popup") {
@@ -269,33 +260,14 @@ Item {
 
     Connections {
         target: IpcService
+        enabled: controller.isActiveScreen
 
-        function onRequestOpenLauncher() {
-            controller.openLauncher()
-        }
-
-        function onRequestPowerSystem() {
-            controller.openPowerSystem()
-        }
-
-        function onRequestPowerProfile() {
-            controller.openPowerProfile()
-        }
-
-        function onRequestControlCenter() {
-            controller.openControlCenter()
-        }
-
-        function onRequestClipboard() {
-            controller.openClipboard()
-        }
-
-        function onRequestKeybinds() {
-            controller.openKeybind()
-        }
-
-        function onRequestEmoji() {
-            controller.openEmoji()
-        }
+        function onRequestOpenLauncher() { controller.openLauncher() }
+        function onRequestPowerSystem() { controller.openPowerSystem() }
+        function onRequestPowerProfile() { controller.openPowerProfile() }
+        function onRequestControlCenter() { controller.openControlCenter() }
+        function onRequestClipboard() { controller.openClipboard() }
+        function onRequestKeybinds() { controller.openKeybind() }
+        function onRequestEmoji() { controller.openEmoji() }
     }
 }

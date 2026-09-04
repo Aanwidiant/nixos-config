@@ -36,17 +36,17 @@ Item {
     }
 
     property bool swRunning: false
-    property int swSeconds: 0
+    property int swMilliseconds: 0
 
-    readonly property string swFormatted: formatStopwatch(swSeconds)
-    readonly property bool swCanReset: !swRunning && swSeconds > 0
+    readonly property string swFormatted: formatStopwatch(swMilliseconds)
+    readonly property bool swCanReset: !swRunning && swMilliseconds > 0
 
     Timer {
         id: swTimer
-        interval: 1000
+        interval: 10 
         repeat: true
         running: root.swRunning
-        onTriggered: root.swSeconds++
+        onTriggered: root.swMilliseconds += 10
     }
 
     function swToggle() { root.swRunning = !root.swRunning; }
@@ -55,7 +55,7 @@ Item {
             return; 
         }
         root.swRunning = false;
-        root.swSeconds = 0;
+        root.swMilliseconds = 0;
     }
 
     property bool tmRunning: false
@@ -111,7 +111,7 @@ Item {
     function triggerTimerAlert() {
         Quickshell.execDetached([
             "bash", "-c",
-            "notify-send 'Timer Finished!' \"Time's up!\" -u critical && (canberra-gtk-play -i alarm-clock-elapsed || pw-play /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga)"
+            "notify-send 'Timer Finished!' \"Time's up!\" -u critical &&  pw-play /home/aanwidiant/.config/quickshell/assets/bell.mp3"
         ]);
     }
 
@@ -126,12 +126,16 @@ Item {
         : `${pad(mins)}:${pad(secs)}`;
     }
 
-    function formatStopwatch(totalSecs) {
-        let hrs = Math.floor(totalSecs / 3600);
-        let mins = Math.floor((totalSecs % 3600) / 60);
-        let secs = totalSecs % 60;
+    function formatStopwatch(totalMs) {
+        let hrs = Math.floor(totalMs / 3600000);
+        let mins = Math.floor((totalMs % 3600000) / 60000);
+        let secs = Math.floor((totalMs % 60000) / 1000);
+        let ms = Math.floor((totalMs % 1000) / 10);
+
         let pad = (n) => (n < 10 ? "0" + n : n);
 
-        return `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
+        return hrs > 0 
+        ? `${pad(hrs)}:${pad(mins)}:${pad(secs)}.${pad(ms)}`
+        : `${pad(mins)}:${pad(secs)}.${pad(ms)}`;
     }
 }

@@ -77,6 +77,7 @@ Item {
                     placeholderTextColor: Theme.muted
                     color: Theme.foreground 
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                     padding: 0
 
                     background: Rectangle { color: "transparent" }

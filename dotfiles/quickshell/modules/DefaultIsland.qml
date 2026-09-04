@@ -5,6 +5,7 @@ import "../components/slides"
 
 Item {
     id: root
+    property string monitorName: ""
 
     implicitWidth: swipeView.currentItem ? swipeView.currentItem.implicitWidth : 156 
     implicitHeight: swipeView.currentItem ? swipeView.currentItem.implicitHeight : 36
@@ -55,7 +56,7 @@ Item {
 
         TimerSlide {}
 
-        TagsSlide {}
+        TagsSlide { monitorName: root.monitorName }
     }
 
     Timer {

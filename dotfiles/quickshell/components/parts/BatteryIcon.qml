@@ -76,6 +76,7 @@ Item {
             Text {
                 text: root.pct
                 font.pixelSize: Metrics.textXS
+                font.family: Theme.textFont
                 color: Theme.foreground 
             }
         }

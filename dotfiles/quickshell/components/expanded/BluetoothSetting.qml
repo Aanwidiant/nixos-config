@@ -39,6 +39,7 @@ Item {
                 text: "Bluetooth Setting"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -56,12 +57,12 @@ Item {
             spacing: Metrics.spacingXL
             visible: BluetoothService.bluetoothEnabled
 
-            // 1. DEVICE NAME
             RowLayout {
                 Layout.fillWidth: true
                 Text {
                     text: "Device Name"
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -70,6 +71,7 @@ Item {
                     text: BluetoothService.activeAdapter?.name || "Unknown"
                     font.pixelSize: Metrics.textMD
                     font.weight: Font.DemiBold
+                    font.family: Theme.textFont
                     color: Theme.primary
                     elide: Text.ElideRight
                     Layout.maximumWidth: 200
@@ -77,12 +79,12 @@ Item {
                 }
             }
 
-            // 2. ADAPTER ID (MAC Address)
             RowLayout {
                 Layout.fillWidth: true
                 Text {
                     text: "Adapter ID"
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -91,6 +93,7 @@ Item {
                     text: BluetoothService.activeAdapter?.adapterId || "Unknown"
                     font.pixelSize: Metrics.textMD
                     font.weight: Font.DemiBold
+                    font.family: Theme.textFont
                     color: Theme.primary
                     elide: Text.ElideRight
                     Layout.maximumWidth: 200
@@ -98,7 +101,6 @@ Item {
                 }
             }
 
-            // 3. PAIRABLE SWITCH
             RowLayout {
                 Layout.fillWidth: true
                 ColumnLayout {
@@ -107,11 +109,13 @@ Item {
                     Text {
                         text: "Pairable"
                         font.pixelSize: Metrics.textMD
+                        font.family: Theme.textFont
                         color: Theme.foreground
                     }
                     Text {
                         text: "Allow devices to request pairing"
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         color: Theme.muted
                     }
                 }
@@ -146,7 +150,6 @@ Item {
                 }
             }
 
-            // 4. PAIRABLE TIMEOUT
             RowLayout {
                 Layout.fillWidth: true
                 visible: BluetoothService.activeAdapter?.pairable || false
@@ -157,11 +160,13 @@ Item {
                     Text {
                         text: "Pairable Timeout"
                         font.pixelSize: Metrics.textMD
+                        font.family: Theme.textFont
                         color: Theme.foreground
                     }
                     Text {
                         text: "Timeout in seconds (0 = unlimited)"
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         color: Theme.muted
                     }
                 }
@@ -244,7 +249,6 @@ Item {
                 }
             }
 
-            // 5. DISCOVERABLE SWITCH
             RowLayout {
                 Layout.fillWidth: true
                 ColumnLayout {
@@ -253,11 +257,13 @@ Item {
                     Text {
                         text: "Discoverable"
                         font.pixelSize: Metrics.textMD
+                        font.family: Theme.textFont
                         color: Theme.foreground
                     }
                     Text {
                         text: "Visible to nearby Bluetooth devices"
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         color: Theme.muted
                     }
                 }
@@ -292,7 +298,6 @@ Item {
                 }
             }
 
-            // 6. DISCOVERABLE TIMEOUT
             RowLayout {
                 Layout.fillWidth: true
                 visible: BluetoothService.activeAdapter?.discoverable || false
@@ -303,11 +308,13 @@ Item {
                     Text {
                         text: "Discoverable Timeout"
                         font.pixelSize: Metrics.textMD
+                        font.family: Theme.textFont
                         color: Theme.foreground
                     }
                     Text {
                         text: "Timeout in seconds (0 = unlimited)"
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         color: Theme.muted
                     }
                 }
@@ -337,6 +344,7 @@ Item {
                         z: 2
                         text: discoverableSpin.textFromValue(discoverableSpin.value, discoverableSpin.locale)
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         color: Theme.primary
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -354,6 +362,7 @@ Item {
                         Text {
                             text: "\uf067"
                             font.pixelSize: Metrics.textLG
+                            font.family: Theme.iconFont
                             color: Theme.background
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter
@@ -374,6 +383,7 @@ Item {
                         Text {
                             text: "\uf068"
                             font.pixelSize: Metrics.textLG
+                            font.family: Theme.iconFont
                             color: Theme.background
                             anchors.fill: parent
                             horizontalAlignment: Text.AlignHCenter

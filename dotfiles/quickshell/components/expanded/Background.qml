@@ -37,6 +37,7 @@ Item {
                 text: "Background"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }

@@ -160,6 +160,7 @@ Item {
                             text: btnRect.profileLabel
                             font.pixelSize: Metrics.textXS
                             font.weight: Font.Medium
+                            font.family: Theme.textFont
                             color: (btnHover.hovered || btnRect.activeFocus) ? Theme.primary : Qt.alpha(Theme.primary, 0.8)
 
                             Behavior on color {

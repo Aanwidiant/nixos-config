@@ -48,6 +48,7 @@ Item {
                 text: "Audio Input Setting"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -76,6 +77,7 @@ Item {
                     text: "Input Device"
                     font.pixelSize: Metrics.textMD
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.fillWidth: true
                 }
@@ -106,6 +108,7 @@ Item {
                     text: "Input Device Levels"
                     font.pixelSize: Metrics.textMD
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.fillWidth: true
                 }
@@ -119,6 +122,7 @@ Item {
                         text: "No input devices found"
                         color: Theme.muted
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 10
                     }

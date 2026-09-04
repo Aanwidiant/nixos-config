@@ -24,6 +24,7 @@ ColumnLayout {
                 text: "Quick Presets"
                 font.pixelSize: Metrics.textSM
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
             }
 
@@ -50,6 +51,7 @@ ColumnLayout {
                             text: modelData.label
                             font.pixelSize: Metrics.textSM
                             font.bold: true
+                            font.family: Theme.textFont
                             color: tapPreset.pressed ? Theme.background : Theme.foreground
                         }
 
@@ -73,6 +75,7 @@ ColumnLayout {
                 text: "Custom Timer"
                 font.pixelSize: Metrics.textSM
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
             }
 
@@ -99,6 +102,7 @@ ColumnLayout {
                     text: ":"
                     font.pixelSize: Metrics.text2XL
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -123,6 +127,7 @@ ColumnLayout {
                     text: ":"
                     font.pixelSize: Metrics.text2XL
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.alignment: Qt.AlignVCenter
                 }
@@ -169,6 +174,7 @@ ColumnLayout {
                     font.pixelSize: Metrics.textSM
                     color: Theme.background
                     font.weight: Font.DemiBold
+                    font.family: Theme.textFont
                 }
             }
 
@@ -188,6 +194,7 @@ ColumnLayout {
             text: TimerService.tmFormatted
             font.pixelSize: 48
             font.bold: true
+            font.family: Theme.textFont
             color: Theme.foreground
         }
 
@@ -217,6 +224,7 @@ ColumnLayout {
                         font.pixelSize: Metrics.textSM
                         color: Theme.background
                         font.weight: Font.DemiBold
+                        font.family: Theme.textFont
                     }
                 }
 
@@ -247,6 +255,7 @@ ColumnLayout {
                         font.pixelSize: Metrics.textSM
                         color: Theme.foreground
                         font.weight: Font.DemiBold
+                        font.family: Theme.textFont
                     }
                 }
 

@@ -28,7 +28,6 @@ Item {
             if (!node || !node.properties) continue
 
             var mediaClass = node.properties["media.class"] || ""
-            // Filter node bertipe Audio/Source (mikrofon/input device)
             if (mediaClass === "Audio/Source" || (!node.isStream && !node.isSink && node.audio)) {
                 devices.push(node)
             }

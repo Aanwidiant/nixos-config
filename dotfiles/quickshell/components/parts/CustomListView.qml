@@ -69,6 +69,7 @@ ColumnLayout {
                     placeholderTextColor: Theme.muted
                     color: Theme.foreground 
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                     padding: 0
 
                     background: Rectangle { color: "transparent" }
@@ -122,7 +123,7 @@ ColumnLayout {
                         id: clearHover
                         cursorShape: Qt.PointingHandCursor
                     }
-                    
+
                     TapHandler {
                         onTapped: {
                             searchableRoot.reset();

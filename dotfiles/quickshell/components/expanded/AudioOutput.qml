@@ -58,6 +58,7 @@ Item {
                 text: "Audio Output Setting"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -83,11 +84,11 @@ Item {
                 width: flickable.width
                 spacing: Metrics.spacingLG
 
-                // --- SECTION 2: CARD PROFILE / CONFIGURATION ---
                 Text {
                     text: "Configuration"
                     font.pixelSize: Metrics.textMD
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.fillWidth: true
                 }
@@ -101,7 +102,6 @@ Item {
                     formatText: function(item) {
                         return root.getCleanProfileName(item.description)
                     }
-                    // Menggunakan arrow function agar binding terhubung dengan benar
                     onItemActivated: (item) => {
                         VolumeService.setCardProfile(item.key)
                     }
@@ -116,6 +116,7 @@ Item {
                     text: "Output Device"
                     font.pixelSize: Metrics.textMD
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.fillWidth: true
                 }
@@ -132,7 +133,6 @@ Item {
                         var fullName = (desc && desc !== "") ? desc : (nick ? nick : item.name)
                         return root.getCleanSinkName(fullName)
                     }
-                    // Menggunakan arrow function
                     onItemActivated: (item) => {
                         VolumeService.setAudioSink(item)
                     }
@@ -143,11 +143,11 @@ Item {
                     color: Theme.border
                 }
 
-                // --- SECTION 3: APPLICATION MIXER ---
                 Text {
                     text: "Application Volume"
                     font.pixelSize: Metrics.textMD
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                     Layout.fillWidth: true
                 }
@@ -161,6 +161,7 @@ Item {
                         text: "No active audio streams"
                         color: Theme.muted
                         font.pixelSize: Metrics.textSM
+                        font.family: Theme.textFont
                         Layout.alignment: Qt.AlignHCenter
                         Layout.topMargin: 10
                     }
@@ -185,6 +186,7 @@ Item {
                                 color: Theme.foreground
                                 font.pixelSize: Metrics.textMD
                                 font.bold: true
+                                font.family: Theme.textFont
                                 text: {
                                     if (!appMixerEntry.appNode) return "Unknown Application";
                                     var app = appMixerEntry.appNode.properties["application.name"] ?? (appMixerEntry.appNode.description !== "" ? appMixerEntry.appNode.description : appMixerEntry.appNode.name);

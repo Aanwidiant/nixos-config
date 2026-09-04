@@ -57,7 +57,6 @@ Item {
             required property var modelData
             required property int index
 
-            // Status visual
             readonly property bool isCurrent: ListView.isCurrentItem
             readonly property bool isHovered: hoverHandler.hovered
 
@@ -65,34 +64,28 @@ Item {
             height: 42
             radius: Metrics.radiusMD
 
-            // Warna latar belakang terpisah untuk hover dan item aktif
             color: isCurrent 
             ? Qt.alpha(Theme.primary, 0.75) 
             : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
 
             Behavior on color { ColorAnimation { duration: 150 } }
 
-            // HoverHandler HANYA mengurus indikator kursor dan efek visual hover
             HoverHandler {
                 id: hoverHandler
                 cursorShape: Qt.PointingHandCursor
             }
 
-            // TapHandler dengan logika 2-langkah (Pilih -> Eksekusi)
             TapHandler {
                 acceptedButtons: Qt.LeftButton
                 onTapped: {
                     if (searchableList.currentIndex === entry.index) {
-                        // KLIK KEDUA: Item sudah aktif -> Konfirmasi & pilih font
                         FontService.selectFont(entry.modelData, controller.closeExpandedState);
                     } else {
-                        // KLIK PERTAMA: Hanya pilih/fokus ke item ini
                         searchableList.currentIndex = entry.index;
                     }
                 }
             }
 
-            // Struktur Layout sederhana & konsisten seperti launcher
             Item {
                 anchors.fill: parent
                 anchors.leftMargin: 12
@@ -103,11 +96,11 @@ Item {
                     anchors.fill: parent
                     text: entry.modelData
                     color: entry.ListView.isCurrentItem ? Theme.foreground : Theme.primary
-                    font.family: entry.modelData // Tetap menggunakan live preview font
+                    font.family: entry.modelData 
                     font.pixelSize: Metrics.textMD
                     font.weight: Font.Medium
                     verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight // Memotong rapi teks panjang tanpa mengacaukan gesture
+                    elide: Text.ElideRight 
                 }
             }
         }

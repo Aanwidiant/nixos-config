@@ -29,6 +29,7 @@ Item {
                 text: "Screen Recorder"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -54,6 +55,7 @@ Item {
                     text: "Record Area"
                     font.pixelSize: Metrics.textSM
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                 }
 
@@ -94,6 +96,7 @@ Item {
                                     color: RecordService.selectedMode === area.modelData.id ? Theme.background : Theme.foreground
                                     font.pixelSize: Metrics.textMD
                                     font.bold: RecordService.selectedMode === area.modelData.id
+                                    font.family: Theme.textFont
                                 }
                             }
 
@@ -112,6 +115,7 @@ Item {
                     text: "Audio Input"
                     font.pixelSize: Metrics.textSM
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                 }
 
@@ -153,6 +157,7 @@ Item {
                                     color: RecordService.selectedAudio === audio.modelData.id ? Theme.background : Theme.foreground
                                     font.pixelSize: Metrics.textMD
                                     font.bold: RecordService.selectedAudio === audio.modelData.id
+                                    font.family: Theme.textFont
                                 }
                             } 
 
@@ -171,6 +176,7 @@ Item {
                     text: "Frame Rate"
                     font.pixelSize: Metrics.textSM
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                 }
 
@@ -208,6 +214,7 @@ Item {
                                     color: RecordService.selectedFps === fps.modelData.id ? Theme.background : Theme.foreground
                                     font.pixelSize: Metrics.textMD
                                     font.bold: RecordService.selectedFps === fps.modelData.id
+                                    font.family: Theme.textFont
                                 }
                             } 
 
@@ -257,6 +264,7 @@ Item {
                     text: "Recording..."
                     font.pixelSize: Metrics.textLG
                     font.bold: true
+                    font.family: Theme.textFont
                     color: Theme.foreground
                 }
             }
@@ -266,6 +274,7 @@ Item {
                 text: RecordService.formattedTime
                 font.pixelSize: Metrics.text4XL
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.primary
             }
 
@@ -296,6 +305,7 @@ Item {
                     color: Theme.background
                     font.pixelSize: Metrics.textMD
                     font.bold: true 
+                    font.family: Theme.textFont
                 }
             } 
 

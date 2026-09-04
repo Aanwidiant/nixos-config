@@ -50,6 +50,7 @@ Item {
                 text: "Wi-Fi"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -149,6 +150,7 @@ Item {
                     text: "Wi-Fi is turned off"
                     color: Theme.muted
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                 }
             }
         }
@@ -176,6 +178,7 @@ Item {
                         text: "Saved Networks"
                         font.pixelSize: Metrics.textSM
                         font.weight: Font.Medium
+                        font.family: Theme.textFont
                         color: Theme.muted
                         bottomPadding: 4
                         visible: knownRepeater.count > 0
@@ -225,6 +228,7 @@ Item {
                                         color: Theme.foreground
                                         font.bold: net && net.connected
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         elide: Text.ElideRight
                                         Layout.fillWidth: true 
                                         Layout.alignment: Qt.AlignVCenter
@@ -235,6 +239,7 @@ Item {
                                         (net && net.stateChanging) ? "Connecting..." : ""
                                         color: (net && net.connected) ? Theme.primary : Theme.muted
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         Layout.alignment: Qt.AlignVCenter
                                         visible: text !== ""
                                     }
@@ -282,6 +287,7 @@ Item {
                                             Text {
                                                 text: "Forget"
                                                 font.pixelSize: Metrics.textSM
+                                                font.family: Theme.textFont
                                                 color: Theme.surface 
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
@@ -327,6 +333,7 @@ Item {
                                             Text {
                                                 text: (net && net.connected) ? "Disconnect" : "Connect" 
                                                 font.pixelSize: Metrics.textSM
+                                                font.family: Theme.textFont
                                                 color: Theme.surface 
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
@@ -352,7 +359,6 @@ Item {
                     } 
                 } 
 
-                // --- AVAILABLE NETWORKS ---
                 Column {
                     id: availableColumn
                     width: parent.width
@@ -362,6 +368,7 @@ Item {
                         text: "Available Networks"
                         font.pixelSize: Metrics.textSM
                         font.weight: Font.Medium
+                        font.family: Theme.textFont
                         color: Theme.muted
                         bottomPadding: 4
                     }
@@ -418,6 +425,7 @@ Item {
                                         text: availableDelegate.netSsid || "Hidden Network" 
                                         color: Theme.foreground
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         elide: Text.ElideRight
                                         Layout.fillWidth: true 
                                         Layout.alignment: Qt.AlignVCenter
@@ -428,6 +436,7 @@ Item {
                                         (net && net.stateChanging) ? "Connecting..." : ""
                                         color: (isSelected && root.errorMessage) ? Theme.danger : Theme.muted
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         Layout.alignment: Qt.AlignVCenter
                                         elide: Text.ElideRight
                                         visible: text !== ""
@@ -440,7 +449,6 @@ Item {
                                     visible: isSelected 
                                     spacing: Metrics.spacingLG
 
-                                    // Spacer agar tombol Connect tetap di kanan saat field password disembunyikan
                                     Item {
                                         Layout.fillWidth: true
                                         visible: !availableDelegate.isEncrypted
@@ -453,6 +461,7 @@ Item {
                                         placeholderText: "Enter password"
                                         echoMode: root.showPassword ? TextInput.Normal : TextInput.Password
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         text: root.passwordText
 
                                         rightPadding: eyeBtn.width + 12 
@@ -549,6 +558,7 @@ Item {
                                             Text {
                                                 text: "Connect" 
                                                 font.pixelSize: Metrics.textSM
+                                                font.family: Theme.textFont
                                                 color: Theme.surface 
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
@@ -590,6 +600,7 @@ Item {
                         text: NetworkService.isScanning ? "Scanning for networks..." : "No networks found."
                         color: Theme.muted
                         font.pixelSize: Metrics.textMD
+                        font.family: Theme.textFont
                     }
                 }
             } 

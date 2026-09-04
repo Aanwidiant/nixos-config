@@ -27,7 +27,8 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 customFont: Qt.font({
                     pixelSize: Metrics.text3XL,
-                    weight: Font.DemiBold
+                    weight: Font.Bold,
+                    family: Theme.textFont
                 })
                 customColor: Theme.primary
             }
@@ -38,7 +39,8 @@ Item {
                 Layout.alignment: Qt.AlignHCenter
                 customFont: Qt.font({
                     pixelSize: Metrics.textMD,
-                    weight: Font.Medium
+                    weight: Font.Medium,
+                    family: Theme.textFont
                 })
             }
         }

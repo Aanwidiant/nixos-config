@@ -14,6 +14,8 @@ ColumnLayout {
         text: TimerService.swFormatted
         font.pixelSize: Metrics.text4XL
         font.bold: true
+        font.family: Theme.textFont
+        font.features: { "tnum": 1 } 
         color: Theme.foreground
     }
 
@@ -43,6 +45,7 @@ ColumnLayout {
                     font.pixelSize: Metrics.textSM
                     color: Theme.background
                     font.weight: Font.DemiBold
+                    font.family: Theme.textFont
                 }
             }
 
@@ -74,6 +77,7 @@ ColumnLayout {
                     font.pixelSize: Metrics.textSM
                     color: Theme.foreground
                     font.weight: Font.DemiBold
+                    font.family: Theme.textFont
                 }
             }
 

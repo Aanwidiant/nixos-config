@@ -5,7 +5,7 @@ import "../../services"
 Item {
     id: root
     implicitWidth: 215
-    implicitHeight: 32
+    implicitHeight: 36
 
     readonly property real brightness: BrightnessService.brightness
     readonly property int brightnessPercent: Math.round(root.brightness * 100)
@@ -54,6 +54,7 @@ Item {
             color: Theme.foreground
             font.pixelSize: Metrics.textSM
             font.weight: Font.Medium
+            font.family: Theme.textFont
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignRight
         }

@@ -57,7 +57,6 @@ Item {
             required property var modelData
             required property int index
 
-            // Status visual
             readonly property bool isCurrent: ListView.isCurrentItem
             readonly property bool isHovered: hoverHandler.hovered
 
@@ -65,20 +64,17 @@ Item {
             height: 42
             radius: Metrics.radiusMD
 
-            // Warna latar belakang terpisah untuk hover dan item aktif
             color: isCurrent 
             ? Qt.alpha(Theme.primary, 0.75) 
             : (isHovered ? Qt.alpha(Theme.surface, 0.6) : "transparent")
 
             Behavior on color { ColorAnimation { duration: 150 } }
 
-            // HoverHandler HANYA mengurus indikator kursor dan efek visual hover
             HoverHandler {
                 id: hoverHandler
                 cursorShape: Qt.PointingHandCursor
             }
 
-            // Flickable Horizontal tanpa ScrollBar
             Flickable {
                 id: itemFlickable
                 anchors.fill: parent
@@ -91,15 +87,12 @@ Item {
                 flickableDirection: Flickable.HorizontalFlick
                 clip: true
 
-                // TapHandler dengan logika 2-langkah (Pilih -> Eksekusi)
                 TapHandler {
                     acceptedButtons: Qt.LeftButton
                     onTapped: {
                         if (searchableList.currentIndex === entry.index) {
-                            // KLIK KEDUA: Item sudah aktif -> Eksekusi keybind
                             KeybindService.selectItem(entry.modelData, controller.closeExpandedState);
                         } else {
-                            // KLIK PERTAMA: Hanya pilih/fokus ke item ini
                             searchableList.currentIndex = entry.index;
                         }
                     }
@@ -108,7 +101,6 @@ Item {
                     height: itemFlickable.height
                     width: Math.max(itemFlickable.width, descText.implicitWidth + keyBadge.implicitWidth + Metrics.spacingMD)
 
-                    // Badge Keybind Rata Kiri
                     Rectangle {
                         id: keyBadge
                         anchors.left: parent.left
@@ -125,10 +117,10 @@ Item {
                             color: entry.ListView.isCurrentItem ? Theme.foreground : Theme.primary
                             font.pixelSize: Metrics.textSM
                             font.weight: Font.Bold
+                            font.family: Theme.textFont
                         }
                     }
 
-                    // Deskripsi Rata Kanan
                     Text {
                         id: descText
                         anchors.right: parent.right
@@ -137,6 +129,7 @@ Item {
                         color: entry.ListView.isCurrentItem ? Theme.foreground : Theme.primary
                         font.pixelSize: Metrics.textMD
                         font.weight: Font.Medium
+                        font.family: Theme.textFont
                         verticalAlignment: Text.AlignVCenter
                         wrapMode: Text.NoWrap
                     }

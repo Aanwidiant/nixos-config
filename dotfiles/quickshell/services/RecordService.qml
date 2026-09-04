@@ -69,7 +69,7 @@ Item {
         onTriggered: {
             if (!root.isPaused) {
                 root.durationSeconds++;
-                checkProcess.running = true;  // cek proses hanya saat tidak pause
+                checkProcess.running = true;
             }
         }
     }

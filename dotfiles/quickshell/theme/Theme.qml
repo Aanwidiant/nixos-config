@@ -5,9 +5,9 @@ import QtQuick
 
 QtObject {
     id: root
-    
+
     readonly property string nixosIcon:
-        Quickshell.env("HOME") + "/nixos-config/dotfiles/quickshell/assets/nixos.png"
+    Quickshell.env("HOME") + "/nixos-config/dotfiles/quickshell/assets/nixos.png"
 
     readonly property FileView themeFile: FileView {
         id: themeFile
@@ -34,6 +34,7 @@ QtObject {
             root.warning    = Qt.color(data.warning    || "#ebcb8b");
             root.danger     = Qt.color(data.danger     || "#bf616a");
             root.iconFont   = data.iconFont            || "JetBrainsMono Nerd Font";
+            root.textFont   = data.textFont            || "JetBrainsMono Nerd Font";
         } catch (e) {
             // abaikan partial read
         }
@@ -53,4 +54,5 @@ QtObject {
     property color warning:    "#ebcb8b"
     property color danger:     "#bf616a"
     property string iconFont:  "JetBrainsMono Nerd Font"
+    property string textFont:  "JetBrainsMono Nerd Font"
 }

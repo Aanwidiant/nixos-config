@@ -155,6 +155,7 @@ Item {
                     text: entry.modelData.name || ""
                     color: entry.ListView.isCurrentItem ? Theme.foreground : Theme.primary 
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                     font.weight: Font.Medium
                     elide: Text.ElideRight
                     verticalAlignment: Text.AlignVCenter

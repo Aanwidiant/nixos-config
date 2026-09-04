@@ -14,7 +14,8 @@ Item {
         customColor: Theme.primary
         customFont: Qt.font({
             pixelSize: Metrics.textMD,
-            weight: Font.DemiBold
+            weight: Font.ExtraBold,
+            family: Theme.textFont
         })
     }
 

@@ -48,6 +48,7 @@ Item {
                 text: "Bluetooth"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -168,11 +169,11 @@ Item {
                     text: "Bluetooth is turned off"
                     color: Theme.muted
                     font.pixelSize: Metrics.textMD
+                    font.family: Theme.textFont
                 }
             }
         }
 
-        // --- STATE: BLUETOOTH ON (DEVICES LIST) ---
         Flickable {
             id: flickable
             Layout.fillWidth: true
@@ -187,7 +188,6 @@ Item {
                 width: parent.width
                 spacing: Metrics.spacingLG
 
-                // --- PAIRED DEVICES ---
                 Column {
                     id: pairedColumn
                     width: parent.width
@@ -197,6 +197,7 @@ Item {
                         text: "Paired Devices"
                         font.pixelSize: Metrics.textSM
                         font.weight: Font.Medium
+                        font.family: Theme.textFont
                         color: Theme.muted
                         bottomPadding: 4
                         visible: pairedRepeater.count > 0
@@ -243,14 +244,13 @@ Item {
                                         function getBluetoothIcon(dev) {
                                             if (!dev) return "\udb80\udcaf"
 
-                                            // Tipe perangkat (Audio, Phone, Input, dll.)
                                             let icon = dev.iconName || ""
                                             if (icon.indexOf("headset") !== -1 || icon.indexOf("audio") !== -1) return "\udb80\udcaf" 
                                             if (icon.indexOf("phone") !== -1) return "\udb80\udcb8" 
                                             if (icon.indexOf("keyboard") !== -1) return "\udb80\udcb3"
                                             if (icon.indexOf("mouse") !== -1) return "\udb80\udcb5"
 
-                                            return "\udb80\udcaf" // Default BT icon
+                                            return "\udb80\udcaf"
                                         }
                                     }
 
@@ -259,6 +259,7 @@ Item {
                                         color: Theme.foreground
                                         font.bold: dev && dev.connected
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         elide: Text.ElideRight
                                         Layout.fillWidth: true 
                                         Layout.alignment: Qt.AlignVCenter
@@ -269,6 +270,7 @@ Item {
                                         (dev && dev.connecting) ? "Connecting..." : ""
                                         color: (dev && dev.connected) ? Theme.primary : Theme.muted
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         Layout.alignment: Qt.AlignVCenter
                                         visible: text !== ""
                                     }
@@ -316,6 +318,7 @@ Item {
                                             Text {
                                                 text: "Unpair"
                                                 font.pixelSize: Metrics.textSM
+                                                font.family: Theme.textFont
                                                 color: Theme.surface 
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
@@ -361,6 +364,7 @@ Item {
                                             Text {
                                                 text: (dev && dev.connected) ? "Disconnect" : "Connect" 
                                                 font.pixelSize: Metrics.textSM
+                                                font.family: Theme.textFont
                                                 color: Theme.surface 
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }
@@ -395,6 +399,7 @@ Item {
                         text: "Available Devices"
                         font.pixelSize: Metrics.textSM
                         font.weight: Font.Medium
+                        font.family: Theme.textFont
                         color: Theme.muted
                         bottomPadding: 4
                     }
@@ -450,6 +455,7 @@ Item {
                                         text: dev ? (dev.alias || dev.name || dev.address || "Unknown Device") : "Unknown Device"
                                         color: Theme.foreground
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         elide: Text.ElideRight
                                         Layout.fillWidth: true 
                                         Layout.alignment: Qt.AlignVCenter
@@ -460,6 +466,7 @@ Item {
                                         (dev && dev.connecting) ? "Pairing..." : ""
                                         color: (isSelected && root.errorMessage) ? Theme.danger : Theme.muted
                                         font.pixelSize: Metrics.textSM
+                                        font.family: Theme.textFont
                                         Layout.alignment: Qt.AlignVCenter
                                         elide: Text.ElideRight
                                         visible: text !== ""
@@ -502,7 +509,7 @@ Item {
                                             anchors.centerIn: parent
 
                                             Text {
-                                                text: "\uf0c1" // Connect/Pair Icon
+                                                text: "\uf0c1" 
                                                 font.family: Theme.iconFont
                                                 font.pixelSize: Metrics.textMD
                                                 color: Theme.surface
@@ -512,6 +519,7 @@ Item {
                                             Text {
                                                 text: "Pair"
                                                 font.pixelSize: Metrics.textSM
+                                                font.family: Theme.textFont
                                                 color: Theme.surface
                                                 anchors.verticalCenter: parent.verticalCenter
                                             }

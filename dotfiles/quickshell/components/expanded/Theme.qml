@@ -37,6 +37,7 @@ Item {
                 text: "Theme"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -128,6 +129,7 @@ Item {
                             color: Theme.foreground
                             font.pixelSize: Metrics.textMD
                             font.weight: Font.Bold
+                            font.family: Theme.textFont
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight

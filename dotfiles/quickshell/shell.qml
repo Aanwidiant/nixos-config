@@ -7,60 +7,54 @@ import "services"
 ShellRoot {
     id: root
 
-    PanelWindow {
-        id: mainPanel
+    Variants {
+        model: Quickshell.screens
 
-        readonly property var targetScreen: {
-            var targetName = ScreenService.activeMonitorName
-            if (!targetName) return Quickshell.screens[0]
-            return Quickshell.screens.find(s => s.name === targetName) ?? Quickshell.screens[0]
-        }
+        PanelWindow {
+            id: mainPanel
 
-        property var lockedScreen: null
+            property var modelData
 
-        screen: {
-            if (!requiresKeyboardFocus || lockedScreen === null) {
-                return targetScreen
-            } 
-            return lockedScreen
-        }
+            screen: modelData
 
-        onScreenChanged: {
-            if (screen) {
-                lockedScreen = screen
+            readonly property bool isActiveScreen: modelData.name === ScreenService.activeMonitorName
+
+            anchors.top: true
+            exclusiveZone: 0 
+            color: "transparent"
+
+            implicitWidth: modelData.width * 0.5
+            implicitHeight: modelData.height * 0.8
+
+            readonly property string currentState: dynamicIsland.currentState
+            readonly property bool isExclusiveFocus: States.isExclusiveFocus(currentState)
+            readonly property bool isOnDemandFocus: States.isOnDemandFocus(currentState)
+
+            WlrLayershell.keyboardFocus: {
+                if (!mainPanel.isActiveScreen) {
+                    return WlrKeyboardFocus.None
+                }
+                return isExclusiveFocus ? WlrKeyboardFocus.Exclusive :
+                isOnDemandFocus ? WlrKeyboardFocus.OnDemand :
+                WlrKeyboardFocus.None
             }
-        }
 
-        anchors.top: true
-        exclusiveZone: 0 
-        color: "transparent"
+            WlrLayershell.layer: WlrLayer.Top
 
-        implicitWidth: mainPanel.screen ? mainPanel.screen.width * 1/2 : 0
-        implicitHeight: mainPanel.screen ? mainPanel.screen.height * 4/5 : 0
+            DynamicIsland {
+                id: dynamicIsland
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
 
-        readonly property string currentState: dynamicIsland.currentState
+                property bool isMainScreen: mainPanel.isActiveScreen
+                property string monitorName: modelData.name
+            }
 
-        readonly property bool isExclusiveFocus: States.isExclusiveFocus(currentState)
-        readonly property bool isOnDemandFocus: States.isOnDemandFocus(currentState)
-        readonly property bool requiresKeyboardFocus: States.needsKeyboardFocus(currentState)
-
-        WlrLayershell.keyboardFocus:
-        isExclusiveFocus
-        ? WlrKeyboardFocus.Exclusive
-        : isOnDemandFocus
-        ? WlrKeyboardFocus.OnDemand
-        : WlrKeyboardFocus.None
-
-        WlrLayershell.layer: WlrLayer.Top
-
-        DynamicIsland {
-            id: dynamicIsland
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-        }
-
-        mask: Region {
-            item: dynamicIsland.islandVisible ? dynamicIsland.islandItem : dynamicIsland.topEdgeTrigger
+            mask: Region {
+                item: (mainPanel.isActiveScreen && dynamicIsland.islandVisible) 
+                ? dynamicIsland.islandItem 
+                : dynamicIsland.topEdgeTrigger
+            }
         }
     }
 

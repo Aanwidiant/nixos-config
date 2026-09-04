@@ -108,6 +108,7 @@ Item {
                 font {
                     pixelSize: Metrics.textMD
                     weight: Font.Bold
+                    family: Theme.textFont
                 }
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignVCenter
@@ -120,6 +121,7 @@ Item {
             font {
                 pixelSize: Metrics.textSM
                 weight: Font.Medium
+                family: Theme.textFont
             }
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
@@ -144,6 +146,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 color: Theme.foreground
                 font.pixelSize: Metrics.textSM
+                font.family: Theme.textFont
                 enabled: !polkitContent.isLocked
                 clip: true
                 maximumLength: 128
@@ -162,6 +165,7 @@ Item {
                     text: "Enter password..."
                     color: Theme.muted
                     font.pixelSize: Metrics.textSM
+                    font.family: Theme.textFont
                     visible: parent.text.length === 0 && !parent.activeFocus
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.left: parent.left
@@ -183,6 +187,7 @@ Item {
                 text: ""
                 color: Theme.danger
                 font.pixelSize: Metrics.textSM
+                font.family: Theme.textFont
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignLeft
@@ -215,6 +220,7 @@ Item {
                     font {
                         pixelSize: Metrics.textSM
                         weight: Font.DemiBold
+                        family: Theme.textFont
                     }
                 }
 
@@ -249,6 +255,7 @@ Item {
                     font {
                         pixelSize: Metrics.textSM
                         weight: Font.DemiBold
+                        family: Theme.textFont
                     }
                 }
 

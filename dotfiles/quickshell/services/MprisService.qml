@@ -5,7 +5,6 @@ import Quickshell.Services.Mpris
 QtObject {
     id: root
 
-    // 1. MPRIS PLAYER SELECTION
     readonly property MprisPlayer activePlayer: {
         let players = Mpris.players.values;
         if (players.length === 0) return null;
@@ -17,10 +16,9 @@ QtObject {
         return players[0];
     }
 
-    // 2. STATE PROPERTIES
     readonly property string trackTitle: activePlayer ? (activePlayer.trackTitle || "Nothing Played") : "Nothing Played"
     readonly property string trackArtist: activePlayer ? (activePlayer.trackArtist || "Nothing Played") : "Nothing Played"
-    
+
     readonly property bool isPlaying: activePlayer ? activePlayer.isPlaying : false
     readonly property bool canGoNext: activePlayer ? activePlayer.canGoNext : false
     readonly property bool canGoPrevious: activePlayer ? activePlayer.canGoPrevious : false
@@ -30,7 +28,6 @@ QtObject {
     readonly property real position: activePlayer ? activePlayer.position : 0
     readonly property real length: (activePlayer && activePlayer.lengthSupported) ? activePlayer.length : 0
 
-    // Fallback bertingkat untuk Album Art
     readonly property string albumArtUrl: {
         if (!activePlayer) return "";
         if (activePlayer.trackArtUrl && activePlayer.trackArtUrl !== "") {
@@ -43,7 +40,6 @@ QtObject {
         return "";
     }
 
-    // 3. HELPER FUNCTIONS & CONTROLS
     function getYouTubeThumbnail(url) {
         if (!url) return "";
         let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -79,7 +75,6 @@ QtObject {
         activePlayer.position = targetPosition;
     }
 
-    // 4. FRAME ANIMATION (POSITION TICKER)
     property var _animation: FrameAnimation {
         running: root.activePlayer && root.isPlaying
         onTriggered: {

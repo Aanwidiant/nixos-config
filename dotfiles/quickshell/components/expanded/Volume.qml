@@ -5,7 +5,7 @@ import "../../services"
 Item {
     id: root
     implicitWidth: 215
-    implicitHeight: 32
+    implicitHeight: 36
 
     readonly property real volume: VolumeService.volume
     readonly property bool muted: VolumeService.isMuted
@@ -56,6 +56,7 @@ Item {
             color: root.muted ? Theme.muted : Theme.foreground
             font.pixelSize: Metrics.textSM
             font.weight: Font.Medium
+            font.family: Theme.textFont
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignRight
         }

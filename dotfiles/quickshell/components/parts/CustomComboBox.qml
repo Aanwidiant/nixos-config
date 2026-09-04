@@ -10,19 +10,16 @@ ComboBox {
         cursorShape: Qt.PointingHandCursor
     }
 
-    // --- CUSTOM PROPERTIES ---
     property var selectedKey: null
     property string keyRole: "id"
     property string defaultText: "Select..."
     property var formatText: null
 
-    // Signal kustom saat item dipilih oleh user
     signal itemActivated(var item, int index)
 
     Layout.fillWidth: true
     textRole: "description"
 
-    // Helper internal pemformatan teks
     function getItemText(item) {
         if (!item) return ""
         if (formatText && typeof formatText === "function") {
@@ -31,13 +28,11 @@ ComboBox {
         return item[textRole] ?? ""
     }
 
-    // Helper internal penentuan item terpilih
     function isSelected(item) {
         if (!item || selectedKey === undefined || selectedKey === null) return false
         return item[keyRole] === selectedKey
     }
 
-    // Fungsi sinkronisasi indeks secara aman tanpa merusak binding
     function syncCurrentIndex() {
         if (!model) {
             control.currentIndex = -1
@@ -45,7 +40,6 @@ ComboBox {
         }
 
         var targetIndex = -1
-        // Model bisa berupa Array JS atau QML ListModel
         var count = model.count !== undefined ? model.count : model.length
 
         for (var i = 0; i < count; i++) {
@@ -58,19 +52,16 @@ ComboBox {
         control.currentIndex = targetIndex
     }
 
-    // Pantau perubahan model atau selectedKey untuk memperbarui indeks
     onModelChanged: syncCurrentIndex()
     onSelectedKeyChanged: syncCurrentIndex()
     Component.onCompleted: syncCurrentIndex()
 
-    // Trigger signal kustom saat item diklik oleh user
     onActivated: function(index) {
         if (!model) return
         var item = model.get ? model.get(index) : model[index]
         control.itemActivated(item, index)
     }
 
-    // --- HEADER TEXT DISPLAY ---
     contentItem: Text {
         leftPadding: Metrics.spacingLG
         rightPadding: control.indicator ? control.indicator.width + Metrics.spacingLG : Metrics.spacing2XL
@@ -85,12 +76,12 @@ ComboBox {
             return control.defaultText
         }
         font.pixelSize: Metrics.textMD
+        font.family: Theme.textFont
         color: (control.currentIndex >= 0 && control.model) ? Theme.foreground : Theme.muted
         wrapMode: Text.Wrap
         verticalAlignment: Text.AlignVCenter
     }
 
-    // --- DROPDOWN ARROW ---
     indicator: Text {
         x: control.width - width - Metrics.spacingLG
         y: control.topPadding + (control.availableHeight - height) / 2
@@ -101,7 +92,6 @@ ComboBox {
         verticalAlignment: Text.AlignVCenter
     }
 
-    // --- BACKGROUND ---
     background: Rectangle {
         implicitHeight: Math.max(42, control.contentItem.implicitHeight)
         color: control.hovered ? Qt.alpha(Theme.primary, 0.2) : Theme.surface
@@ -112,10 +102,8 @@ ComboBox {
         Behavior on color { ColorAnimation { duration: Metrics.durationFast } }
     }
 
-    // --- ITEM DELEGATE ---
     delegate: ItemDelegate {
         id: delegate
-        // Lebar mengikuti ListView (bukan control) agar tidak ter-clip oleh padding popup
         width: ListView.view.width
         highlighted: control.highlightedIndex === index
 
@@ -129,6 +117,7 @@ ComboBox {
             color: control.isSelected(modelData) ? Theme.primary : Theme.foreground
             font.pixelSize: Metrics.textMD
             font.bold: control.isSelected(modelData)
+            font.family: Theme.textFont
             wrapMode: Text.Wrap
             verticalAlignment: Text.AlignVCenter
         }
@@ -141,11 +130,9 @@ ComboBox {
         }
     }
 
-    // --- POPUP CONTAINER ---
     popup: Popup {
         y: control.height + Metrics.spacingMD
         width: control.width
-        implicitHeight: contentItem.implicitHeight
         padding: Metrics.spacingMD
 
         contentItem: ListView {
@@ -153,8 +140,6 @@ ComboBox {
             implicitHeight: contentHeight > 250 ? 250 : contentHeight
             model: control.delegateModel
             currentIndex: control.highlightedIndex
-            // Snap highlight tanpa animasi agar tidak goyang saat hover antar item
-            highlightMoveDuration: 0
             ScrollIndicator.vertical: ScrollIndicator {}
         }
 

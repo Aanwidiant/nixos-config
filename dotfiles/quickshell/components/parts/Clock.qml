@@ -8,7 +8,8 @@ Text {
     property int precision: SystemClock.Minutes
     property font customFont: Qt.font({
         pixelSize: Metrics.textSM,
-        weight: Font.DemiBold
+        weight: Font.DemiBold,
+        family: Theme.textFont
     })
     property color customColor: Theme.foreground
 

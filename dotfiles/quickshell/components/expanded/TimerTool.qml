@@ -13,7 +13,7 @@ Item {
         if (root.currentTab !== "timer") {
             return 260
         }
-        return (TimerService.tmRemaining > 0) ? 260 : 380
+        return (TimerService.tmRemaining > 0) ? 280 : 380
     }
 
     property string currentTab: "timer"
@@ -37,6 +37,7 @@ Item {
                 text: "Timer & Stopwatch"
                 font.pixelSize: Metrics.textLG
                 font.bold: true
+                font.family: Theme.textFont
                 color: Theme.foreground
                 Layout.fillWidth: true
             }
@@ -52,6 +53,7 @@ Item {
             text: "Mode"
             font.pixelSize: Metrics.textSM
             font.bold: true
+            font.family: Theme.textFont
             color: Theme.foreground
         }
 
@@ -95,6 +97,7 @@ Item {
                             color: tabItem.isActive ? Theme.background : Theme.foreground
                             font.pixelSize: Metrics.textMD
                             font.bold: tabItem.isActive
+                            font.family: Theme.textFont
                         }
                     }
 

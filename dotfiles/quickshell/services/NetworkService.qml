@@ -8,15 +8,12 @@ Item {
 
     readonly property bool debug: false
 
-    // Logging helpers
     function log(...args) { if (debug) console.log("[NetworkService]", ...args) }
     function warn(...args) { if (debug) console.warn("[NetworkService]", ...args) }
 
-    // Signals
     signal passwordRequired(var network)
     signal connectionFailed(string name, string errorMessage)
 
-    // Global state & backend
     readonly property bool wifiEnabled: Networking.wifiEnabled
     readonly property bool wifiHardwareEnabled: Networking.wifiHardwareEnabled
     readonly property var backend: Networking.backend
@@ -24,13 +21,12 @@ Item {
     readonly property bool canCheckConnectivity: Networking.canCheckConnectivity
 
     onWifiEnabledChanged: {
-        log("📡 Wi-Fi software →", wifiEnabled)
+        log("Wi-Fi software →", wifiEnabled)
         if (wifiEnabled && wifiDevice) wifiDevice.scannerEnabled = true
     }
 
-    onWifiHardwareEnabledChanged: log("🔌 Wi-Fi hardware →", wifiHardwareEnabled)
+    onWifiHardwareEnabledChanged: log("Wi-Fi hardware →", wifiHardwareEnabled)
 
-    // Device resolution
     property WifiDevice wifiDevice: null
     property WiredDevice wiredDevice: null
     property var _previousActiveNetwork: null
@@ -45,30 +41,29 @@ Item {
 
     function _registerDevice(dev) {
         if (!dev) return
-        log("🔍 Device ditemukan:", dev.name, "| Type:", dev.type)
+        log("Device ditemukan:", dev.name, "| Type:", dev.type)
 
         if (dev.type === DeviceType.Wifi && !wifiDevice) {
             wifiDevice = dev
             wifiDevice.scannerEnabled = true
-            log("✅ Wi-Fi device tersimpan:", dev.name)
+            log("Wi-Fi device tersimpan:", dev.name)
         } else if (dev.type === DeviceType.Wired && !wiredDevice) {
             wiredDevice = dev
-            log("✅ Wired device tersimpan:", dev.name)
+            log("Wired device tersimpan:", dev.name)
         }
     }
 
     function _unregisterDevice(dev) {
         if (wifiDevice === dev) {
             wifiDevice = null
-            log("❌ Wi-Fi device dihapus")
+            log("Wi-Fi device dihapus")
         }
         if (wiredDevice === dev) {
             wiredDevice = null
-            log("❌ Wired device dihapus")
+            log("Wired device dihapus")
         }
     }
 
-    // Exposed properties
     readonly property bool isWifiConnected: wifiDevice ? wifiDevice.connected : false
     readonly property bool isWiredConnected: wiredDevice ? wiredDevice.connected : false
     readonly property bool wiredHasLink: wiredDevice ? wiredDevice.hasLink : false
@@ -77,17 +72,15 @@ Item {
     property bool isScanning: false
     readonly property var wifiNetworksModel: wifiDevice ? wifiDevice.networks : null
 
-    // Timers
     Timer {
         id: scanAnimationTimer
         interval: 3000
         onTriggered: {
             root.isScanning = false
-            log("⏹️ Animasi scan selesai.")
+            log("Animasi scan selesai.")
         }
     }
 
-    // Timer statis untuk rollback ke jaringan sebelumnya
     Timer {
         id: rollbackTimer
         interval: 1000
@@ -95,7 +88,7 @@ Item {
 
         onTriggered: {
             if (targetNetwork) {
-                log("🔄 Executing rollback to:", targetNetwork.name)
+                log("Executing rollback to:", targetNetwork.name)
                 targetNetwork.connect()
             }
             targetNetwork = null
@@ -104,16 +97,15 @@ Item {
 
     function scanWifi() {
         if (!wifiDevice) {
-            warn("⚠️ Tidak bisa scan: Wi-Fi device tidak ditemukan")
+            warn("Tidak bisa scan: Wi-Fi device tidak ditemukan")
             return
         }
-        log("🔄 Meminta pemicu scan baru pada", wifiDevice.name)
+        log("Meminta pemicu scan baru pada", wifiDevice.name)
         wifiDevice.scannerEnabled = true
         root.isScanning = true
         scanAnimationTimer.restart()
     }
 
-    // Icons
     readonly property var _wifiIcons: ({
         "limited":   ["\udb82\udd2b", "\udb82\udd20", "\udb82\udd23", "\udb82\udd26", "\udb82\udd29"],
         "encrypted": ["\udb82\udd2c", "\udb82\udd21", "\udb82\udd24", "\udb82\udd27", "\udb82\udd2a"],
@@ -128,11 +120,10 @@ Item {
         return 0
     }
 
-    // Actions
     function toggleWifi() {
-        if (!wifiHardwareEnabled) { warn("⚠️ Hardware disabled"); return }
+        if (!wifiHardwareEnabled) { warn("Hardware disabled"); return }
         const newState = !wifiEnabled
-        log("🔄 Toggle Wi-Fi →", newState)
+        log("Toggle Wi-Fi →", newState)
         Networking.wifiEnabled = newState
     }
 
@@ -141,33 +132,32 @@ Item {
     }
 
     function checkConnectivity() {
-        if (!canCheckConnectivity) { warn("⚠️ Tidak support connectivity check"); return }
-        log("🔍 Trigger connectivity check")
+        if (!canCheckConnectivity) { warn("Tidak support connectivity check"); return }
+        log("Trigger connectivity check")
         Networking.checkConnectivity()
     }
 
     function disconnectWifi() {
-        if (!wifiDevice || !wifiDevice.connected) { log("ℹ️ Wi-Fi sudah terputus"); return }
-        log("🔌 Disconnect Wi-Fi")
+        if (!wifiDevice || !wifiDevice.connected) { log("Wi-Fi sudah terputus"); return }
+        log("Disconnect Wi-Fi")
         wifiDevice.disconnect()
     }
 
     function disconnectWired() {
-        if (!wiredDevice || !wiredDevice.connected) { log("ℹ️ Wired sudah terputus"); return }
-        log("🔌 Disconnect Wired")
+        if (!wiredDevice || !wiredDevice.connected) { log("Wired sudah terputus"); return }
+        log("Disconnect Wired")
         wiredDevice.disconnect()
     }
 
     function connectToNetwork(network) {
         if (!network) return
-        // Pakai WifiSecurityType.Open (standar) untuk cek jaringan terbuka
         const isEncrypted = network.security !== WifiSecurityType.Open
 
         if (isEncrypted && !network.known) {
-            log("🔑 Jaringan butuh password:", network.name)
+            log("Jaringan butuh password:", network.name)
             root.passwordRequired(network)
         } else {
-            log("🔗 Connect langsung ke:", network.name)
+            log("Connect langsung ke:", network.name)
             network.connect()
         }
     }
@@ -178,7 +168,6 @@ Item {
         const networkName = network.name
         const wasKnownBefore = network.known === true
 
-        // Simpan jaringan aktif sebagai fallback
         root._previousActiveNetwork = null
         const connectedNet = _iterateModel(function(net) {
             return net && net !== network && (net.connected === true || net.isConnected === true)
@@ -186,10 +175,10 @@ Item {
 
         if (connectedNet) {
             root._previousActiveNetwork = connectedNet
-            log("📌 Fallback terdeteksi & disimpan:", connectedNet.name)
+            log("Fallback terdeteksi & disimpan:", connectedNet.name)
         }
 
-        log("🔑 Mencoba koneksi dengan password ke:", networkName)
+        log("Mencoba koneksi dengan password ke:", networkName)
 
         var onFailedHandler, onConnectedHandler
 
@@ -198,12 +187,12 @@ Item {
                 network.connectionFailed.disconnect(onFailedHandler)
                 network.connectedChanged.disconnect(onConnectedHandler)
             } catch (e) {
-                // Abaikan error jika sinyal terlanjur terputus / objek hancur
+                // 
             }
         }
 
         onFailedHandler = function(reason) {
-            log("❌ Connection Failed Reason Code:", reason)
+            log("Connection Failed Reason Code:", reason)
             if (!wasKnownBefore) network.forget()
 
             var errorMsg = "Failed to connect"
@@ -218,7 +207,7 @@ Item {
             root._previousActiveNetwork = null
 
             if (targetFallback) {
-                log("⏳ Menunggu NetworkManager idle, lalu reconnect ke:", targetFallback.name)
+                log("Menunggu NetworkManager idle, lalu reconnect ke:", targetFallback.name)
                 errorMsg += " (Reconnecting to " + targetFallback.name + "...)"
 
                 rollbackTimer.targetNetwork = targetFallback
@@ -231,7 +220,7 @@ Item {
 
         onConnectedHandler = function() {
             if (network.connected) {
-                log("🎉 Berhasil terhubung ke:", networkName)
+                log("Berhasil terhubung ke:", networkName)
                 root._previousActiveNetwork = null
                 cleanup()
             }
@@ -250,37 +239,33 @@ Item {
 
     function disconnectNetwork(network) {
         if (!network) return
-        log("🔌 Disconnect dari:", network.name)
+        log("Disconnect dari:", network.name)
         network.disconnect()
     }
 
     function forgetNetwork(network) {
         if (!network) return
-        log("🗑️ Forget network:", network.name)
+        log("Forget network:", network.name)
         network.forget()
     }
 
     function getWifiIcon(net) {
-        if (!net) return "\udb82\udd2f" // Off / Disconnected
+        if (!net) return "\udb82\udd2f"
 
         const s = net.signalStrength || 0
         const idx = _getIconIndex(s)
 
-        // Terhubung tapi terbatas / tanpa internet
         if (net.connected && (Networking.connectivity === NetworkConnectivity.Limited)) {
             return _wifiIcons.limited[idx]
         }
 
-        // Terkunci (encrypted)
         if (net.security !== WifiSecurityType.Open) {
             return _wifiIcons.encrypted[idx]
         }
 
-        // Terbuka / standar
         return _wifiIcons.open[idx]
     }
 
-    // Helper iterasi model (values vs rowCount)
     function _iterateModel(callback) {
         var model = wifiNetworksModel
         if (!model) return null
@@ -317,7 +302,6 @@ Item {
         return getWifiIcon(getConnectedWifiObject())
     }
 
-    // Log status awal setelah inisialisasi
     Timer {
         id: initTimer
         interval: 500
