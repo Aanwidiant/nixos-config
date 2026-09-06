@@ -17,13 +17,8 @@
     { nixpkgs, home-manager, mangowm, ... }@inputs:
 
     let
-      system = "x86_64-linux";
-      username = "aanwidiant";
-      hostname = "nixos";
-      gitUser = {
-        name = "aanwidiant";
-        email = "aanwidianto01@gmail.com";
-      };
+      vars = import ./variables.nix;
+      inherit (vars) system username hostname gitUser;
     in
     {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {

@@ -44,7 +44,7 @@ Item {
                 text: {
                     if (TimerService.tmRemaining > 0) return TimerService.tmFormatted;
                     if (TimerService.swMilliseconds > 0) return TimerService.swFormatted;
-                    return "Stopwatch";
+                    return "00:00.00";
                 }
 
                 font.pixelSize: Metrics.textSM

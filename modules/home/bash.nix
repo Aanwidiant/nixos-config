@@ -97,8 +97,8 @@
       qwen = "ollama run qwen3:8b";
 
       # NixOS
-      nix-switch = "sudo nixos-rebuild switch --flake ~/nixos-config#";
-      nix-sync = "sudo nixos-rebuild boot --flake ~/nixos-config#";
+      nix-switch = "sudo nixos-rebuild switch --flake path:$HOME/nixos-config#";
+      nix-sync = "sudo nixos-rebuild boot --flake path:$HOME/nixos-config#";
       nix-update = "nix flake update --flake ~/nixos-config";
       nix-upgrade = "nix-update && nix-switch";
       nix-list = "sudo nixos-rebuild list-generations";

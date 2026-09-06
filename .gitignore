@@ -1,26 +1,10 @@
-# Direnv
-.direnv
-.envrc
-
-# Nix build results
-result
-result-*
-
-# Flake backup / temp
-*.drv
-*.lock.old
-
-# Editor
-.vscode/
-.idea/
+# Editor (Vim/Neovim swap files)
 *.swp
 *.swo
-
-# OS files
-.DS_Store
 
 # Logs
 *.log
 
 # folder and file secrets
 dotfiles/theme/current/
+variables.nix

@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    libreoffice
     librewolf
     onlyoffice-desktopeditors
     mousepad

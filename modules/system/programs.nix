@@ -1,5 +1,4 @@
 { pkgs, ... }:
-
 {
   nixpkgs.config.allowUnfree = true;
 
@@ -14,24 +13,19 @@
     usbutils
     intel-gpu-tools
     polkit_gnome
-    gnutar
-    xz
-    thunar
-    xfconf
-    thunar-volman
-    p7zip
     file-roller
     xwayland-satellite
     unzip
+    p7zip 
   ];
 
-  programs.thunar.enable = true;
-  programs.xfconf.enable = true;
-
-  programs.thunar.plugins = with pkgs; [
-    thunar-volman
-    thunar-archive-plugin
-  ];
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs; [
+      thunar-volman
+      thunar-archive-plugin
+    ];
+  };
 
   programs.gpu-screen-recorder.enable = true;
 

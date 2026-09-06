@@ -45,6 +45,5 @@
     HandlePowerKey = "suspend";
     HandlePowerKeyLongPress = "poweroff";
     HandleLidSwitch = "suspend";
-    HandleLidSwitchExternalPower = "lock";
   };
 }
